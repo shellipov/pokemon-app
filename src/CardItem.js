@@ -1,40 +1,34 @@
 import React from "react";
-import { View, Text, Button, StyleSheet } from "react-native";
+import { mainStyles } from "../styles/styles";
+import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
 
-const CardItem = ({ item }) => {
+const CardItem = ({ item, navigation }) => {
   return (
-    <View style={styles.card}>
-      <View style={styles.textBlock}>
-        <Text numberOfLines={1} style={styles.title}>
-          {item.title}
-        </Text>
-        <Text numberOfLines={2} style={styles.body}>
-          {item.body}
-        </Text>
-      </View>
+    <TouchableOpacity onPress={() => navigation.navigate("Pokemon", item.item)}>
+      <View style={mainStyles.card}>
+        <View style={styles.textBlock}>
+          <Text numberOfLines={1} style={mainStyles.comix}>
+            {item.item.name}
+          </Text>
+        </View>
 
-      <View style={styles.buttonBlock}>
-        <Button title="more" />
-        <Button title="delete" />
+        <View style={styles.buttonBlock}>
+          <Button
+            title="more"
+            
+          />
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
-    backgroundColor: "#ccc",
-    padding: 6,
-    borderRadius: 6,
-    margin: 5,
-    flexDirection: "row",
-    justifyContent: 'space-around'
-  },
   textBlock: {
-    width: '80%'
+    width: "80%",
   },
   buttonBlock: {
-    width: '20%'
+    width: "20%",
   },
   title: {
     color: "green",

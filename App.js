@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { NativeRouter } from "react-router-native";
-import Nav from "./src/Nav";
 import AppRouter from "./src/AppRouter";
 import AppLoading from "expo-app-loading";
 import Theme from "./src/Theme";
@@ -15,36 +13,44 @@ import {
 } from "react-native";
 
 export default function App() {
-  const [isBlackTheme, setIsBlackTheme] = useState(false);
+  const [isBlackTheme, setIsBlackTheme] = useState(true);
   const [isFontsLoad, setIsFontsLoad] = useState(false);
 
   if (isFontsLoad) {
     return (
-      <NativeRouter>
-        <SafeAreaView
-          style={
-            (styles.container,
-            isBlackTheme ? styles.blackTheme : styles.whiteTheme)
-          }
-        >
-          <StatusBar
-            barStyle={isBlackTheme ? "light-content" : "dark-content"}
-            animated={true}
-          />
+      <>
+        {/* <SafeAreaView
+            style={styles.container, isBlackTheme ? styles.blackTheme : styles.whiteTheme}
+            >
+        <View >
+            <StatusBar
+              barStyle={isBlackTheme ? "light-content" : "dark-content"}
+              animated={true}
+              />
+
           <Nav />
           <Theme
             isBlackTheme={isBlackTheme}
             setIsBlackTheme={setIsBlackTheme}
-          />
+            />
+
           <View
             style={
               (styles.app, isBlackTheme ? styles.blackTheme : styles.whiteTheme)
             }
-          >
-            <AppRouter />
+            >
+            <AppRouter/>
           </View>
-        </SafeAreaView>
-      </NativeRouter>
+        </View>
+            </SafeAreaView> */}
+
+        <StatusBar
+          barStyle={isBlackTheme ? "light-content" : "dark-content"}
+          animated={true}
+        />
+  
+        <AppRouter isBlackTheme={isBlackTheme} />
+      </>
     );
   } else {
     return (
