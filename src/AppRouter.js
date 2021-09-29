@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import { Text } from "react-native";
-import { mainStyles } from "../styles/styles";
-import {  fonts } from "../styles/styles";
 import PostList from "./PostList";
-import Search from "../pages/Search";
 import Settings from "./Settings";
 import Pokemon from "../pages/Pokemon";
 import Favorites from "../pages/Favorites";
@@ -11,49 +7,46 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 export default function AppRouter({ isBlackTheme }) {
-
-  const font = fonts()
   const Stack = createNativeStackNavigator();
+  const [isBlacktheme, setIsBlacktheme] = useState(false);
 
-  const screenSettings = (title) =>{
-    return {title: title,
-    headerTintColor: "white",
-    headerTitleStyle: {
-      fontWeight: "bold",
-    },
-    headerStyle: {
-      backgroundColor: "orange",
-    },}
-  }
+  const screenSettings = (title) => {
+    return {
+      title: title,
+      headerTintColor: "white",
+      headerTitleStyle: {
+        fontWeight: "bold",
+      },
+      headerStyle: {
+        backgroundColor: isBlacktheme ? "black" : "orange",
+      },
+    };
+  };
   return (
     <>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
             name="PostList"
-            component={PostList}
-            options={screenSettings('Post List')}
-          />
-          <Stack.Screen
-            name="Search"
-            component={Search}
-            options={screenSettings('Search')}
-          />
+            options={screenSettings("Pokemons")}
+          >{(props) => <PostList {...props} isBlacktheme={isBlacktheme} />}
+          </Stack.Screen>
           <Stack.Screen
             name="Pokemon"
-            component={Pokemon}
-            options={screenSettings('Pokemon')}
-          />
-          <Stack.Screen
-            name="Settings"
-            component={Settings}
-            options={screenSettings('Settings')}
-          />
-          <Stack.Screen
-            name="Favorites"
-            component={Favorites}
-            options={screenSettings('Favorites')}
-          />
+            options={screenSettings("Pokemon")}
+          >{(props) => <Pokemon {...props} isBlacktheme={isBlacktheme} />}
+          </Stack.Screen>
+          <Stack.Screen name="Settings" options={screenSettings("Settings")}>
+            {() => (
+              <Settings
+                isBlacktheme={isBlacktheme}
+                setIsBlacktheme={setIsBlacktheme}
+              />
+            )}
+          </Stack.Screen>
+          <Stack.Screen name="Favorites" options={screenSettings("Favorites")}>
+            {() => <Favorites isBlacktheme={isBlacktheme} />}
+          </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </>

@@ -9,7 +9,7 @@ import {
   Animated,
 } from "react-native";
 
-const CardItem = ({ item, navigation }) => {
+const CardItem = ({ item, navigation, isBlacktheme }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const fadeIn = () => {
@@ -37,7 +37,7 @@ const CardItem = ({ item, navigation }) => {
               onError={fadeIn}
               style={{
                 height: 80,
-                width: 60,
+                width: 100,
                 shadowColor: "rgb(41, 41, 41)",
                 shadowOffset: {
                   width: 1,
@@ -56,9 +56,9 @@ const CardItem = ({ item, navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  textBlock: {
-    width: "80%",
-  },
+  // textBlock: {
+  //   width: "80%",
+  // },
   buttonBlock: {
     width: "20%",
   },

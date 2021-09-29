@@ -12,11 +12,13 @@ export const mainStyles = StyleSheet.create({
   card: {
     backgroundColor: "orange",
     padding: 6,
+    paddingHorizontal: 15,
     borderRadius: 16,
     margin: 5,
     marginLeft: 10,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: 'space-between',
     shadowColor: "gray",
     paddingLeft: 20,
     shadowOffset: {
@@ -86,17 +88,29 @@ export const mainStyles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-around",
-    marginBottom: 20
+    paddingBottom: 20
   },
   comix: {
     fontFamily: "comix",
     color: "black",
     fontSize: 10,
   },
+  comixWhite: {
+    fontFamily: "comix",
+    color: "white",
+    fontSize: 10,
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1,
+  },
   big: {
     fontFamily: "comix",
     color: "orange",
     fontSize: 25,
+    textShadowColor: "black",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1,
   },
   favotiveFont: {
     marginTop: 10,
@@ -104,7 +118,7 @@ export const mainStyles = StyleSheet.create({
     fontSize: 16,
     color: "orange",
     textShadowColor: "rgba(0, 0, 0, 0.75)",
-    textShadowOffset: { width: -1, height: 1 },
+    textShadowOffset: { width: -2, height: 2 },
     textShadowRadius: 1,
   },
   delete: {

@@ -27,7 +27,7 @@ export default function App() {
         <AppRouter isBlackTheme={isBlackTheme} />
       </>
     );
-  } else {
+  } else {  
     return (
       <>
         <ActivityIndicator size="small" />

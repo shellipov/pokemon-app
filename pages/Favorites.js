@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Favorites = () => {
+const Favorites = ({isBlacktheme}) => {
   const [favoritesList, setFavoritesList] = useState([]);
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -72,7 +72,7 @@ const Favorites = () => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: isBlacktheme? 'rgb(24, 24, 24)': 'white' }}>
       <FlatList
         data={favoritesList}
         keyExtractor={(item) => item.id}
