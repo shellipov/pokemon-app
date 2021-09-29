@@ -10,8 +10,6 @@ export const fonts = () =>
 
 export const mainStyles = StyleSheet.create({
   card: {
-    width: "65%",
-    height: 40,
     backgroundColor: "orange",
     padding: 6,
     borderRadius: 16,

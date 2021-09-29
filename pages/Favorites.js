@@ -24,14 +24,6 @@ const Favorites = () => {
     }).start();
   };
 
-  const fadeOut = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 1000,
-      useNativeDriver: true
-    }).start();
-  };
-
   const getIsBlackThemeStorage = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem("favorites");

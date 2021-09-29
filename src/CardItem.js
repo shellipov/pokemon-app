@@ -1,18 +1,57 @@
-import React from "react";
+import React, { useRef } from "react";
 import { mainStyles } from "../styles/styles";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
 
 const CardItem = ({ item, navigation }) => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 400,
+      useNativeDriver: true,
+    }).start();
+  };
+
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Pokemon", item.item)}>
-      <View style={mainStyles.card}>
-        <View style={styles.textBlock}>
-          <Text numberOfLines={1} style={mainStyles.comix}>
-            {item.item.name}
-          </Text>
+    <Animated.View style={{ opacity: fadeAnim }}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Pokemon", item.item)}
+      >
+        <View style={mainStyles.card}>
+          <View style={styles.textBlock}>
+            <Text numberOfLines={1} style={mainStyles.comix}>
+              {item.item.name}
+            </Text>
+          </View>
+          <View style={styles.textBlock}>
+            <Image
+              onLoad={fadeIn}
+              onError={fadeIn}
+              style={{
+                height: 80,
+                width: 60,
+                shadowColor: "rgb(41, 41, 41)",
+                shadowOffset: {
+                  width: 1,
+                  height: 1,
+                },
+                shadowOpacity: 1,
+                shadowRadius: 1,
+              }}
+              source={{ uri: item.item.front }}
+            ></Image>
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 

@@ -9,32 +9,35 @@ import {
 import CardItem from "./CardItem";
 import { mainStyles } from "../styles/styles";
 import Api from "../api/api";
-import { getPageCount } from "../utils/pages";
 
 export default function PostList({ navigation }) {
-  const limit = 40;
   const [posts, setPosts] = useState(null);
-  const [offset, setOffset] = useState(0);
   const [pages, setPages] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
+  const [detailedPokemons, setDetailedPokemons] = useState(null);
+  const [pageNumber, setPageNumber] = useState("a");
 
   const scrollRef = useRef();
 
   useEffect(() => {
     async function fetchMyAPI() {
-      let data = await Api.getPost(limit, offset);
-      setPosts(data.results);
-      const pageNumber = getPageCount(data.count, limit);
-      const pageArray = [];
-      for (let i = 0; i < pageNumber; i++) {
-        pageArray.push(i + 1);
-      }
-      setPages(pageArray);
+      let data = await Api.newGetPost();
+      setPosts(data);
+      setPages(Object.keys(data));
     }
     fetchMyAPI();
-  }, [offset]);
+  }, []);
 
-  if (posts) {
+  useEffect(() => {
+    if (posts && pageNumber) {
+      async function fetchMyAPI() {
+        const detailedList = await Api.getDetailedList(posts[pageNumber]);
+        setDetailedPokemons(detailedList);
+      }
+      fetchMyAPI();
+    }
+  }, [posts, pageNumber]);
+
+  if (detailedPokemons) {
     return (
       <>
         <View style={mainStyles.around}>
@@ -49,10 +52,8 @@ export default function PostList({ navigation }) {
           </TouchableOpacity>
         </View>
         <FlatList
-          style={{ flexDirection: "column" }}
-          numColumns={2}
           ref={scrollRef}
-          data={posts}
+          data={detailedPokemons}
           renderItem={(item) => (
             <CardItem item={item} navigation={navigation} />
           )}
@@ -68,8 +69,8 @@ export default function PostList({ navigation }) {
             renderItem={(pages) => (
               <TouchableOpacity
                 onPress={() => {
-                  setOffset((pages.item - 1) * limit),
-                    setPageNumber(pages.item),
+                  setPageNumber(pages.item),
+                  setDetailedPokemons([]),
                     scrollRef.current?.scrollToOffset({
                       animated: true,
                       offset: 0,

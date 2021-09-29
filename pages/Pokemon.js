@@ -49,6 +49,9 @@ const Pokemon = ({ route }) => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          backgroundColor: 'gray',
+          margin: 20,
+          borderRadius: 20,
         }}
       >
         <Text style={mainStyles.big}>{route.params.name}</Text>
@@ -56,20 +59,36 @@ const Pokemon = ({ route }) => {
           style={{
             width: "60%",
             height: "30%",
+            shadowColor: "rgb(41, 41, 41)",
+                shadowOffset: {
+                  width: 1,
+                  height: 1,
+                },
+                shadowOpacity: 2,
+                shadowRadius: 2,
           }}
           source={{
-            uri: pokemon.front_default,
+            uri: route.params.front,
           }}
         />
         <Image
           style={{
             width: "60%",
             height: "30%",
+            shadowColor: "rgb(41, 41, 41)",
+                shadowOffset: {
+                  width: 2,
+                  height: 2,
+                },
+                shadowOpacity: 1,
+                shadowRadius: 1,
           }}
           source={{
-            uri: pokemon.back_default,
+            uri: route.params.back,
           }}
         />
+        <Text style={mainStyles.comix}>{`weight - ${route.params.weight}`}</Text>
+        <Text style={mainStyles.comix} > {`height - ${route.params.height}`}</Text>
         <TouchableOpacity
           onPress={() =>
             setPokemonToStorage({
