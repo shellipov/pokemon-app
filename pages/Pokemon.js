@@ -93,8 +93,8 @@ const Pokemon = ({ route, isBlacktheme }) => {
           <Image
             onLoad={fadeIn}
             style={{
-              width: 250,
-              height: 250,
+              width: '60%',
+              height: '30%',
               shadowColor: "rgb(41, 41, 41)",
               shadowOffset: {
                 width: 1,
@@ -109,8 +109,8 @@ const Pokemon = ({ route, isBlacktheme }) => {
           />
           <Image
             style={{
-              width: 250,
-              height: 250,
+              width: '60%',
+              height: '30%',
               shadowColor: "rgb(41, 41, 41)",
               shadowOffset: {
                 width: 2,
