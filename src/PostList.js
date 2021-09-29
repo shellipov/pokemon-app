@@ -4,7 +4,7 @@ import {
   View,
   FlatList,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import CardItem from "./CardItem";
 import { mainStyles } from "../styles/styles";
@@ -12,7 +12,7 @@ import Api from "../api/api";
 import { getPageCount } from "../utils/pages";
 
 export default function PostList({ navigation }) {
-  const limit = 25;
+  const limit = 40;
   const [posts, setPosts] = useState(null);
   const [offset, setOffset] = useState(0);
   const [pages, setPages] = useState([]);
@@ -24,7 +24,7 @@ export default function PostList({ navigation }) {
     async function fetchMyAPI() {
       let data = await Api.getPost(limit, offset);
       setPosts(data.results);
-      const pageNumber = getPageCount(data.count, 30);
+      const pageNumber = getPageCount(data.count, limit);
       const pageArray = [];
       for (let i = 0; i < pageNumber; i++) {
         pageArray.push(i + 1);
@@ -38,26 +38,19 @@ export default function PostList({ navigation }) {
     return (
       <>
         <View style={mainStyles.around}>
-          <Text
-            onPress={() => navigation.navigate("Search")}
-            style={mainStyles.titleFont}
-          >
-            Search
-          </Text>
-          <Text
-            onPress={() => navigation.navigate("Settings")}
-            style={mainStyles.titleFont}
-          >
-            Settings
-          </Text>
-          <Text
-            onPress={() => navigation.navigate("My")}
-            style={mainStyles.titleFont}
-          >
-            My
-          </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Search")}>
+            <Text style={mainStyles.titleFont}>Search</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
+            <Text style={mainStyles.titleFont}>Settings</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("Favorites")}>
+            <Text style={mainStyles.titleFont}>Favorites</Text>
+          </TouchableOpacity>
         </View>
         <FlatList
+          style={{ flexDirection: "column" }}
+          numColumns={2}
           ref={scrollRef}
           data={posts}
           renderItem={(item) => (
@@ -73,23 +66,26 @@ export default function PostList({ navigation }) {
             showsHorizontalScrollIndicator={false}
             data={pages}
             renderItem={(pages) => (
-              <TouchableOpacity onPress={() =>{
-                setOffset(pages.item * limit),
-                setPageNumber(pages.item),
-                scrollRef.current?.scrollToOffset({
-                  animated: true, offset: 0
-                })
-              }
-              }>
-
-              <View style={{...mainStyles.pageButton, ...(pageNumber === pages.item ? {backgroundColor: 'gray'}: {})}}>
-                <Text
-                  
-                  style={mainStyles.pageButtonText}
+              <TouchableOpacity
+                onPress={() => {
+                  setOffset((pages.item - 1) * limit),
+                    setPageNumber(pages.item),
+                    scrollRef.current?.scrollToOffset({
+                      animated: true,
+                      offset: 0,
+                    });
+                }}
+              >
+                <View
+                  style={{
+                    ...mainStyles.pageButton,
+                    ...(pageNumber === pages.item
+                      ? { backgroundColor: "gray" }
+                      : {}),
+                  }}
                 >
-                  {pages.item}{" "}
-                </Text>
-              </View>
+                  <Text style={mainStyles.pageButtonText}>{pages.item} </Text>
+                </View>
               </TouchableOpacity>
             )}
             keyExtractor={(post) => post.name}

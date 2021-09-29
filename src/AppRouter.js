@@ -6,6 +6,7 @@ import PostList from "./PostList";
 import Search from "../pages/Search";
 import Settings from "./Settings";
 import Pokemon from "../pages/Pokemon";
+import Favorites from "../pages/Favorites";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -47,6 +48,11 @@ export default function AppRouter({ isBlackTheme }) {
             name="Settings"
             component={Settings}
             options={screenSettings('Settings')}
+          />
+          <Stack.Screen
+            name="Favorites"
+            component={Favorites}
+            options={screenSettings('Favorites')}
           />
         </Stack.Navigator>
       </NavigationContainer>

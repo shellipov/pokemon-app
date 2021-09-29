@@ -1,6 +1,6 @@
 import React from "react";
 import { mainStyles } from "../styles/styles";
-import { View, Text, Button, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const CardItem = ({ item, navigation }) => {
   return (
@@ -10,13 +10,6 @@ const CardItem = ({ item, navigation }) => {
           <Text numberOfLines={1} style={mainStyles.comix}>
             {item.item.name}
           </Text>
-        </View>
-
-        <View style={styles.buttonBlock}>
-          <Button
-            title="more"
-            
-          />
         </View>
       </View>
     </TouchableOpacity>

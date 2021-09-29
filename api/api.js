@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default class Api {
-  static async getPost(limit = 25, offset = 0) {
+  static async getPost(limit = 40, offset = 0) {
     try {
       const resp = await axios.get(`https://pokeapi.co/api/v2/pokemon`, {
         params: {

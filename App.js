@@ -19,31 +19,6 @@ export default function App() {
   if (isFontsLoad) {
     return (
       <>
-        {/* <SafeAreaView
-            style={styles.container, isBlackTheme ? styles.blackTheme : styles.whiteTheme}
-            >
-        <View >
-            <StatusBar
-              barStyle={isBlackTheme ? "light-content" : "dark-content"}
-              animated={true}
-              />
-
-          <Nav />
-          <Theme
-            isBlackTheme={isBlackTheme}
-            setIsBlackTheme={setIsBlackTheme}
-            />
-
-          <View
-            style={
-              (styles.app, isBlackTheme ? styles.blackTheme : styles.whiteTheme)
-            }
-            >
-            <AppRouter/>
-          </View>
-        </View>
-            </SafeAreaView> */}
-
         <StatusBar
           barStyle={isBlackTheme ? "light-content" : "dark-content"}
           animated={true}

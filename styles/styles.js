@@ -10,12 +10,14 @@ export const fonts = () =>
 
 export const mainStyles = StyleSheet.create({
   card: {
+    width: "65%",
+    height: 40,
     backgroundColor: "orange",
     padding: 6,
     borderRadius: 16,
     margin: 5,
+    marginLeft: 10,
     flexDirection: "row",
-    justifyContent: "space-around",
     alignItems: "center",
     shadowColor: "gray",
     paddingLeft: 20,
@@ -43,7 +45,9 @@ export const mainStyles = StyleSheet.create({
     padding: 6,
     borderColor: 'black',
     borderWidth: 1,
-    margin: 2,
+    marginTop: 5,
+    marginBottom: 4,
+    marginLeft : 12,
     borderRadius: 16,
     width:60,
     shadowColor: "gray",
@@ -93,7 +97,26 @@ export const mainStyles = StyleSheet.create({
   },
   big: {
     fontFamily: "comix",
-    color: "black",
+    color: "orange",
     fontSize: 25,
-  }
+  },
+  favotiveFont: {
+    marginTop: 10,
+    fontFamily: "comix",
+    fontSize: 16,
+    color: "orange",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1,
+  },
+  delete: {
+    fontFamily: "comix",
+    fontSize: 12,
+    color: "orange",
+    textShadowColor: "rgba(0, 0, 0, 0.75)",
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1,
+    paddingLeft: 4,
+    paddingRight: 3,
+  },
 });
