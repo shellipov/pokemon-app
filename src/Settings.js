@@ -4,7 +4,7 @@ import { mainStyles } from "../styles/styles";
 import { Text, View, Switch } from "react-native";
 
 export default function Settings({ isBlacktheme, setIsBlacktheme }) {
-  const toggleSwitch = () => setIsBlacktheme((previousState) => !previousState);
+  const toggleSwitch = () => setIsBlacktheme(!isBlacktheme);
   return (
     <>
       <View
