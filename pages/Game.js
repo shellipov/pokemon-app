@@ -12,7 +12,7 @@ import {
   Pressable,
 } from "react-native";
 
-const Game = ({ isBlacktheme, posts, navigation }) => {
+const Game = ({ isBlacktheme, posts, navigation, playClick }) => {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(10);
   const [round, setRound] = useState(1);
@@ -153,6 +153,7 @@ const Game = ({ isBlacktheme, posts, navigation }) => {
               onPress={() => {
                 setModalVisible(!modalVisible);
                 navigation.navigate("MainPage");
+                playClick()
               }}
             >
               <Text style={mainStyles.comixWhite}>Close</Text>
@@ -288,6 +289,7 @@ const Game = ({ isBlacktheme, posts, navigation }) => {
               }}
             >
               <TouchableOpacity
+              disabled={userAnswer}
                 style={[
                   styles.button,
                   userAnswer && button.name === truePokemon.name
@@ -301,7 +303,7 @@ const Game = ({ isBlacktheme, posts, navigation }) => {
                       }
                     : null,
                 ]}
-                onPress={() => getAnswer(button.name)}
+                onPress={() => {getAnswer(button.name); playClick()}}
               >
                 <Text style={mainStyles.titleFont}>{button.name}</Text>
               </TouchableOpacity>

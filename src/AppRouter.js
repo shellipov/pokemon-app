@@ -9,7 +9,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function AppRouter({posts, pages}) {
+export default function AppRouter({posts, pages, playClick}) {
   const Stack = createNativeStackNavigator();
   const [isBlacktheme, setIsBlacktheme] = useState(false);
 
@@ -60,13 +60,13 @@ export default function AppRouter({posts, pages}) {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="MainPage" options={screenSettings("MainPage")}>
-            {(props) => <MainPage {...props} isBlacktheme={isBlacktheme} />}
+            {(props) => <MainPage {...props} isBlacktheme={isBlacktheme} playClick={playClick} />}
           </Stack.Screen>
           <Stack.Screen name="Pokemons" options={screenSettings("Pokemons")}>
             {(props) => <PostList {...props} posts={posts} pages={pages} isBlacktheme={isBlacktheme} />}
           </Stack.Screen>
           <Stack.Screen name="Game" options={screenSettings("Game")}>
-            {(props) => <Game {...props} posts={posts} isBlacktheme={isBlacktheme} />}
+            {(props) => <Game {...props} posts={posts} isBlacktheme={isBlacktheme} playClick={playClick} />}
           </Stack.Screen>
           <Stack.Screen name="Pokemon" options={screenSettings("Pokemon")}>
             {(props) => <Pokemon {...props} isBlacktheme={isBlacktheme} />}

@@ -6,13 +6,15 @@ import {
   StyleSheet,
   Animated,
 } from "react-native";
+
 import { mainStyles } from "../styles/styles";
 
-const MainPage = ({ isBlacktheme, navigation }) => {
+const MainPage = ({ isBlacktheme, navigation, playClick }) => {
   const button1 = useRef(new Animated.Value(0)).current;
   const button2 = useRef(new Animated.Value(0)).current;
   const button3 = useRef(new Animated.Value(0)).current;
   const button4 = useRef(new Animated.Value(0)).current;
+
 
   const fadeIn = (element, timeout) => {
     setTimeout(() => {
@@ -65,7 +67,7 @@ const MainPage = ({ isBlacktheme, navigation }) => {
       <Animated.View style={{ opacity: button1, width: '100%', alignItems: 'center' }}>
         <TouchableOpacity
           style={style.button}
-          onPress={() => {navigation.navigate("Game")}}
+          onPress={() => {navigation.navigate("Game"),playClick()}}
         >
           <Text style={mainStyles.titleFont}>Game</Text>
         </TouchableOpacity>
@@ -74,7 +76,7 @@ const MainPage = ({ isBlacktheme, navigation }) => {
       <Animated.View style={{ opacity: button2, width: '100%', alignItems: 'center' }}>
         <TouchableOpacity
           style={style.button}
-          onPress={() => {navigation.navigate("Pokemons")}}
+          onPress={() => {navigation.navigate("Pokemons"),playClick()}}
         >
           <Text style={mainStyles.titleFont}>Pokemons</Text>
         </TouchableOpacity>
@@ -83,7 +85,7 @@ const MainPage = ({ isBlacktheme, navigation }) => {
       <Animated.View style={{ opacity: button3, width: '100%', alignItems: 'center' }}>
         <TouchableOpacity
           style={style.button}
-          onPress={() => {navigation.navigate("Favorites")}}
+          onPress={() => {navigation.navigate("Favorites"),playClick()}}
         >
           <Text style={mainStyles.titleFont}>Favorites</Text>
         </TouchableOpacity>
@@ -92,7 +94,7 @@ const MainPage = ({ isBlacktheme, navigation }) => {
       <Animated.View style={{ opacity: button4, width: '100%', alignItems: 'center' }}>
         <TouchableOpacity
           style={style.button}
-          onPress={() => {navigation.navigate("Settings")}}
+          onPress={() => {navigation.navigate("Settings"),playClick()}}
         >
           <Text style={mainStyles.titleFont}>Settings</Text>
         </TouchableOpacity>
