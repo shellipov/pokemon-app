@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import PostList from "./PostList";
-import Settings from "./Settings";
+import PostList from "../pages/PostList";
+import Settings from "../pages/Settings";
 import Pokemon from "../pages/Pokemon";
 import Favorites from "../pages/Favorites";
+import Game from "../pages/Game";
+import MainPage from "../pages/MainPage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function AppRouter() {
+export default function AppRouter({posts, pages}) {
   const Stack = createNativeStackNavigator();
   const [isBlacktheme, setIsBlacktheme] = useState(false);
 
@@ -31,7 +33,6 @@ export default function AppRouter() {
   useEffect(() => {
     async function getStorageData() {
       const blackTheme = await getIsBlackThemeStorage();
-      console.log(blackTheme);
       setIsBlacktheme(blackTheme);
     }
     getStorageData();
@@ -58,8 +59,14 @@ export default function AppRouter() {
     <>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="PostList" options={screenSettings("Pokemons")}>
-            {(props) => <PostList {...props} isBlacktheme={isBlacktheme} />}
+          <Stack.Screen name="MainPage" options={screenSettings("MainPage")}>
+            {(props) => <MainPage {...props} isBlacktheme={isBlacktheme} />}
+          </Stack.Screen>
+          <Stack.Screen name="Pokemons" options={screenSettings("Pokemons")}>
+            {(props) => <PostList {...props} posts={posts} pages={pages} isBlacktheme={isBlacktheme} />}
+          </Stack.Screen>
+          <Stack.Screen name="Game" options={screenSettings("Game")}>
+            {(props) => <Game {...props} posts={posts} isBlacktheme={isBlacktheme} />}
           </Stack.Screen>
           <Stack.Screen name="Pokemon" options={screenSettings("Pokemon")}>
             {(props) => <Pokemon {...props} isBlacktheme={isBlacktheme} />}

@@ -1,30 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppRouter from "./src/AppRouter";
 import AppLoading from "expo-app-loading";
-import Theme from "./src/Theme";
+import Api from "./api/api";
 import { fonts } from "./styles/styles";
 
 import {
-  StyleSheet,
-  View,
-  SafeAreaView,
   StatusBar,
   ActivityIndicator,
 } from "react-native";
 
 export default function App() {
-  const [isBlackTheme, setIsBlackTheme] = useState(true);
   const [isFontsLoad, setIsFontsLoad] = useState(false);
+  const [posts, setPosts] = useState(null);
+  const [pages, setPages] = useState([]);
 
-  if (isFontsLoad) {
+  useEffect(() => {
+    async function fetchMyAPI() {
+      let data = await Api.newGetPost();
+      setPosts(data);
+      setPages(Object.keys(data));
+    }
+    fetchMyAPI();
+  }, []);
+
+  if (isFontsLoad && posts && pages) {
     return (
       <>
         <StatusBar
-          barStyle={isBlackTheme ? "light-content" : "dark-content"}
+          barStyle={"light-content"}
           animated={true}
         />
-  
-        <AppRouter isBlackTheme={isBlackTheme} />
+        <AppRouter posts={posts} pages={pages} />
       </>
     );
   } else {  
@@ -43,19 +49,3 @@ export default function App() {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  blackTheme: {
-    backgroundColor: "black",
-    color: "white",
-  },
-  whiteTheme: {
-    backgroundColor: "white",
-    color: "black",
-  },
-  app: {
-    padding: 10,
-  },
-});

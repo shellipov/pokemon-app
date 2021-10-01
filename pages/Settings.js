@@ -32,10 +32,10 @@ export default function Settings({ isBlacktheme, setIsBlacktheme }) {
             elevation: 1,
             borderColor: "black",
             borderWidth: 1,
+            alignItems: "center"
           }}
         >
           <Text style={[mainStyles.comixWhite, { marginBottom: 20 }]}>
-            {" "}
             Take a dark theme
           </Text>
           <Switch

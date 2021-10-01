@@ -6,26 +6,14 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
-import CardItem from "./CardItem";
+import CardItem from "../src/CardItem";
 import { mainStyles } from "../styles/styles";
 import Api from "../api/api";
 
-export default function PostList({ navigation, isBlacktheme }) {
-  const [posts, setPosts] = useState(null);
-  const [pages, setPages] = useState([]);
+export default function PostList({ navigation, isBlacktheme, posts, pages }) {
   const [detailedPokemons, setDetailedPokemons] = useState(null);
   const [pageNumber, setPageNumber] = useState("a");
-
   const scrollRef = useRef();
-
-  useEffect(() => {
-    async function fetchMyAPI() {
-      let data = await Api.newGetPost();
-      setPosts(data);
-      setPages(Object.keys(data));
-    }
-    fetchMyAPI();
-  }, []);
 
   useEffect(() => {
     if (posts && pageNumber) {
@@ -40,29 +28,32 @@ export default function PostList({ navigation, isBlacktheme }) {
   if (detailedPokemons) {
     return (
       <>
-        <View style={[mainStyles.around, {backgroundColor: isBlacktheme? 'rgb(24, 24, 24)': 'white'}]}>
-          {/* <TouchableOpacity onPress={() => navigation.navigate("Search")}>
-            <Text style={mainStyles.titleFont}>Search</Text>
-          </TouchableOpacity> */}
-          <TouchableOpacity onPress={() => navigation.navigate("Favorites")}>
-            <Text style={mainStyles.titleFont}>Favorites</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate("Settings")}>
-            <Text style={mainStyles.titleFont}>Settings</Text>
-          </TouchableOpacity>
-        </View>
         <FlatList
-        style={{backgroundColor: isBlacktheme? 'rgb(24, 24, 24)': 'white'}}
+          style={{
+            backgroundColor: isBlacktheme ? "rgb(24, 24, 24)" : "white",
+          }}
           ref={scrollRef}
           data={detailedPokemons}
           renderItem={(item) => (
-            <CardItem item={item} navigation={navigation} isBlacktheme={isBlacktheme} />
+            <CardItem
+              item={item}
+              navigation={navigation}
+              isBlacktheme={isBlacktheme}
+            />
           )}
           keyExtractor={(post) => post.name}
         />
-        <View style={[mainStyles.around, {backgroundColor: isBlacktheme? 'rgb(24, 24, 24)': 'white'}]}> 
+        <View
+          style={[
+            mainStyles.around,
+            { backgroundColor: isBlacktheme ? "rgb(24, 24, 24)" : "white" },
+          ]}
+        >
           <FlatList
-            contentContainerStyle={{ alignSelf: "flex-start", backgroundColor: isBlacktheme? 'rgb(24, 24, 24)': 'white'}}
+            contentContainerStyle={{
+              alignSelf: "flex-start",
+              backgroundColor: isBlacktheme ? "rgb(24, 24, 24)" : "white",
+            }}
             numColumns={60}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
@@ -71,7 +62,7 @@ export default function PostList({ navigation, isBlacktheme }) {
               <TouchableOpacity
                 onPress={() => {
                   setPageNumber(pages.item),
-                  setDetailedPokemons([]),
+                    setDetailedPokemons([]),
                     scrollRef.current?.scrollToOffset({
                       animated: true,
                       offset: 0,
@@ -98,7 +89,16 @@ export default function PostList({ navigation, isBlacktheme }) {
   } else {
     return (
       <>
-        <ActivityIndicator size="small" />
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alingItems: "center",
+            backgroundColor: isBlacktheme ? "rgb(24, 24, 24)" : "white",
+          }}
+        >
+          <ActivityIndicator size="small" />
+        </View>
       </>
     );
   }

@@ -70,6 +70,16 @@ const Favorites = ({isBlacktheme}) => {
       },
     ]);
   }
+  if(favoritesList.length === 0){
+    return (
+      <View style={{ flex: 1, backgroundColor: isBlacktheme? 'rgb(24, 24, 24)': 'white', justifyContent: 'center', alignItems: "center", padding: 40}}>
+        <Text style={mainStyles.titleFont}>there is no one here yet</Text>
+        <Text style={[mainStyles.titleFont, {fontSize: 10, marginTop: 50}]}>Please add someone from the Pokemon list</Text>
+      </View>
+
+
+    )
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: isBlacktheme? 'rgb(24, 24, 24)': 'white' }}>

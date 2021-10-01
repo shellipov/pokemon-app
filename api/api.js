@@ -1,17 +1,6 @@
 import axios from "axios";
 
 export default class Api {
-  // static async getPost(limit = 40, offset = 0) {
-  //   try {
-  //     const resp = await axios.get(`https://pokeapi.co/api/v2/pokemon`, {
-  //       params: {
-  //         limit: limit,
-  //         offset: offset,
-  //       },
-  //     });
-  //     return resp.data;
-  //   } catch (e) {}
-  // }
 
   static async getDetailedList(pokeponList) {
     try {

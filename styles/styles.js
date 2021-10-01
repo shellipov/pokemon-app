@@ -37,6 +37,7 @@ export const mainStyles = StyleSheet.create({
     textShadowOffset: { width: -1, height: 1 },
     textShadowRadius: 1,
     padding: 5,
+    textAlign: 'center',
   },
   pageButton: {
     marginTop: 10,
