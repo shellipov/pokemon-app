@@ -13,14 +13,40 @@ export default function App() {
   const [isFontsLoad, setIsFontsLoad] = useState(false);
   const [posts, setPosts] = useState(null);
   const [pages, setPages] = useState([]);
-  const [sound, setSound] = useState(null);
+  const [music, setMusic] = useState(null);
 
   async function playClick() {
     const { sound } = await Audio.Sound.createAsync(
        require('./assets/click.mp3')
     );
-    setSound(sound);
     await sound.playAsync(); }
+
+  async function playReaction(reaction) {
+    if( reaction === 'victory'){
+      const { sound } = await Audio.Sound.createAsync(
+         require('./assets/victory.mp3')
+      );
+      await sound.playAsync(); }
+    if( reaction === 'losing'){
+      const { sound } = await Audio.Sound.createAsync(
+         require('./assets/losing.mp3')
+      );
+      await sound.playAsync(); }
+    if( reaction === 'gameOver'){
+      const { sound } = await Audio.Sound.createAsync(
+         require('./assets/gameOver.mp3')
+      );
+      await sound.playAsync(); }
+    // if( reaction === 'startGame'){
+    //   const { sound } = await Audio.Sound.createAsync(
+    //      require('./assets/game.mp3')
+    //   );
+    //   setMusic(sound)
+    //   await music.playAsync(); }
+    // if( reaction === 'stopGame'){
+
+    //   await music.stopAsync(); }
+    }
 
   useEffect(() => {
     async function fetchMyAPI() {
@@ -38,7 +64,7 @@ export default function App() {
           barStyle={"light-content"}
           animated={true}
         />
-        <AppRouter posts={posts} pages={pages} playClick={playClick} />
+        <AppRouter posts={posts} pages={pages} playClick={playClick} playReaction={playReaction} />
       </>
     );
   } else {  

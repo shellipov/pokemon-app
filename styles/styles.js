@@ -6,6 +6,8 @@ export const fonts = () =>
     comix: require("../fonts/comixloucyr.ttf"),
     manropebold: require("../fonts/Manropebold.ttf"),
     manropelight: require("../fonts/Manropelight.ttf"),
+    pokemonH: require("../fonts/PokemonHollow.ttf"),
+    pokemonS: require("../fonts/PokemonSolid.ttf"),
   });
 
 export const mainStyles = StyleSheet.create({
@@ -95,6 +97,11 @@ export const mainStyles = StyleSheet.create({
     fontFamily: "comix",
     color: "black",
     fontSize: 10,
+  },
+  pokemonS: {
+    fontFamily: "pokemonS",
+    color: "orange",
+    fontSize: 25,
   },
   comixWhite: {
     fontFamily: "comix",

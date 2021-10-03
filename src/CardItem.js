@@ -9,7 +9,7 @@ import {
   Animated,
 } from "react-native";
 
-const CardItem = ({ item, navigation, isBlacktheme }) => {
+const CardItem = ({ item, navigation, isBlacktheme, playClick }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const fadeIn = () => {
@@ -23,7 +23,9 @@ const CardItem = ({ item, navigation, isBlacktheme }) => {
   return (
     <Animated.View style={{ opacity: fadeAnim }}>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Pokemon", item.item)}
+        onPress={() => {
+          navigation.navigate("Pokemon", item.item), playClick();
+        }}
       >
         <View style={mainStyles.card}>
           <View style={styles.textBlock}>

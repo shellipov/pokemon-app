@@ -10,7 +10,7 @@ import CardItem from "../src/CardItem";
 import { mainStyles } from "../styles/styles";
 import Api from "../api/api";
 
-export default function PostList({ navigation, isBlacktheme, posts, pages }) {
+export default function PostList({ navigation, isBlacktheme, posts, pages, playClick }) {
   const [detailedPokemons, setDetailedPokemons] = useState(null);
   const [pageNumber, setPageNumber] = useState("a");
   const scrollRef = useRef();
@@ -36,6 +36,7 @@ export default function PostList({ navigation, isBlacktheme, posts, pages }) {
           data={detailedPokemons}
           renderItem={(item) => (
             <CardItem
+            playClick={playClick}
               item={item}
               navigation={navigation}
               isBlacktheme={isBlacktheme}
@@ -63,6 +64,7 @@ export default function PostList({ navigation, isBlacktheme, posts, pages }) {
                 onPress={() => {
                   setPageNumber(pages.item),
                     setDetailedPokemons([]),
+                    playClick(),
                     scrollRef.current?.scrollToOffset({
                       animated: true,
                       offset: 0,

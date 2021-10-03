@@ -12,7 +12,7 @@ import {
   Pressable,
 } from "react-native";
 
-const Game = ({ isBlacktheme, posts, navigation, playClick }) => {
+const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(10);
   const [round, setRound] = useState(1);
@@ -90,8 +90,9 @@ const Game = ({ isBlacktheme, posts, navigation, playClick }) => {
 
   useEffect(() => {
     const startCounter = () => {};
-    if (counter === 0 || lives <= 0) {
+    if ((counter === 0 && !userAnswer) || (lives <= 0 && !userAnswer)) {
       setModalVisible(true);
+      playReaction('gameOver');
       fadeOut(gameWindow, 500);
     }
     if (counter != 0 && !userAnswer) {
@@ -153,7 +154,7 @@ const Game = ({ isBlacktheme, posts, navigation, playClick }) => {
               onPress={() => {
                 setModalVisible(!modalVisible);
                 navigation.navigate("MainPage");
-                playClick()
+                playClick();
               }}
             >
               <Text style={mainStyles.comixWhite}>Close</Text>
@@ -289,7 +290,7 @@ const Game = ({ isBlacktheme, posts, navigation, playClick }) => {
               }}
             >
               <TouchableOpacity
-              disabled={userAnswer}
+                disabled={userAnswer}
                 style={[
                   styles.button,
                   userAnswer && button.name === truePokemon.name
@@ -303,7 +304,16 @@ const Game = ({ isBlacktheme, posts, navigation, playClick }) => {
                       }
                     : null,
                 ]}
-                onPress={() => {getAnswer(button.name); playClick()}}
+                onPress={() => {
+                  getAnswer(button.name);
+                  playClick();
+                  if(button.name === truePokemon.name){
+                    playReaction('victory')
+                  }
+                  if(button.name !== truePokemon.name){
+                    playReaction('losing')
+                  }
+                }}
               >
                 <Text style={mainStyles.titleFont}>{button.name}</Text>
               </TouchableOpacity>
