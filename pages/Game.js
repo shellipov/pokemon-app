@@ -10,6 +10,7 @@ import {
   GameBackground,
 } from "../src/StyledComponents";
 import ModalWindow from "../src/ModalWindow";
+import { setStorageStatisticsPlusValue, setMaximumPointsPerGame } from "../utils/statistics";
 import { fadeIn, fadeOut } from "../utils/fade";
 
 const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
@@ -28,6 +29,34 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
   const imageView = useRef(new Animated.Value(0)).current;
   const buttonsView = useRef(new Animated.Value(0)).current;
 
+  //styled functions
+  function clickButton(buttonName) {
+    getAnswer(buttonName);
+    playClick();
+    if (buttonName === truePokemon.name) {
+      playReaction("victory");
+    }
+    if (buttonName !== truePokemon.name) {
+      playReaction("losing");
+    }
+  }
+
+  function buttonStyles(buttonName) {
+    return [
+      { width: "auto", marginLeft: 0, align: "center" },
+      userAnswer && buttonName === truePokemon.name
+        ? {
+            backgroundColor: "green",
+          }
+        : null,
+      userAnswer && buttonName !== truePokemon.name
+        ? {
+            backgroundColor: "red",
+          }
+        : null,
+    ];
+  }
+
   function randonPokemon() {
     const letters = Object.keys(posts);
     const oneLetter = letters[Math.floor(Math.random() * letters.length)];
@@ -44,34 +73,6 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
     const indexCorrectAnswer = Math.floor(Math.random() * 4);
     buttonArray[indexCorrectAnswer].name = correctAnswer;
     setButtons(buttonArray);
-  }
-
-  function clickButton(buttonName) {
-    getAnswer(buttonName);
-    playClick();
-    if (buttonName === truePokemon.name) {
-      playReaction("victory");
-    }
-    if (buttonName !== truePokemon.name) {
-      playReaction("losing");
-    }
-  }
-
-  function buttonStyles(buttonName) {
-    return [
-      { width: "auto", marginLeft: 0, align: "center"
-    },
-      userAnswer && buttonName === truePokemon.name
-        ? {
-            backgroundColor: "green",
-          }
-        : null,
-      userAnswer && buttonName !== truePokemon.name
-        ? {
-            backgroundColor: "red",
-          }
-        : null,
-    ];
   }
 
   useEffect(() => {
@@ -92,11 +93,13 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
   }, [round]);
 
   useEffect(() => {
-    const startCounter = () => {};
     if ((counter === 0 && !userAnswer) || (lives <= 0 && !userAnswer)) {
       setModalVisible(true);
       playReaction("gameOver");
-      fadeOut(gameWindow, 500);
+      setTimeout(() => {
+        fadeOut(gameWindow, 1000);
+      }, 200);
+      return;
     }
     if (counter != 0 && !userAnswer) {
       const timer = setTimeout(
@@ -107,8 +110,14 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
       );
       return () => clearInterval(timer);
     }
-    startCounter();
   }, [counter]);
+
+  useEffect(() => {
+    (async () => {
+      setStorageStatisticsPlusValue("totalGamesPlayed");
+    })()
+   return 
+  }, []);
 
   const getAnswer = (answer) => {
     fadeOut(counterView, 0);
@@ -116,8 +125,13 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
     if (answer === truePokemon.name) {
       setLives((prev) => prev + 1);
       setScore((prev) => prev + 1);
+      setStorageStatisticsPlusValue("allCorrectAnswers");
+      setMaximumPointsPerGame(score+1);
+
     } else {
       setLives((prev) => prev - 1);
+      setStorageStatisticsPlusValue("totalWrongAnswers");
+
     }
     fadeOut(imageView);
     fadeOut(buttonsView);
@@ -138,26 +152,9 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
         playClick={playClick}
       />
 
-      <Animated.View
+      <GameBackground
         style={{
           opacity: gameWindow,
-          width: "100%",
-          flex: 1,
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: "gray",
-          borderRadius: 20,
-          shadowColor: "gray",
-          shadowOffset: {
-            width: 2,
-            height: 2,
-          },
-          shadowOpacity: 1,
-          shadowRadius: 1,
-          elevation: 1,
-          borderColor: "black",
-          borderWidth: 1,
         }}
       >
         <Animated.View style={{ opacity: textView, flex: 1 }}>
@@ -194,7 +191,7 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
           </WhiteText>
         </Animated.View>
         <Animated.View style={{ opacity: counterView, flex: 1 }}>
-          <OrangText 
+          <OrangText
             style={{
               fontSize: 30,
               color: counter < 3 ? "rgb(209, 25, 25)" : "orange",
@@ -238,12 +235,14 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
                   clickButton(button.name);
                 }}
               >
-                <OrangText style={{ padding: 0, fontSize: 12, lineHeight:21 }}>{button.name}</OrangText>
+                <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
+                  {button.name}
+                </OrangText>
               </LittleButton>
             </View>
           ))}
         </Animated.View>
-      </Animated.View>
+      </GameBackground>
     </Container>
   );
 };

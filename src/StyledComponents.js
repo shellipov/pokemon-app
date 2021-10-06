@@ -63,14 +63,12 @@ export const GrayBackground = styled.View`
 
 export const GameBackground = styled(Animated.View)`
   width: 100%;
-  background-color: gray;
-  padding-horizontal: 50px;
-  padding-vertical: 50px;
-  border-radius: 20px;
   flex: 1;
   flex-direction: column;
-  align-items: center;
   justify-content: center
+  align-items: center;
+  background-color: gray;
+  border-radius: 20px;
   shadow-color: rgba(61, 61, 61, 0.418);
   shadow-offset: 2px 2px;
   shadow-opacity: 1;
