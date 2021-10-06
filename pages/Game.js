@@ -90,24 +90,24 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
     getPokemon();
   }, [round]);
 
-  // useEffect(() => {
-  //   const startCounter = () => {};
-  //   if ((counter === 0 && !userAnswer) || (lives <= 0 && !userAnswer)) {
-  //     setModalVisible(true);
-  //     playReaction("gameOver");
-  //     fadeOut(gameWindow, 500);
-  //   }
-  //   if (counter != 0 && !userAnswer) {
-  //     const timer = setTimeout(
-  //       () => {
-  //         setCounter((prev) => prev - 1);
-  //       },
-  //       counter === 6 ? 2000 : 1000
-  //     );
-  //     return () => clearInterval(timer);
-  //   }
-  //   startCounter();
-  // }, [counter]);
+  useEffect(() => {
+    const startCounter = () => {};
+    if ((counter === 0 && !userAnswer) || (lives <= 0 && !userAnswer)) {
+      setModalVisible(true);
+      playReaction("gameOver");
+      fadeOut(gameWindow, 500);
+    }
+    if (counter != 0 && !userAnswer) {
+      const timer = setTimeout(
+        () => {
+          setCounter((prev) => prev - 1);
+        },
+        counter === 6 ? 2000 : 1000
+      );
+      return () => clearInterval(timer);
+    }
+    startCounter();
+  }, [counter]);
 
   const getAnswer = (answer) => {
     fadeOut(counterView, 0);
