@@ -1,29 +1,21 @@
 import React, { useEffect, useState, useRef } from "react";
-import { mainStyles } from "../styles/styles";
 import {
-  View,
-  Text,
-  Image,
-  ActivityIndicator,
-  TouchableOpacity,
-  Alert,
-  Animated,
-} from "react-native";
+  Container,
+  GrayBackground,
+  StyledImage,
+  OrangText,
+  WhiteText,
+  LittleButton,
+} from "../src/StyledComponents";
+import { ActivityIndicator, Alert, Animated } from "react-native";
+import { fadeIn } from "../utils/fade";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Api from "../api/api";
 
 const Pokemon = ({ route, isBlacktheme }) => {
   const [pokemon, setPokemon] = useState(null);
-
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-
-  const fadeIn = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 600,
-      useNativeDriver: true,
-    }).start();
-  };
+  const image1 = useRef(new Animated.Value(0)).current;
+  const image2 = useRef(new Animated.Value(0)).current;
 
   const setPokemonToStorage = async (value) => {
     try {
@@ -47,89 +39,47 @@ const Pokemon = ({ route, isBlacktheme }) => {
     async function fetchMyAPI() {
       let data = await Api.getURL(route.params.url);
       setPokemon(data.sprites);
-      fadeIn();
     }
     fetchMyAPI();
   }, []);
 
   if (pokemon) {
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: isBlacktheme ? "rgb(24, 24, 24)" : "white",
-          flexDirection: "column",
-          justifyContent: "space-around",
-          alignItems: "center",
-          padding: 20,
-        }}
-      >
-        <Animated.View
-          style={[
-            { opacity: fadeAnim },
-            {
-              flex: 1,
-              width: "100%",
-              height: "100%",
-              flexDirection: "column",
-              justifyContent: "space-around",
-              alignItems: "center",
-              backgroundColor: "gray",
-              borderRadius: 20,
-              shadowColor: "gray",
-              shadowOffset: {
-                width: 2,
-                height: 2,
-              },
-              shadowOpacity: 1,
-              shadowRadius: 1,
-              elevation: 1,
-              borderColor: "black",
-              borderWidth: 1,
-            },
-          ]}
+      <Container isBlacktheme={isBlacktheme} style={{ padding: 24 }}>
+        <GrayBackground
+          style={{
+            width: "100%",
+            height: "100%",
+            justifyContent: "space-between",
+          }}
         >
-          <Text style={[mainStyles.big, {textAlign: "center"}]}>{route.params.name}</Text>
-          <Image
-            onLoad={fadeIn}
-            style={{
-              width: '60%',
-              height: '30%',
-              shadowColor: "rgb(41, 41, 41)",
-              shadowOffset: {
-                width: 1,
-                height: 1,
-              },
-              shadowOpacity: 2,
-              shadowRadius: 2,
-            }}
-            source={{
-              uri: route.params.front,
-            }}
-          />
-          <Image
-            style={{
-              width: '60%',
-              height: '30%',
-              shadowColor: "rgb(41, 41, 41)",
-              shadowOffset: {
-                width: 2,
-                height: 2,
-              },
-              shadowOpacity: 1,
-              shadowRadius: 1,
-            }}
-            source={{
-              uri: route.params.back,
-            }}
-          />
-          <Text
-            style={mainStyles.comixWhite}
-          >{`weight: ${route.params.weight}`}</Text>
-          <Text style={mainStyles.comixWhite}>
-            {`height: ${route.params.height}`}
-          </Text>
-          <TouchableOpacity
+          <OrangText>{route.params.name}</OrangText>
+          <Animated.View
+            style={{ width: "100%", height: "30%", opacity: image1 }}
+          >
+            <StyledImage
+              style={{ width: "100%", height: "100%" }}
+              onLoad={() => fadeIn(image1)}
+              source={{
+                uri: route.params.front,
+              }}
+            />
+          </Animated.View>
+          <Animated.View
+            style={{ width: "100%", height: "30%", opacity: image2 }}
+          >
+            <StyledImage
+              style={{ width: "100%", height: "100%" }}
+              onLoad={() => fadeIn(image2)}
+              source={{
+                uri: route.params.back,
+              }}
+            />
+          </Animated.View>
+          <WhiteText>{`weight: ${route.params.weight},   height: ${route.params.height}`}</WhiteText>
+
+          <LittleButton
+            style={{ width: "100%" }}
             onPress={() =>
               setPokemonToStorage({
                 name: route.params.name,
@@ -138,38 +88,17 @@ const Pokemon = ({ route, isBlacktheme }) => {
               })
             }
           >
-            <View
-              style={{
-                borderWidth: 1,
-                backgroundColor: "white",
-                borderRadius: 15,
-                height: 60,
-                width: 60,
-                paddingHorizontal: 16,
-                marginBottom: 20,
-              }}
-            >
-              <Text style={mainStyles.big}>+</Text>
-            </View>
-          </TouchableOpacity>
-        </Animated.View>
-      </View>
+            <OrangText>add to fovarites</OrangText>
+          </LittleButton>
+        </GrayBackground>
+      </Container>
     );
   } else {
     return (
       <>
-        <View
-          style={{
-            flex: 1,
-            backgroundColor: isBlacktheme ? "rgb(24, 24, 24)" : "white",
-            flexDirection: "column",
-            justifyContent: "space-around",
-            alignItems: "center",
-            padding: 20,
-          }}
-        >
+        <Container isBlacktheme={isBlacktheme} style={{ padding: 24 }}>
           <ActivityIndicator size="small" />
-        </View>
+        </Container>
       </>
     );
   }

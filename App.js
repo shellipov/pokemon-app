@@ -37,15 +37,15 @@ export default function App() {
          require('./assets/gameOver.mp3')
       );
       await sound.playAsync(); }
-    // if( reaction === 'startGame'){
-    //   const { sound } = await Audio.Sound.createAsync(
-    //      require('./assets/game.mp3')
-    //   );
-    //   setMusic(sound)
-    //   await music.playAsync(); }
-    // if( reaction === 'stopGame'){
+    if( reaction === 'startGame'){
+      const { sound } = await Audio.Sound.createAsync(
+         require('./assets/game.mp3')
+      );
+      setMusic(sound)
+      await music.playAsync(); }
+    if( reaction === 'stopGame'){
 
-    //   await music.stopAsync(); }
+      await music.stopAsync(); }
     }
 
   useEffect(() => {

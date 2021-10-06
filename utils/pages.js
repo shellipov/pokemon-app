@@ -1,3 +1,3 @@
-export function getPageCount ( totalConut, limit){
-   return Math.ceil(totalConut / limit) 
-}
+// export function getPageCount ( totalConut, limit){
+//    return Math.ceil(totalConut / limit) 
+// }

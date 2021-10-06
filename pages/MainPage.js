@@ -1,13 +1,7 @@
 import React, { useRef, useEffect } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Animated,
-} from "react-native";
-
-import { mainStyles } from "../styles/styles";
+import { Animated, StyleSheet } from "react-native";
+import { Container, Button, OrangText } from "../src/StyledComponents";
+import { fadeIn } from '../utils/fade'
 
 const MainPage = ({ isBlacktheme, navigation, playClick }) => {
   const button1 = useRef(new Animated.Value(0)).current;
@@ -15,111 +9,63 @@ const MainPage = ({ isBlacktheme, navigation, playClick }) => {
   const button3 = useRef(new Animated.Value(0)).current;
   const button4 = useRef(new Animated.Value(0)).current;
 
-
-  const fadeIn = (element, timeout) => {
-    setTimeout(() => {
-      Animated.timing(element, {
-        toValue: 1,
-        duration: 400,
-        useNativeDriver: true,
-      }).start();
-    }, timeout);
-  };
-  const fadeOut = (element, timeout) => {
-    setTimeout(() => {
-      Animated.timing(element, {
-        toValue: 0,
-        duration: 400,
-        useNativeDriver: true,
-      }).start();
-    }, timeout);
-  };
-
-  useEffect(()=>{
-    fadeIn(button1, 150)
-    fadeIn(button2, 300)
-    fadeIn(button3, 450)
-    fadeIn(button4, 600)
-  },[])
-  
-  // function exitAnimation (){
-  //   fadeOut(button1, 100)
-  //   fadeOut(button2, 200)
-  //   fadeOut(button3, 300)
-  //   fadeOut(button4, 400)
-  // }
-
-
+  useEffect(() => {
+    fadeIn(button1, 150);
+    fadeIn(button2, 300);
+    fadeIn(button3, 450);
+    fadeIn(button4, 600);
+  }, []);
 
   return (
-    <View
-      style={[
-        {
-          flex: 1,
-          backgroundColor: isBlacktheme ? "rgb(24, 24, 24)" : "white",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "space-around",
-          paddingVertical: 100,
-        },
-      ]}
-    >
-      <Animated.View style={{ opacity: button1, width: '100%', alignItems: 'center' }}>
-        <TouchableOpacity
-          style={style.button}
-          onPress={() => {navigation.navigate("Game"),playClick()}}
+    <Container style={{ paddingVertical: '20%' }} isBlacktheme={isBlacktheme}>
+      <Animated.View style={[{ opacity: button1 }, styles.buttonBlock]}>
+        <Button
+          onPress={() => {
+            navigation.navigate("Game"), playClick();
+          }}
         >
-          <Text style={mainStyles.titleFont}>Game</Text>
-        </TouchableOpacity>
+          <OrangText>Game</OrangText>
+        </Button>
       </Animated.View>
 
-      <Animated.View style={{ opacity: button2, width: '100%', alignItems: 'center' }}>
-        <TouchableOpacity
-          style={style.button}
-          onPress={() => {navigation.navigate("Pokemons"),playClick()}}
+      <Animated.View style={[{ opacity: button2 }, styles.buttonBlock]}>
+        <Button
+          onPress={() => {
+            navigation.navigate("Pokemons"), playClick();
+          }}
         >
-          <Text style={mainStyles.titleFont}>Pokemons</Text>
-        </TouchableOpacity>
+          <OrangText>Pokemons</OrangText>
+        </Button>
       </Animated.View>
 
-      <Animated.View style={{ opacity: button3, width: '100%', alignItems: 'center' }}>
-        <TouchableOpacity
-          style={style.button}
-          onPress={() => {navigation.navigate("Favorites"),playClick()}}
+      <Animated.View style={[{ opacity: button3 }, styles.buttonBlock]}>
+        <Button
+          onPress={() => {
+            navigation.navigate("Favorites"), playClick();
+          }}
         >
-          <Text style={mainStyles.titleFont}>Favorites</Text>
-        </TouchableOpacity>
+          <OrangText>Favorites</OrangText>
+        </Button>
       </Animated.View>
 
-      <Animated.View style={{ opacity: button4, width: '100%', alignItems: 'center' }}>
-        <TouchableOpacity
-          style={style.button}
-          onPress={() => {navigation.navigate("Settings"),playClick()}}
+      <Animated.View style={[{ opacity: button4 }, styles.buttonBlock]}>
+        <Button
+          onPress={() => {
+            navigation.navigate("Settings"), playClick();
+          }}
         >
-          <Text style={mainStyles.titleFont}>Settings</Text>
-        </TouchableOpacity>
+          <OrangText>Settings</OrangText>
+        </Button>
       </Animated.View>
-    </View>
+    </Container>
   );
 };
 
 export default MainPage;
 
-const style = StyleSheet.create({
-  button: {
-    backgroundColor: "gray",
-    width: "50%",
-    paddingVertical: 30,
-    borderRadius: 20,
-    shadowColor: "gray",
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 1,
-    elevation: 1,
-    borderColor: "black",
-    borderWidth: 1,
+const styles = StyleSheet.create({
+  buttonBlock: {
+    width: "100%",
+    alignItems: "center",
   },
 });

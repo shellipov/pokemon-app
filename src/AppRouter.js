@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PostList from "../pages/PostList";
+import PokemonList from "../pages/PokemonList";
 import Settings from "../pages/Settings";
 import Pokemon from "../pages/Pokemon";
 import Favorites from "../pages/Favorites";
@@ -9,7 +9,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export default function AppRouter({posts, pages, playClick, playReaction}) {
+export default function AppRouter({ posts, pages, playClick, playReaction }) {
   const Stack = createNativeStackNavigator();
   const [isBlacktheme, setIsBlacktheme] = useState(false);
 
@@ -60,13 +60,35 @@ export default function AppRouter({posts, pages, playClick, playReaction}) {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="MainPage" options={screenSettings("MainPage")}>
-            {(props) => <MainPage {...props} isBlacktheme={isBlacktheme} playClick={playClick} />}
+            {(props) => (
+              <MainPage
+                {...props}
+                isBlacktheme={isBlacktheme}
+                playClick={playClick}
+              />
+            )}
           </Stack.Screen>
           <Stack.Screen name="Pokemons" options={screenSettings("Pokemons")}>
-            {(props) => <PostList {...props} posts={posts} pages={pages} isBlacktheme={isBlacktheme} playClick={playClick} />}
+            {(props) => (
+              <PokemonList
+                {...props}
+                posts={posts}
+                pages={pages}
+                isBlacktheme={isBlacktheme}
+                playClick={playClick}
+              />
+            )}
           </Stack.Screen>
           <Stack.Screen name="Game" options={screenSettings("Game")}>
-            {(props) => <Game {...props} posts={posts} isBlacktheme={isBlacktheme} playClick={playClick} playReaction={playReaction} />}
+            {(props) => (
+              <Game
+                {...props}
+                posts={posts}
+                isBlacktheme={isBlacktheme}
+                playClick={playClick}
+                playReaction={playReaction}
+              />
+            )}
           </Stack.Screen>
           <Stack.Screen name="Pokemon" options={screenSettings("Pokemon")}>
             {(props) => <Pokemon {...props} isBlacktheme={isBlacktheme} />}

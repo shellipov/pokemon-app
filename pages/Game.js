@@ -1,57 +1,31 @@
 import React, { useEffect, useState, useRef } from "react";
-import { mainStyles } from "../styles/styles";
 import Api from "../api/api";
+import { View, Animated } from "react-native";
 import {
-  View,
-  Text,
-  Image,
-  Animated,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-  Pressable,
-} from "react-native";
+  OrangText,
+  WhiteText,
+  StyledImage,
+  LittleButton,
+  Container,
+} from "../src/StyledComponents";
+import ModalWindow from "../src/ModalWindow";
+import { fadeIn, fadeOut } from "../utils/fade";
 
 const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(10);
   const [round, setRound] = useState(1);
-  const [truePokemon, setTruePokemon] = useState({});
   const [counter, setCounter] = useState(6);
+  const [truePokemon, setTruePokemon] = useState({});
   const [buttons, setButtons] = useState([]);
   const [userAnswer, setUserAnswer] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+
   const gameWindow = useRef(new Animated.Value(0)).current;
   const textView = useRef(new Animated.Value(0)).current;
   const counterView = useRef(new Animated.Value(0)).current;
   const imageView = useRef(new Animated.Value(0)).current;
-  // const imageSize = useRef(new Animated.Value(200)).current;
   const buttonsView = useRef(new Animated.Value(0)).current;
-
-  const fadeIn = (element, timeout) => {
-    setTimeout(() => {
-      Animated.timing(element, {
-        toValue: 1,
-        duration: 400,
-        useNativeDriver: true,
-      }).start();
-    }, timeout);
-  };
-  const fadeOut = (element, duration = 1500) => {
-    Animated.timing(element, {
-      toValue: 0,
-      duration: duration,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  // const growing = () => {
-  //     Animated.timing(imageSize, {
-  //       toValue: 300,
-  //       duration: 10000,
-  //       useNativeDriver: true,
-  //     }).start();
-  // };
 
   function randonPokemon() {
     const letters = Object.keys(posts);
@@ -71,6 +45,34 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
     setButtons(buttonArray);
   }
 
+  function clickButton(buttonName) {
+    getAnswer(buttonName);
+    playClick();
+    if (buttonName === truePokemon.name) {
+      playReaction("victory");
+    }
+    if (buttonName !== truePokemon.name) {
+      playReaction("losing");
+    }
+  }
+
+  function buttonStyles(buttonName) {
+    return [
+      { width: "auto", marginLeft: 0, align: "center"
+    },
+      userAnswer && buttonName === truePokemon.name
+        ? {
+            backgroundColor: "green",
+          }
+        : null,
+      userAnswer && buttonName !== truePokemon.name
+        ? {
+            backgroundColor: "red",
+          }
+        : null,
+    ];
+  }
+
   useEffect(() => {
     async function getPokemon() {
       const pokemon = randonPokemon();
@@ -88,24 +90,24 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
     getPokemon();
   }, [round]);
 
-  useEffect(() => {
-    const startCounter = () => {};
-    if ((counter === 0 && !userAnswer) || (lives <= 0 && !userAnswer)) {
-      setModalVisible(true);
-      playReaction('gameOver');
-      fadeOut(gameWindow, 500);
-    }
-    if (counter != 0 && !userAnswer) {
-      const timer = setTimeout(
-        () => {
-          setCounter((prev) => prev - 1);
-        },
-        counter === 6 ? 2000 : 1000
-      );
-      return () => clearInterval(timer);
-    }
-    startCounter();
-  }, [counter]);
+  // useEffect(() => {
+  //   const startCounter = () => {};
+  //   if ((counter === 0 && !userAnswer) || (lives <= 0 && !userAnswer)) {
+  //     setModalVisible(true);
+  //     playReaction("gameOver");
+  //     fadeOut(gameWindow, 500);
+  //   }
+  //   if (counter != 0 && !userAnswer) {
+  //     const timer = setTimeout(
+  //       () => {
+  //         setCounter((prev) => prev - 1);
+  //       },
+  //       counter === 6 ? 2000 : 1000
+  //     );
+  //     return () => clearInterval(timer);
+  //   }
+  //   startCounter();
+  // }, [counter]);
 
   const getAnswer = (answer) => {
     fadeOut(counterView, 0);
@@ -125,53 +127,25 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: isBlacktheme ? "rgb(24, 24, 24)" : "white",
-      }}
-    >
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={[mainStyles.comix, { fontSize: 25 }]}>Game Over</Text>
-            <Text style={[mainStyles.comix, { fontSize: 13, marginTop: 30 }]}>
-              {counter === 0 ? "time is up" : "no more lifes"}
-            </Text>
-            <Text style={[mainStyles.comix, { fontSize: 13, marginTop: 9 }]}>
-              You score: {score}
-            </Text>
-            <Pressable
-              style={styles.closeButton}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-                navigation.navigate("MainPage");
-                playClick();
-              }}
-            >
-              <Text style={mainStyles.comixWhite}>Close</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
+    <Container style={{ padding: 20 }} isBlacktheme={isBlacktheme}>
+      <ModalWindow
+        navigation={navigation}
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        score={score}
+        counter={counter}
+        playClick={playClick}
+      />
 
       <Animated.View
         style={{
+          width: "100%",
           opacity: gameWindow,
           flex: 1,
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
           backgroundColor: "gray",
-          margin: 20,
           borderRadius: 20,
           shadowColor: "gray",
           shadowOffset: {
@@ -200,65 +174,42 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
                 justifyContent: "flex-start",
               }}
             >
-              <Text style={[mainStyles.titleFont, { fontSize: 18 }]}>❤️</Text>
-              <Text style={mainStyles.titleFont}>{lives}</Text>
+              <OrangText style={{ fontSize: 18 }}>❤️</OrangText>
+              <OrangText>{lives}</OrangText>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Text style={[mainStyles.titleFont, { fontSize: 10 }]}>
-                Score:
-              </Text>
-              <Text style={mainStyles.titleFont}>{score}</Text>
+              <OrangText style={{ fontSize: 10 }}>Score:</OrangText>
+              <OrangText>{score}</OrangText>
             </View>
           </View>
-          <Text
-            style={[
-              mainStyles.comixWhite,
-              {
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-                marginTop: 30,
-                fontSize: 15,
-              },
-            ]}
+          <WhiteText
+            isBlacktheme={isBlacktheme}
+            style={{
+              marginTop: 30,
+              fontSize: 15,
+            }}
           >
             Do you know who is it?
-          </Text>
+          </WhiteText>
         </Animated.View>
         <Animated.View style={{ opacity: counterView, flex: 1 }}>
-          <Text
-            style={[
-              mainStyles.titleFont,
-              {
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: 30,
-                color: counter < 3 ? "rgb(209, 25, 25)" : "orange",
-              },
-            ]}
+          <OrangText 
+            style={{
+              fontSize: 30,
+              color: counter < 3 ? "rgb(209, 25, 25)" : "orange",
+            }}
           >
             {counter}
-          </Text>
+          </OrangText>
         </Animated.View>
         <Animated.View style={{ opacity: imageView, flex: 2 }}>
-          {/* <Animated.View style={{ height: imageSize, width: imageSize}}> */}
-
-          <Image
+          <StyledImage
             style={{
               height: 200,
               width: 200,
-              shadowColor: "rgb(41, 41, 41)",
-              shadowOffset: {
-                width: 2,
-                height: 2,
-              },
-              shadowOpacity: 1,
-              shadowRadius: 1,
             }}
             source={{ uri: truePokemon.front }}
-          ></Image>
-          {/* </Animated.View> */}
+          />
         </Animated.View>
         <Animated.View
           style={{
@@ -268,120 +219,32 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
             paddingBottom: 20,
           }}
         >
-          {/* <FlatList
-            data={buttons}
-            keyExtractor={(item) => item.id}
-            renderItem={(buttons) => (
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => getAnswer(buttons.item.name)}
-              >
-                <Text style={mainStyles.titleFont}>{buttons.item.name}</Text>
-              </TouchableOpacity>
-            )}
-          /> */}
           {buttons.map((button) => (
             <View
               key={button.id.toString()}
               style={{
                 height: "25%",
                 width: "100%",
+                paddingHorizontal: 20,
                 flexDirection: "column-reverse",
               }}
             >
-              <TouchableOpacity
+              <LittleButton
+                isBlacktheme={isBlacktheme}
                 disabled={userAnswer}
-                style={[
-                  styles.button,
-                  userAnswer && button.name === truePokemon.name
-                    ? {
-                        backgroundColor: "green",
-                      }
-                    : null,
-                  userAnswer && button.name !== truePokemon.name
-                    ? {
-                        backgroundColor: "red",
-                      }
-                    : null,
-                ]}
+                style={buttonStyles(button.name)}
                 onPress={() => {
-                  getAnswer(button.name);
-                  playClick();
-                  if(button.name === truePokemon.name){
-                    playReaction('victory')
-                  }
-                  if(button.name !== truePokemon.name){
-                    playReaction('losing')
-                  }
+                  clickButton(button.name);
                 }}
               >
-                <Text style={mainStyles.titleFont}>{button.name}</Text>
-              </TouchableOpacity>
+                <OrangText style={{ padding: 0, fontSize: 12, lineHeight:21 }}>{button.name}</OrangText>
+              </LittleButton>
             </View>
           ))}
         </Animated.View>
       </Animated.View>
-    </View>
+    </Container>
   );
 };
 
 export default Game;
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: "white",
-    borderRadius: 20,
-    shadowColor: "gray",
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 1,
-    elevation: 1,
-    borderColor: "black",
-    borderWidth: 1,
-    marginHorizontal: 20,
-  },
-
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 0,
-    backgroundColor: "rgba(0, 0, 0, 0.747)",
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    paddingHorizontal: 35,
-    paddingVertical: 100,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  closeButton: {
-    backgroundColor: "gray",
-    marginTop: 30,
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-    borderRadius: 20,
-    shadowColor: "gray",
-    shadowOffset: {
-      width: 2,
-      height: 2,
-    },
-    shadowOpacity: 1,
-    shadowRadius: 1,
-    elevation: 1,
-    borderColor: "black",
-    borderWidth: 1,
-  },
-});
