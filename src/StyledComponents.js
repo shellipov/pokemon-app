@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { Animated } from "react-native";
 
 export const Container = styled.View`
   flex: 1;
@@ -60,6 +61,25 @@ export const GrayBackground = styled.View`
   align-items: center;
 `;
 
+export const GameBackground = styled(Animated.View)`
+  width: 100%;
+  background-color: gray;
+  padding-horizontal: 50px;
+  padding-vertical: 50px;
+  border-radius: 20px;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center
+  shadow-color: rgba(61, 61, 61, 0.418);
+  shadow-offset: 2px 2px;
+  shadow-opacity: 1;
+  shadow-radius: 1px;
+  elevation: 1;
+  border-color: black;
+  border-width: 1px;
+`;
+
 export const OrangeCard = styled.View`
   background-color: orange;
   padding-right: 15px;
@@ -91,13 +111,54 @@ export const StyledImage = styled.Image`
   resize-mode: contain;
 `;
 
+// Modal components
+
+export const CenteredBackView = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  margin-top: 0;
+  background-color: rgba(0, 0, 0, 0.747);
+`;
+
+export const ModaView = styled.View`
+  margin: 20px;
+  background-color: white;
+  border-radius: 20px;
+  padding-horizontal: 35px;
+  padding-vertical: 100px;
+  align-items: center;
+  shadow-color: #000;
+  shadow-offset: 0px 2px;
+  shadow-opacity: 0.25;
+  shadow-radius: 4px;
+  elevation: 5;
+`;
+
+export const CloseButton = styled.Pressable`
+  background-color: gray;
+  margin-top: 30px;
+  width: 50%;
+  padding-vertical: 15px;
+  padding-horizontal: 30px;
+  border-radius: 20px;
+  shadow-color: rgba(61, 61, 61, 0.418);
+  shadow-opacity: 1;
+  shadow-radius: 1px;
+  elevation: 1;
+  border-color: black;
+  border-width: 1px;
+  shadow-offset: 2px 2px;
+`;
+
 //Fonts
 
 export const OrangText = styled.Text`
   font-family: "comix";
   font-size: 15px;
   color: orange;
-  text-shadow-color: ${(props) => (props.isBlacktheme ? "white" : "rgba(0, 0, 0, 0.75)")};
+  text-shadow-color: ${(props) =>
+    props.isBlacktheme ? "white" : "rgba(0, 0, 0, 0.75)"};
   text-shadow-offset: -1px 1px;
   text-shadow-radius: 1px;
   padding: 5px;
@@ -108,7 +169,8 @@ export const WhiteText = styled.Text`
   font-family: "comix";
   font-size: 10px;
   color: ${(props) => (props.isBlacktheme ? "black" : "white")};
-  text-shadow-color: ${(props) => (props.isBlacktheme ? "white" : "rgba(0, 0, 0, 0.75)")};
+  text-shadow-color: ${(props) =>
+    props.isBlacktheme ? "white" : "rgba(0, 0, 0, 0.75)"};
   text-shadow-offset: -1px 1px;
   text-shadow-radius: 1px;
   text-align: center;

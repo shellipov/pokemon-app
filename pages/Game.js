@@ -7,6 +7,7 @@ import {
   StyledImage,
   LittleButton,
   Container,
+  GameBackground,
 } from "../src/StyledComponents";
 import ModalWindow from "../src/ModalWindow";
 import { fadeIn, fadeOut } from "../utils/fade";
@@ -139,8 +140,8 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
 
       <Animated.View
         style={{
-          width: "100%",
           opacity: gameWindow,
+          width: "100%",
           flex: 1,
           flexDirection: "column",
           justifyContent: "center",
