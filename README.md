@@ -1,6 +1,6 @@
 ### Pokemon-app:
 <div >
-<img style="margin:0 auto" src="readme-assets/video.gif" alt="screenshot" width="300"/>
+<img src="readme-assets/video.gif" alt="screenshot" width="350"/>
 </div>
 
 > Небольшое приложение для iphone. 
@@ -8,14 +8,14 @@
 > Используемые технологии: React, React-Native. 
 
 <p>
-<img src="readme-assets/1.png" alt="screenshot" width="200"/>
-<img src="readme-assets/2.png" alt="screenshot" width="200"/>
-<img src="readme-assets/3.png" alt="screenshot" width="200"/>
+<img src="readme-assets/1.png" alt="screenshot" width="250"/>
+<img src="readme-assets/2.png" alt="screenshot" width="250"/>
+<img src="readme-assets/3.png" alt="screenshot" width="250"/>
 </p>
 <p>
-<img src="readme-assets/4.png" alt="screenshot" width="200"/>
-<img src="readme-assets/5.png" alt="screenshot" width="200"/>
-<img src="readme-assets/6.png" alt="screenshot" width="200"/>
+<img src="readme-assets/4.png" alt="screenshot" width="250"/>
+<img src="readme-assets/5.png" alt="screenshot" width="250"/>
+<img src="readme-assets/6.png" alt="screenshot" width="250"/>
 </p>
 
 
