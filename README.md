@@ -1,6 +1,7 @@
 ### Pokemon-app:
 
-![screenshot](readme-assets/video.gif)
+<!-- ![screenshot](readme-assets/video.gif) -->
+<img src="readme-assets/video.gif" alt="drawing" width="200"/>
 
 
 > Небольшое приложение для iphone. 
