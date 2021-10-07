@@ -8,6 +8,7 @@ export const fonts = () =>
     manropelight: require("../fonts/Manropelight.ttf"),
     pokemonH: require("../fonts/PokemonHollow.ttf"),
     pokemonS: require("../fonts/PokemonSolid.ttf"),
+    DG: require("../fonts/DG.ttf"),
   });
 
 export const mainStyles = StyleSheet.create({
