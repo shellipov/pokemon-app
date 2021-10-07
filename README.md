@@ -1,13 +1,13 @@
 ### Pokemon-app:
-
-<img src="readme-assets/video.gif" alt="screenshot" width="300"/>
-
+<div >
+<img style="margin:0 auto" src="readme-assets/video.gif" alt="screenshot" width="300"/>
+</div>
 
 > Небольшое приложение для iphone. 
 > Нет, это приложение не спасет мир и вряд ли сможет решить какие-то глобальные проблемы. Просто список покемонов и просто игра, которая при должном усердии поможет запомнить имена покемонов, 
 > Используемые технологии: React, React-Native. 
 
-<p style="display:flex;flex-direction:center;">
+<p>
 <img src="readme-assets/1.png" alt="screenshot" width="200"/>
 <img src="readme-assets/2.png" alt="screenshot" width="200"/>
 <img src="readme-assets/3.png" alt="screenshot" width="200"/>
