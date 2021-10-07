@@ -1,2 +1,1 @@
-# phone
-first phone app
+# Pokemon-app
