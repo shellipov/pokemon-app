@@ -10,8 +10,12 @@ import {
   GameBackground,
 } from "../src/StyledComponents";
 import ModalWindow from "../src/ModalWindow";
-import { setStorageStatisticsPlusValue, setMaximumPointsPerGame } from "../utils/statistics";
+import {
+  setStorageStatisticsPlusValue,
+  setMaximumPointsPerGame,
+} from "../utils/statistics";
 import { fadeIn, fadeOut } from "../utils/fade";
+import { sizeUpAnimation, sizeDownAnimation } from "../utils/changeSize";
 
 const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
   const [score, setScore] = useState(0);
@@ -28,6 +32,7 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
   const counterView = useRef(new Animated.Value(0)).current;
   const imageView = useRef(new Animated.Value(0)).current;
   const buttonsView = useRef(new Animated.Value(0)).current;
+  const animationValue = useRef(new Animated.Value(1)).current;
 
   //styled functions
   function clickButton(buttonName) {
@@ -87,6 +92,7 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
       fadeIn(imageView, 500);
       fadeIn(buttonsView, 1000);
       fadeIn(counterView, 1200);
+      sizeUpAnimation(animationValue);
       setCounter(6);
     }
     getPokemon();
@@ -115,8 +121,8 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
   useEffect(() => {
     (async () => {
       setStorageStatisticsPlusValue("totalGamesPlayed");
-    })()
-   return 
+    })();
+    return;
   }, []);
 
   const getAnswer = (answer) => {
@@ -126,17 +132,16 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
       setLives((prev) => prev + 1);
       setScore((prev) => prev + 1);
       setStorageStatisticsPlusValue("allCorrectAnswers");
-      setMaximumPointsPerGame(score+1);
-
+      setMaximumPointsPerGame(score + 1);
     } else {
       setLives((prev) => prev - 1);
       setStorageStatisticsPlusValue("totalWrongAnswers");
-
     }
     fadeOut(imageView);
     fadeOut(buttonsView);
     setTimeout(() => {
       setUserAnswer(null);
+      sizeDownAnimation(animationValue);
       setRound((prev) => prev + 1);
     }, 1500);
   };
@@ -200,7 +205,13 @@ const Game = ({ isBlacktheme, posts, navigation, playClick, playReaction }) => {
             {counter}
           </OrangText>
         </Animated.View>
-        <Animated.View style={{ opacity: imageView, flex: 2 }}>
+        <Animated.View
+          style={{
+            opacity: imageView,
+            transform: [{ scale: animationValue }],
+            flex: 2,
+          }}
+        >
           <StyledImage
             style={{
               height: 200,
