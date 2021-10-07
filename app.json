@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "my-app",
+    "name": "pokemon-test-app",
     "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,7 +17,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "shellipov.pokemon.app"
     },
     "android": {
       "adaptiveIcon": {

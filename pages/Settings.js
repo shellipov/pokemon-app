@@ -6,6 +6,7 @@ import {
   WhiteText,
   OrangText,
   LittleButton,
+  StyledImage,
 } from "../src/StyledComponents";
 import { getStorageStatistics, clearStatistics } from "../utils/statistics";
 
@@ -117,6 +118,15 @@ export default function Settings({ isBlacktheme, setIsBlacktheme }) {
 
         <GrayBackground style={styles.littlePadding}>
           <TouchableOpacity
+            onPress={() => {
+              Linking.openURL("https://pokeapi.co");
+            }}
+          >
+            <WhiteText style={{fontSize: 8}} isBlacktheme={isBlacktheme}>the program is based on</WhiteText>
+            <StyledImage style={{width: 200,height: 50}} source={require('../assets/pokeapi.png')}></StyledImage>
+          </TouchableOpacity>
+          <TouchableOpacity
+          style={{marginTop: 20}}
             onPress={() => {
               Linking.openURL("https://github.com/shellipov");
             }}

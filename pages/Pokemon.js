@@ -76,9 +76,9 @@ const Pokemon = ({ route, isBlacktheme }) => {
               }}
             />
           </Animated.View>
-          <WhiteText>{`weight: ${route.params.weight},   height: ${route.params.height}`}</WhiteText>
+          <WhiteText isBlacktheme={isBlacktheme}>{`weight: ${route.params.weight},   height: ${route.params.height}`}</WhiteText>
 
-          <LittleButton
+          <LittleButton isBlacktheme={isBlacktheme}
             style={{ width: "100%" }}
             onPress={() =>
               setPokemonToStorage({

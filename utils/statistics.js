@@ -40,7 +40,6 @@ export const setMaximumPointsPerGame = async (newValue) => {
   try {
     const jsonKeyValue = await AsyncStorage.getItem('maximumPointsPerGame');
     let keyValue = jsonKeyValue != null ? JSON.parse(jsonKeyValue) : 0;
-    console.log(newValue);
     if(keyValue< newValue)
     await AsyncStorage.setItem('maximumPointsPerGame', JSON.stringify(newValue));
   } catch (e) {
@@ -54,6 +53,7 @@ export const clearStatistics = async () => {
     await AsyncStorage.setItem('allCorrectAnswers', JSON.stringify(0));
     await AsyncStorage.setItem('totalWrongAnswers', JSON.stringify(0));
     await AsyncStorage.setItem('maximumPointsPerGame', JSON.stringify(0));
+    // await AsyncStorage.clear()
   } catch (e) {
     console.log(e);
   }
