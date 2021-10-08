@@ -1,5 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
-import { View, FlatList, ActivityIndicator } from "react-native";
+import {
+  View,
+  FlatList,
+  ActivityIndicator,
+  Platform,
+  ScrollView,
+} from "react-native";
 import CardItem from "../src/CardItem";
 import { Container, LittleButton, OrangText } from "../src/StyledComponents";
 import { LinearGradient } from "expo-linear-gradient";
@@ -61,15 +67,18 @@ export default function PokemonList({
             paddingBottom: 20,
           }}
         >
-          <FlatList
-            contentContainerStyle={{
+
+          {/* NOT WORK ON ANDROIN */}
+          {/* <FlatList
+            contentContainerStyle={ Platform.OS === 'ios'? {
               alignSelf: "flex-start",
               justifyContent: "row",
-            }}
+            } : {}}
             numColumns={60}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
             data={pages}
+            keyExtractor={(pages) => pages}
             renderItem={(pages) => (
               <LittleButton
                 isBlacktheme={isBlacktheme}
@@ -87,8 +96,27 @@ export default function PokemonList({
                 <OrangText style={{ fontSize: 13 }}>{pages.item} </OrangText>
               </LittleButton>
             )}
-            keyExtractor={(post) => post.name}
-          />
+          /> */}
+          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+            {pages.map((item) => (
+              <LittleButton
+                key={item}
+                isBlacktheme={isBlacktheme}
+                active={pageNumber === item}
+                onPress={() => {
+                  setPageNumber(item),
+                    setDetailedPokemons([]),
+                    playClick(),
+                    scrollRef.current?.scrollToOffset({
+                      animated: true,
+                      offset: 0,
+                    });
+                }}
+              >
+                <OrangText style={{ fontSize: 13 }}>{item} </OrangText>
+              </LittleButton>
+            ))}
+          </ScrollView>
         </View>
       </Container>
     );
