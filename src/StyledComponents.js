@@ -18,7 +18,7 @@ export const Button = styled.TouchableOpacity`
   shadow-color: rgba(61, 61, 61, 0.418);
   shadow-opacity: 1;
   shadow-radius: 1px;
-  elevation: 1;
+  elevation: 5;
   border-color: black;
   border-width: 1px;
   shadow-offset: 2px 2px;
@@ -40,7 +40,7 @@ export const LittleButton = styled.TouchableOpacity`
   shadow-color: gray;
   shadow-opacity: 1;
   shadow-radius: 1px;
-  elevation: 1;
+  elevation: 5;
   border-color: black;
   border-width: 1px;
   shadow-offset: 1px 1px;
@@ -55,7 +55,7 @@ export const GrayBackground = styled.View`
   shadow-offset: 2px 2px;
   shadow-opacity: 1;
   shadow-radius: 1px;
-  elevation: 1;
+  elevation: 5;
   border-color: black;
   border-width: 1px;
   align-items: center;
@@ -73,7 +73,7 @@ export const GameBackground = styled(Animated.View)`
   shadow-offset: 2px 2px;
   shadow-opacity: 1;
   shadow-radius: 1px;
-  elevation: 1;
+  elevation: 5;
   border-color: black;
   border-width: 1px;
 `;
@@ -90,7 +90,7 @@ export const OrangeCard = styled.View`
   shadow-offset: 1px 1px;
   shadow-opacity: 1;
   shadow-radius: 1px;
-  elevation: 1;
+  elevation: 5;
   border-color: black;
   border-width: 1px;
   align-items: center;
@@ -143,7 +143,7 @@ export const CloseButton = styled.Pressable`
   shadow-color: rgba(61, 61, 61, 0.418);
   shadow-opacity: 1;
   shadow-radius: 1px;
-  elevation: 1;
+  elevation: 5;
   border-color: black;
   border-width: 1px;
   shadow-offset: 2px 2px;
