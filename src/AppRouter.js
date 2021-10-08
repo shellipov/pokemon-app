@@ -91,7 +91,7 @@ export default function AppRouter({ posts, pages, playClick, playReaction }) {
             )}
           </Stack.Screen>
           <Stack.Screen name="Pokemon" options={screenSettings("Pokemon")}>
-            {(props) => <Pokemon {...props} isBlacktheme={isBlacktheme} />}
+            {(props) => <Pokemon {...props} isBlacktheme={isBlacktheme} playClick={playClick} />}
           </Stack.Screen>
           <Stack.Screen name="Settings" options={screenSettings("Settings")}>
             {() => (
@@ -102,7 +102,7 @@ export default function AppRouter({ posts, pages, playClick, playReaction }) {
             )}
           </Stack.Screen>
           <Stack.Screen name="Favorites" options={screenSettings("Favorites")}>
-            {() => <Favorites isBlacktheme={isBlacktheme} />}
+            {() => <Favorites isBlacktheme={isBlacktheme} playClick={playClick} />}
           </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>

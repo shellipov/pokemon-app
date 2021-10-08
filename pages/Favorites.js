@@ -4,7 +4,7 @@ import { Container, OrangText } from "../src/StyledComponents";
 import FavoriteItem from "../src/FavoriteItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Favorites = ({ isBlacktheme }) => {
+const Favorites = ({ isBlacktheme, playClick }) => {
   const [favoritesList, setFavoritesList] = useState(null);
 
   const getFavoritesList = async () => {
@@ -74,7 +74,7 @@ const Favorites = ({ isBlacktheme }) => {
         data={favoritesList}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
-          <FavoriteItem item={item} index={index} deletePokemom={deletePokemom} />
+          <FavoriteItem item={item} index={index} playClick={playClick} deletePokemom={deletePokemom} />
         )}
       />
       <View style={{ height: 20 }}></View>

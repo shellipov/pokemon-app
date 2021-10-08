@@ -12,7 +12,7 @@ import { fadeIn } from "../utils/fade";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Api from "../api/api";
 
-const Pokemon = ({ route, isBlacktheme }) => {
+const Pokemon = ({ route, isBlacktheme, playClick }) => {
   const [pokemon, setPokemon] = useState(null);
   const image1 = useRef(new Animated.Value(0)).current;
   const image2 = useRef(new Animated.Value(0)).current;
@@ -76,17 +76,21 @@ const Pokemon = ({ route, isBlacktheme }) => {
               }}
             />
           </Animated.View>
-          <WhiteText isBlacktheme={isBlacktheme}>{`weight: ${route.params.weight},   height: ${route.params.height}`}</WhiteText>
+          <WhiteText
+            isBlacktheme={isBlacktheme}
+          >{`weight: ${route.params.weight},   height: ${route.params.height}`}</WhiteText>
 
-          <LittleButton isBlacktheme={isBlacktheme}
+          <LittleButton
+            isBlacktheme={isBlacktheme}
             style={{ width: "100%" }}
-            onPress={() =>
+            onPress={() => {
               setPokemonToStorage({
                 name: route.params.name,
                 img1: pokemon.front_default,
                 img2: pokemon.back_default,
-              })
-            }
+              });
+              playClick();
+            }}
           >
             <OrangText>add to fovarites</OrangText>
           </LittleButton>

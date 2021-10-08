@@ -7,7 +7,7 @@ import {
   StyledImage,
 } from "../src/StyledComponents";
 
-const FavoriteItem = ({ item, deletePokemom, index }) => {
+const FavoriteItem = ({ item, deletePokemom, index , playClick}) => {
   const card = useRef(new Animated.Value(0)).current;
   const image_1 = useRef(new Animated.Value(0)).current;
   const image_2 = useRef(new Animated.Value(0)).current;
@@ -27,7 +27,7 @@ const FavoriteItem = ({ item, deletePokemom, index }) => {
       >
         <OrangText>{item.name}</OrangText>
         <TouchableOpacity
-          onPress={() => deletePokemom(item.id)}
+          onPress={() => {deletePokemom(item.id); playClick()}}
           style={styles.littleButton}
         >
           <OrangText style={styles.littleButtonText}>del</OrangText>
