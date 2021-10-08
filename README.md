@@ -4,8 +4,13 @@
 </div>
 
 > Небольшое приложение для iphone. 
+
+ссылка на приложение ( небходимо установить на телефон программу Expo)
+> exp://exp.host/@shellipov/myFirstApp 
+<img src="readme-assets/appQR.png" alt="screenshot" width="200"/>
+
 > Нет, это приложение не спасет мир и вряд ли сможет решить какие-то глобальные проблемы. Просто список покемонов и просто игра, которая при должном усердии поможет запомнить имена покемонов, 
-> Используемые технологии: React, React-Native. 
+> Используемые технологии: React, React-Native, Expo. 
 
 <p>
 <img src="readme-assets/1.png" alt="screenshot" width="250"/>

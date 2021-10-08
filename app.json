@@ -1,7 +1,9 @@
 {
   "expo": {
     "name": "pokemon-test-app",
-    "slug": "my-app",
+    "slug": "myFirstApp",
+    "privacy": "public",
+    "description": "app to remember all pokenons",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
