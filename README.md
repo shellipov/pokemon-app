@@ -5,7 +5,14 @@
 
 > Небольшое приложение для iphone. 
 
->>чтобы открыть приложение небходимо установить на телефон программу Expo, отсканировать QR код и перейти по ссылке
+>>чтобы открыть приложение небходимо установить на телефон программу Expo
+
+> <https://apps.apple.com/ru/app/expo-go/id982107779> - ios
+
+> <https://play.google.com/store/apps/details?id=host.exp.exponent> - android
+
+
+ После отсканировать QR код или перейти по ссылке
 <img src="readme-assets/appQR.png" alt="screenshot" width="200"/>
 
 > <http://exp.host/@shellipov/myFirstApp>
