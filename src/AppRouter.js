@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import PokemonList from "../pages/PokemonList";
 import Settings from "../pages/Settings";
 import Pokemon from "../pages/Pokemon";
 import Favorites from "../pages/Favorites";
 import Game from "../pages/Game";
-import MainPage from "../pages/MainPage";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Index from "../pages/Index";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function AppRouter({ posts, pages, playClick, playReaction }) {
@@ -57,8 +56,6 @@ export default function AppRouter({ posts, pages, playClick, playReaction }) {
   };
   return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator>
           <Stack.Screen name="MainPage" options={screenSettings("MainPage")}>
             {(props) => (
               <MainPage
@@ -104,8 +101,6 @@ export default function AppRouter({ posts, pages, playClick, playReaction }) {
           <Stack.Screen name="Favorites" options={screenSettings("Favorites")}>
             {() => <Favorites isBlacktheme={isBlacktheme} playClick={playClick} />}
           </Stack.Screen>
-        </Stack.Navigator>
-      </NavigationContainer>
     </>
   );
 }

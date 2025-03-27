@@ -1,45 +1,50 @@
-### Pokemon-app:
-<div >
-<img src="readme-assets/video.gif" alt="screenshot" width="350"/>
-</div>
+# Welcome to your Expo app 👋
 
-> Небольшое приложение для iphone. 
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-Чтобы открыть приложение небходимо установить на телефон программу Expo
+## Get started
 
-> <https://apps.apple.com/ru/app/expo-go/id982107779> - ios
+1. Install dependencies
 
-> <https://play.google.com/store/apps/details?id=host.exp.exponent> - android
+   ```bash
+   npm install
+   ```
 
+2. Start the app
 
- После отсканировать QR код или перейти по ссылке
-<img src="readme-assets/appQR.png" alt="screenshot" width="200"/>
+   ```bash
+    npx expo start
+   ```
 
-> <http://exp.host/@shellipov/myFirstApp>
+In the output, you'll find options to open the app in a
 
-> Нет, это приложение не спасет мир и вряд ли сможет решить какие-то глобальные проблемы. Просто список покемонов и просто игра, которая при должном усердии поможет запомнить имена покемонов, 
-> Используемые технологии: React, React-Native, Expo. 
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-<p>
-<img src="readme-assets/1.png" alt="screenshot" width="250"/>
-<img src="readme-assets/2.png" alt="screenshot" width="250"/>
-<img src="readme-assets/3.png" alt="screenshot" width="250"/>
-</p>
-<p>
-<img src="readme-assets/4.png" alt="screenshot" width="250"/>
-<img src="readme-assets/5.png" alt="screenshot" width="250"/>
-<img src="readme-assets/6.png" alt="screenshot" width="250"/>
-</p>
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
+## Get a fresh project
 
-Для запуска программы программы потребуется установленная программа x-code с настроенным эмулятором iphone. После:
+When you're ready, run:
 
-> Скачать репозиторий.
+```bash
+npm run reset-project
+```
 
-> Перейти в папку с репозиторием
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-> В консоли ввести npm i или yarn для установки всех необходимых пакетов
+## Learn more
 
-> В консоли ввести npm start или yarn start для запуска приложения
+To learn more about developing your project with Expo, look at the following resources:
 
-> В консоли нажать кнопку i для запуска приложения в эмуляторе.
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+
+## Join the community
+
+Join our community of developers creating universal apps.
+
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.

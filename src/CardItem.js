@@ -1,23 +1,23 @@
-import React, { useRef } from "react";
-import { fadeIn } from "../utils/fade";
-import { StyledImage, OrangeCard, BlackText } from "../src/StyledComponents";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Animated,
-} from "react-native";
+import React, {useRef} from "react";
+import {fadeIn} from "../utils/fade";
+import {BlackText, OrangeCard, StyledImage} from "../src/StyledComponents";
+import {Animated, StyleSheet, TouchableOpacity, View,} from "react-native";
+import {useRouter} from "expo-router";
 
-const CardItem = ({ item, navigation, isBlacktheme, playClick }) => {
+const CardItem = ({ item, navigation, isBlacktheme }) => {
   const card = useRef(new Animated.Value(0)).current;
+    const router = useRouter();
 
-  return (
+
+    return (
     <Animated.View style={{ opacity: card, flex: 1, alignItems: "center" }}>
       <TouchableOpacity
         style={{ width: "100%" }}
         onPress={() => {
-          navigation.navigate("Pokemon", item.item), playClick();
+            router.push({
+                pathname: '/pokemon',
+                params: { url: item.item.url, item: JSON.stringify(item.item)},
+            })
         }}
       >
         <OrangeCard>
@@ -34,8 +34,7 @@ const CardItem = ({ item, navigation, isBlacktheme, playClick }) => {
                 height: 80,
                 width: 100,
               }}
-              source={{ uri: item.item.front }}
-            ></StyledImage>
+              source={{ uri: item.item.front }} />
           </View>
         </OrangeCard>
       </TouchableOpacity>
