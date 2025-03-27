@@ -79,6 +79,7 @@ const Game = ({ isBlacktheme, navigation }) => {
       const pokemon = randonPokemon();
       const response = await Api.getDetailedList([pokemon]);
       const detailedPokemon = response?.[0];
+      console.log('>>> true - ', detailedPokemon?.name)
       setTruePokemon(detailedPokemon);
       createButtons(detailedPokemon.name);
       fadeIn(gameWindow, 100);

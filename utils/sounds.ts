@@ -2,6 +2,7 @@ import { Audio } from 'expo-av';
 
 export default class SoundController {
     public music: unknown = null
+    // @ts-ignore
     static instance = SoundController.instance ?? new SoundController()
 
     public async setIOSSettings () {

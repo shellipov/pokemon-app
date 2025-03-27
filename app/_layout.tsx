@@ -9,6 +9,8 @@ import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import {Button} from "react-native";
 import SoundController from "@/utils/sounds.ts";
+import {DebugVars} from "@/src/debug";
+import {reactotronInit} from "@/utils/reactotron";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -24,6 +26,9 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
+    if (DebugVars?.enableReactotron) {
+      reactotronInit();
+    }
     setIOSSettings().then()
     if (loaded) {
       SplashScreen.hideAsync();
@@ -36,6 +41,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      {/*<DebugPanel debugButtons />*/}
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
