@@ -45,7 +45,7 @@ export default function PokemonList({
 
   if (detailedPokemons) {
     return (
-      <Container isBlacktheme={isBlacktheme} style={{ position: "relative" }}>
+      <Container  style={{ position: "relative" }}>
         <LinearGradient
           colors={[
             `${isBlacktheme ? "rgb(24, 24, 24)" : "white"}`,

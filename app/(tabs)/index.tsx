@@ -3,7 +3,7 @@ import { Animated, StyleSheet } from "react-native";
 import { Container, Button, OrangText } from "@/src/StyledComponents";
 import { fadeIn } from '@/utils/fade'
 import { useRouter } from 'expo-router';
-import SoundController from "@/utils/sounds.ts.ts";
+import SoundController from "@/utils/sounds.ts";
 
 
 const Index = () => {

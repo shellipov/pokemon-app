@@ -4,6 +4,13 @@ export default class SoundController {
     public music: unknown = null
     static instance = SoundController.instance ?? new SoundController()
 
+    public async setIOSSettings () {
+        await Audio.setAudioModeAsync({
+            playsInSilentModeIOS: true,
+            allowsRecordingIOS: false,
+            staysActiveInBackground: false,
+        }); }
+
     public async playClick () {
         const { sound } = await Audio.Sound.createAsync(
             require('../assets/sounds/click.mp3')
