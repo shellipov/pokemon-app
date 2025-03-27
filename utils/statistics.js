@@ -28,7 +28,7 @@ export const getStorageStatistics = async (setValue) => {
 export const setStorageStatisticsPlusValue = async (key) => {
   try {
     const jsonKeyValue = await AsyncStorage.getItem(key);
-    let keyValue = jsonKeyValue != null ? JSON.parse(jsonKeyValue) : 0;
+    let keyValue = !!jsonKeyValue ? JSON.parse(jsonKeyValue) : 0;
     keyValue++;
     await AsyncStorage.setItem(key, JSON.stringify(keyValue++));
   } catch (e) {

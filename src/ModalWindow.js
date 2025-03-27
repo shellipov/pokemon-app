@@ -7,15 +7,16 @@ import {
   ModaView,
   CloseButton,
 } from "../src/StyledComponents";
+import {useRouter} from "expo-router";
 
 const ModalWindow = ({
   modalVisible,
   setModalVisible,
   score,
   counter,
-  navigation,
-  playClick,
 }) => {
+  const router = useRouter();
+
   return (
     <Modal
       animationType="fade"
@@ -33,16 +34,19 @@ const ModalWindow = ({
             {counter === 0 ? "time is up" : "no more lifes"}
           </BlackText>
           <BlackText style={{ fontSize: 13, marginTop: 9 }}>
-            You score: {score}
+            {`You score: ${score}`}
           </BlackText>
           <CloseButton
             onPress={() => {
               setModalVisible(!modalVisible);
-              navigation.navigate("MainPage");
-              playClick();
+              router.dismissAll
+              router.navigate("/");
+              // playClick();
             }}
           >
-            <WhiteText>Close</WhiteText>
+            <WhiteText>
+              {'Close'}
+            </WhiteText>
           </CloseButton>
         </ModaView>
       </CenteredBackView>

@@ -65,7 +65,7 @@ export const GameBackground = styled(Animated.View)`
   width: 100%;
   flex: 1;
   flex-direction: column;
-  justify-content: center
+  justify-content: center;
   align-items: center;
   background-color: gray;
   border-radius: 20px;
@@ -152,7 +152,7 @@ export const CloseButton = styled.Pressable`
 //Fonts
 
 export const OrangText = styled.Text`
-  font-family: "comix";
+  font-family: "Comix";
   font-size: 15px;
   color: orange;
   text-shadow-color: ${(props) =>
@@ -164,7 +164,7 @@ export const OrangText = styled.Text`
 `;
 
 export const WhiteText = styled.Text`
-  font-family: "comix";
+  font-family: "Comix";
   font-size: 10px;
   color: ${(props) => (props.isBlacktheme ? "black" : "white")};
   text-shadow-color: ${(props) =>
@@ -175,7 +175,7 @@ export const WhiteText = styled.Text`
 `;
 
 export const BlackText = styled.Text`
-  font-family: "comix";
+  font-family: "Comix";
   font-size: 10px;
   color: black;
   text-align: center;

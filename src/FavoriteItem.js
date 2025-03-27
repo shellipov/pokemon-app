@@ -1,11 +1,7 @@
-import React, { useRef, useEffect } from "react";
-import { fadeIn } from "../utils/fade";
-import { Animated, View, TouchableOpacity, StyleSheet } from "react-native";
-import {
-  GrayBackground,
-  OrangText,
-  StyledImage,
-} from "../src/StyledComponents";
+import React, {useEffect, useRef} from "react";
+import {fadeIn} from "../utils/fade";
+import {Animated, StyleSheet, TouchableOpacity, View} from "react-native";
+import {GrayBackground, OrangText, StyledImage,} from "../src/StyledComponents";
 
 const FavoriteItem = ({ item, deletePokemom, index , playClick}) => {
   const card = useRef(new Animated.Value(0)).current;
