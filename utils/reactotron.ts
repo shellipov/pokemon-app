@@ -128,45 +128,45 @@ function patchConsoleLog() {
   handler: DebugCommandHandler;
 }
 
-interface ICustomCommand {
-  debugCommand: IDebugCommand;
-  uid: string;
-  remover: () => void;
-}
+// interface ICustomCommand {
+//   debugCommand: IDebugCommand;
+//   uid: string;
+//   remover: () => void;
+// }
 
-let customCommands: ICustomCommand[] = [];
+// let customCommands: ICustomCommand[] = [];
 
-function debugCommandsMap(debugCommands: IDebugCommand[]) {
-  const r = tron!;
-  // remove deleted
-  const removedCommands = customCommands.filter(cc => debugCommands.indexOf(cc.debugCommand) === -1);
-  removedCommands.forEach(cc => cc.remover());
+// function debugCommandsMap(debugCommands: IDebugCommand[]) {
+//   const r = tron!;
+//   // remove deleted
+//   const removedCommands = customCommands.filter(cc => debugCommands.indexOf(cc.debugCommand) === -1);
+//   removedCommands.forEach(cc => cc.remover());
+//
+//   // add new
+//   customCommands = customCommands.filter(cc => debugCommands.indexOf(cc.debugCommand) !== -1);
+//   debugCommands.forEach(dc => {
+//     const isExists = customCommands.findIndex(cc => cc.debugCommand === dc) !== -1;
+//     const uid = debugCommandUidAbbrev(dc);
+//     const description = `command (cmd+.): ${uid}`;
+//     if (!isExists) {
+//       const remover = r.onCustomCommand({
+//         command: uid, description, title: dc.title, handler: () => {
+//           console.log(`🐞 [DebugCommand] Execute: ${dc.title}`); // 🐞 ✅
+//           dc.handler();
+//         },
+//       });
+//
+//       customCommands.push({
+//         debugCommand: dc,
+//         uid,
+//         remover,
+//       });
+//     }
+//
+//     console.log(`🐞 [DebugCommand] ${description} → ${dc.title}`); // 🐞 ✅
+//   });
+// }
 
-  // add new
-  customCommands = customCommands.filter(cc => debugCommands.indexOf(cc.debugCommand) !== -1);
-  debugCommands.forEach(dc => {
-    const isExists = customCommands.findIndex(cc => cc.debugCommand === dc) !== -1;
-    const uid = debugCommandUidAbbrev(dc);
-    const description = `command (cmd+.): ${uid}`;
-    if (!isExists) {
-      const remover = r.onCustomCommand({
-        command: uid, description, title: dc.title, handler: () => {
-          console.log(`🐞 [DebugCommand] Execute: ${dc.title}`); // 🐞 ✅
-          dc.handler();
-        },
-      });
-
-      customCommands.push({
-        debugCommand: dc,
-        uid,
-        remover,
-      });
-    }
-
-    console.log(`🐞 [DebugCommand] ${description} → ${dc.title}`); // 🐞 ✅
-  });
-}
-
-function debugCommandUidAbbrev(dc: IDebugCommand): string {
-  return dc.title.trim().split(' ').map(word => word[0]).join('').toLowerCase();
-}
+// function debugCommandUidAbbrev(dc: IDebugCommand): string {
+//   return dc.title.trim().split(' ').map(word => word[0]).join('').toLowerCase();
+// }
