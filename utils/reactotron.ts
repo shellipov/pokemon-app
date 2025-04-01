@@ -29,7 +29,6 @@ export function reactotronInit() {
     errors: {
       veto: (stackFrame: any) => false,
     },
-    // overlay: true TODO: need?
   })
     .setAsyncStorageHandler(AsyncStorage)
     .connect()

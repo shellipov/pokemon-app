@@ -49,13 +49,13 @@ export default class Api {
     } catch (e) {}
   }
 
-  static async getPokemon(name) {
+  static async getPokemon(name: string) {
     try {
       const resp = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
       return resp.data;
     } catch (e) {}
   }
-  static async getURL(url) {
+  static async getURL(url: string) {
     try {
       const resp = await axios.get(`${url}`);
       return resp.data;

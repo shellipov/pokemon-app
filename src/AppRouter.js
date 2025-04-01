@@ -1,9 +1,9 @@
 import React from "react";
-import Settings from "../pages/Settings";
-import Favorites from "../pages/Favorites";
-import Game from "../pages/Game";
-import Pokemon from "../pages/Pokemon";
-import PokemonList from "../pages/PokemonList";
+import {ScreenSettings} from "../screens/ScreenSettings";
+import Favorites from "../screens/Favorites";
+import Game from "../screens/Game";
+import Pokemon from "../screens/Pokemon";
+import PokemonList from "../screens/PokemonList";
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {Tabs} from "./Tabs";
@@ -28,7 +28,7 @@ export default function AppRouter() {
         <NavigationContainer>
             <Stack.Navigator>
                 <Stack.Screen name="MainPage" options={{ headerShown: false }} component={Tabs}  />
-                <Stack.Screen name="Settings" options={{ headerShown: false }} component={Settings} />
+                <Stack.Screen name="Settings" options={{ headerShown: false }} component={ScreenSettings} />
                 <Stack.Screen name="Pokemon" options={screenSettings("Pokemon")} component={Pokemon} />
                 <Stack.Screen name="PokemonList" options={screenSettings("PokemonList")} component={PokemonList} />
                 <Stack.Screen name="Favorites" options={screenSettings("Favorites")} component={Favorites} />

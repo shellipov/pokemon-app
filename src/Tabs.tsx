@@ -1,17 +1,19 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Settings from "@/pages/Settings";
-import MainPage from "@/pages/MainPage";
-import Ionicons from 'react-native-vector-icons/Ionicons';
+import {ScreenSettings} from "@/screens/ScreenSettings";
+import { ScreenMainPage } from "@/screens/ScreenMainPage";
+// @ts-ignore
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 
 const Tab = createBottomTabNavigator();
 
 export function Tabs() {
+
     return (
     <Tab.Navigator>
     <Tab.Screen
         name="MainPage"
-        component={MainPage}
+        component={ScreenMainPage}
         options={
         { headerShown: false,
           tabBarIcon: ({ color, size }) => (
@@ -19,7 +21,7 @@ export function Tabs() {
         )}} />
     <Tab.Screen
         name="Settings"
-        component={Settings}
+        component={ScreenSettings}
         options={{ headerShown: false,
             tabBarIcon: ({ color, size }) => (
                 <Ionicons name="settings" size={size} color={color} />

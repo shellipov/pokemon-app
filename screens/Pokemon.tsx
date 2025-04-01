@@ -6,21 +6,17 @@ import {
   OrangText,
   WhiteText,
   LittleButton,
-} from "../src/StyledComponents";
+} from "@/src/StyledComponents";
 import {ActivityIndicator, Alert, Animated, View, Text} from "react-native";
-import { fadeIn } from "../utils/fade";
+import { fadeIn } from "@/utils/fade";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Api from "../api/api";
-import {useLocalSearchParams} from "expo-router";
 
-const Pokemon = ({ route, isBlacktheme, playClick, props }) => {
+const Pokemon = ({ route }) => {
   const [pokemon, setPokemon] = useState(null);
   const image1 = useRef(new Animated.Value(0)).current;
   const image2 = useRef(new Animated.Value(0)).current;
-  const params : { url: string , item: string } = useLocalSearchParams() ;
-  const { url } = params;
-  const item = JSON.parse(params?.item)
-
+  const { url , item } = route.params;
 
   const setPokemonToStorage = async (value) => {
     try {
@@ -51,7 +47,7 @@ const Pokemon = ({ route, isBlacktheme, playClick, props }) => {
 
   if (pokemon) {
     return (
-      <Container isBlacktheme={isBlacktheme} style={{ padding: 24 }}>
+      <Container style={{ padding: 24 }}>
         <GrayBackground
           style={{
             width: "100%",
@@ -83,11 +79,9 @@ const Pokemon = ({ route, isBlacktheme, playClick, props }) => {
             />
           </Animated.View>
           <WhiteText
-            isBlacktheme={isBlacktheme}
           >{`weight: ${item.weight},   height: ${item.heyght}`}</WhiteText>
 
           <LittleButton
-            isBlacktheme={isBlacktheme}
             style={{ width: "100%" }}
             onPress={() => {
               setPokemonToStorage({
@@ -106,17 +100,11 @@ const Pokemon = ({ route, isBlacktheme, playClick, props }) => {
   } else {
     return (
       <>
-        <Container isBlacktheme={isBlacktheme} style={{ padding: 24 }}>
+        <Container style={{ padding: 24 }}>
           <View>
             <OrangText>
-              {route?.params?.url || 'ниче нет'}
+              {url || 'ниче нет'}
             </OrangText>
-            <OrangText>
-              {`${JSON.stringify(Object.keys(params.url))}`}
-            </OrangText>
-            <Text>
-              {`${JSON.stringify(Object.keys(params.url))}`}
-            </Text>
           </View>
           <ActivityIndicator size="small" />
         </Container>

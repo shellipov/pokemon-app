@@ -45,7 +45,7 @@ export default [
                 'error',
                 {
                     'default': [
-                        // MainPage signature
+                        // ScreenMainPageComponent signature
                         'signature',
                         // All static fields and members
                         'public-static-field',

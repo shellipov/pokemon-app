@@ -6,7 +6,7 @@ import {DebugVars} from "./src/debug";
 import {reactotronInit} from "./utils/reactotron";
 import * as SplashScreen from "expo-splash-screen/build/index";
 import {DarkTheme, DefaultTheme, ThemeProvider} from "@react-navigation/native";
-import SoundController from "./utils/sounds";
+import {SoundController} from "./utils/sounds";
 import {useColorScheme} from "react-native";
 
 export default function App() {

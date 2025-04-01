@@ -6,11 +6,11 @@ import {setMaximumPointsPerGame, setStorageStatisticsPlusValue,} from "@/utils/s
 import {fadeIn, fadeOut} from "@/utils/fade";
 import {sizeDownAnimation, sizeUpAnimation} from "@/utils/changeSize";
 import Api from "@/api/api";
-import SoundController from "@/utils/sounds.ts";
+import {ReactionEnum, SoundController } from "@/utils/sounds";
 
 interface IPokemon {     id?: string;     name?: string;     front?: string;     back?: string;     weight?: string;     height?: string;     url?: string; }
 
-const Game = ({ isBlacktheme, navigation }) => {
+const Game = () => {
   const [posts, setPosts] = useState<{}>();
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(2);
@@ -33,12 +33,12 @@ const Game = ({ isBlacktheme, navigation }) => {
   //styled functions
   function clickButton(buttonName: string) {
     getAnswer(buttonName);
-    playClick();
+    playClick().then();
     if (buttonName === truePokemon?.name) {
-      playReaction("victory");
+      playReaction(ReactionEnum.victory).then();
     }
     if (buttonName !== truePokemon.name) {
-      playReaction("losing");
+      playReaction(ReactionEnum.losing).then();
     }
   }
 
@@ -49,7 +49,7 @@ const Game = ({ isBlacktheme, navigation }) => {
     ];
   }
 
-  function randonPokemon() {
+  function randomPokemon() {
     const letters = Object.keys(posts);
     const oneLetter = letters[Math.floor(Math.random() * letters.length)];
     const pokemonlist = posts[oneLetter];
@@ -59,7 +59,7 @@ const Game = ({ isBlacktheme, navigation }) => {
   function createButtons(correctAnswer) {
     const buttonArray = [];
     for (let i = 0; i < 4; i++) {
-      buttonArray.push({ name: randonPokemon().name, id: i.toString() });
+      buttonArray.push({ name: randomPokemon().name, id: i.toString() });
     }
     const indexCorrectAnswer = Math.floor(Math.random() * 4);
     buttonArray[indexCorrectAnswer].name = correctAnswer;
@@ -69,6 +69,7 @@ const Game = ({ isBlacktheme, navigation }) => {
   useEffect(() => {
     async function fetchMyAPI() {
       let data = await Api.newGetPost();
+      console.log(`>>>> data`, data)
       setPosts(data);
     }
     fetchMyAPI();
@@ -76,7 +77,7 @@ const Game = ({ isBlacktheme, navigation }) => {
 
   useEffect(() => {
     async function getPokemon() {
-      const pokemon = randonPokemon();
+      const pokemon = randomPokemon();
       const response = await Api.getDetailedList([pokemon]);
       const detailedPokemon = response?.[0];
       console.log('>>> true - ', detailedPokemon?.name)
@@ -154,7 +155,6 @@ const Game = ({ isBlacktheme, navigation }) => {
                     flexDirection: "column-reverse",
                   }}>
                 <LittleButton
-                    isBlacktheme={isBlacktheme}
                     disabled={!!userAnswer}
                     style={buttonStyles(button.name)}
                     onPress={() => {
@@ -207,7 +207,6 @@ const Game = ({ isBlacktheme, navigation }) => {
             </View>
           </View>
           <WhiteText
-            isBlacktheme={isBlacktheme}
             style={{
               marginTop: 30,
               fontSize: 15,

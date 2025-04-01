@@ -8,7 +8,7 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import {Button} from "react-native";
-import SoundController from "@/utils/sounds.ts";
+import {SoundController} from "@/utils/sounds";
 import {DebugVars} from "@/src/debug";
 import {reactotronInit} from "@/utils/reactotron";
 

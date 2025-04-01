@@ -1,9 +1,24 @@
-import { Audio } from 'expo-av';
+import {Audio, AVPlaybackSource} from 'expo-av';
 
-export default class SoundController {
-    public music: unknown = null
+export enum ReactionEnum {
+    victory= 'victory',
+    losing= 'losing',
+    gameOver= 'gameOver',
+    startGame= 'startGame',
+    stopGame= 'stopGame',
+}
+
+const soundBank : { [key in ReactionEnum]?: AVPlaybackSource} = {
+    [ReactionEnum.victory]: require('../assets/sounds/correctly.mp3'),
+    [ReactionEnum.losing]: require('../assets/sounds/wrong.mp3'),
+    [ReactionEnum.gameOver]: require('../assets/sounds/gameOver.mp3'),
+    [ReactionEnum.startGame]: require('../assets/sounds/game.mp3'),
+}
+
+export class SoundController {
     // @ts-ignore
     static instance = SoundController.instance ?? new SoundController()
+    public music:  Audio.Sound | undefined  = undefined
 
     public async setIOSSettings () {
         await Audio.setAudioModeAsync({
@@ -18,31 +33,19 @@ export default class SoundController {
         );
         await sound.playAsync(); }
 
-    public async  playReaction(reaction: string) {
-        if( reaction === 'victory'){
-            const { sound } = await Audio.Sound.createAsync(
-                require('../assets/sounds/victory.mp3')
-            );
-            await sound.playAsync(); }
-        if( reaction === 'losing'){
-            const { sound } = await Audio.Sound.createAsync(
-                require('../assets/sounds/losing.mp3')
-            );
-            await sound.playAsync(); }
-        if( reaction === 'gameOver'){
-            const { sound } = await Audio.Sound.createAsync(
-                require('../assets/sounds/gameOver.mp3')
-            );
-            await sound.playAsync(); }
-        if( reaction === 'startGame'){
-            const { sound } = await Audio.Sound.createAsync(
-                require('../assets/sounds/game.mp3')
-            );
-            this.music = sound
-            await this.music.playAsync(); }
-        if( reaction === 'stopGame'){
 
-            await this.music.stopAsync(); }
+    public async  playReaction(reaction: ReactionEnum) {
+        const path = soundBank[reaction]
+
+        if (reaction !== ReactionEnum.stopGame && !!path) {
+            const { sound } = await Audio.Sound.createAsync(path)
+            this.music = sound
+            await this.music?.playAsync()
+        }
+
+        if (reaction === ReactionEnum.stopGame && !!this.music) {
+            await this.music?.stopAsync();
+        }
     }
 }
 

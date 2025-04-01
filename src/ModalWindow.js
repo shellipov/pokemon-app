@@ -40,7 +40,7 @@ const ModalWindow = ({
             onPress={() => {
               setModalVisible(!modalVisible);
               navigation.popToTop()
-              navigation.navigate("MainPage");
+              navigation.navigate("ScreenMainPageComponent");
             }}
           >
             <WhiteText>

@@ -1,6 +1,6 @@
 import React, {useRef} from "react";
-import {fadeIn} from "../utils/fade";
-import {BlackText, OrangeCard, StyledImage} from "../src/StyledComponents";
+import {fadeIn} from "@/utils/fade";
+import {BlackText, OrangeCard, StyledImage} from "@/src/StyledComponents";
 import {Animated, StyleSheet, TouchableOpacity, View,} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 
@@ -13,18 +13,15 @@ const CardItem = ({ item }) => {
     <Animated.View style={{ opacity: card, flex: 1, alignItems: "center" }}>
       <TouchableOpacity
         style={{ width: "100%" }}
-        onPress={() => {
-            navigation.navigate('Pokemon',{ url: item.item.url, item: item.item},
-            )
-        }}
+        onPress={() => {navigation.navigate('Pokemon',{ url: item.item.url, item: item.item})}}
       >
         <OrangeCard>
-          <View style={styles.textBlock}>
+          <View style={styles.buttonBlock}>
             <BlackText numberOfLines={1}>
               {item.item.name}
             </BlackText>
           </View>
-          <View style={styles.textBlock}>
+          <View style={styles.buttonBlock}>
             <StyledImage
               onLoad={() => fadeIn(card)}
               onError={() => fadeIn(card)}
