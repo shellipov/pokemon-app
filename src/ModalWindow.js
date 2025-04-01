@@ -6,8 +6,8 @@ import {
   CenteredBackView,
   ModaView,
   CloseButton,
-} from "../src/StyledComponents";
-import {useRouter} from "expo-router";
+} from "@/src/StyledComponents";
+import {useNavigation} from "@react-navigation/native";
 
 const ModalWindow = ({
   modalVisible,
@@ -15,7 +15,7 @@ const ModalWindow = ({
   score,
   counter,
 }) => {
-  const router = useRouter();
+  const navigation = useNavigation();
 
   return (
     <Modal
@@ -39,9 +39,8 @@ const ModalWindow = ({
           <CloseButton
             onPress={() => {
               setModalVisible(!modalVisible);
-              router.dismissAll
-              router.navigate("/");
-              // playClick();
+              navigation.popToTop()
+              navigation.navigate("MainPage");
             }}
           >
             <WhiteText>

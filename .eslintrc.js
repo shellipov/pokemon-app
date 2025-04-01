@@ -56,7 +56,7 @@ module.exports = {
       'error',
       {
         'default': [
-          // Index signature
+          // MainPage signature
           'signature',
           // All static fields and members
           'public-static-field',
