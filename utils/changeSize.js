@@ -1,4 +1,4 @@
-import { Animated } from "react-native";
+import { Animated } from 'react-native';
 
 
 export function sizeUpAnimation (value){
@@ -6,7 +6,7 @@ export function sizeUpAnimation (value){
     toValue: 1.4,
     duration: 7000,
     useNativeDriver: true,
-  }).start()
+  }).start();
 }
 
 export function sizeDownAnimation (value){
@@ -14,5 +14,5 @@ export function sizeDownAnimation (value){
     toValue: 1,
     duration: 1,
     useNativeDriver: true,
-  }).start()
+  }).start();
 }

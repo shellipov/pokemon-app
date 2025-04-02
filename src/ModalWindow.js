@@ -1,13 +1,13 @@
-import React from "react";
-import { Modal, Alert } from "react-native";
+import React from 'react';
+import { Modal, Alert } from 'react-native';
 import {
   BlackText,
   WhiteText,
   CenteredBackView,
   ModaView,
   CloseButton,
-} from "@/src/StyledComponents";
-import {useNavigation} from "@react-navigation/native";
+} from '@/src/StyledComponents';
+import {useNavigation} from '@react-navigation/native';
 
 const ModalWindow = ({
   modalVisible,
@@ -23,7 +23,7 @@ const ModalWindow = ({
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
+        Alert.alert('Modal has been closed.');
         setModalVisible(!modalVisible);
       }}
     >
@@ -31,7 +31,7 @@ const ModalWindow = ({
         <ModaView>
           <BlackText style={{ fontSize: 25 }}>Game Over</BlackText>
           <BlackText style={{ fontSize: 13, marginTop: 30 }}>
-            {counter === 0 ? "time is up" : "no more lifes"}
+            {counter === 0 ? 'time is up' : 'no more lifes'}
           </BlackText>
           <BlackText style={{ fontSize: 13, marginTop: 9 }}>
             {`You score: ${score}`}
@@ -39,8 +39,8 @@ const ModalWindow = ({
           <CloseButton
             onPress={() => {
               setModalVisible(!modalVisible);
-              navigation.popToTop()
-              navigation.navigate("ScreenMainPageComponent");
+              navigation.popToTop();
+              navigation.navigate('ScreenMainPageComponent');
             }}
           >
             <WhiteText>

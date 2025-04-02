@@ -1,4 +1,4 @@
-import { Animated } from "react-native";
+import { Animated } from 'react-native';
 
 interface IFadeInFadeOutProps {
   items : Animated.Value[],
@@ -29,20 +29,20 @@ export  const fadeOut = (element:  Animated.Value, duration = 1500) => {
 
 export  const fadeInArray = ({items , duration = 50}: IFadeInFadeOutProps) => {
   items.forEach((item, index) => {
-    fadeIn(item, ((index + 1) * duration))
-  })
+    fadeIn(item, ((index + 1) * duration));
+  });
 };
 
 export  const fadeOutArray = ({items , duration = 50}: IFadeInFadeOutProps) => {
   items.forEach((item, index) => {
-    fadeOut(item, ((index + 1) * duration))
-  })
+    fadeOut(item, ((index + 1) * duration));
+  });
 };
 
 export  const fadeInFadeOutUtil = ({items , duration, isActive }: IFadeInFadeOutArrayProps) => {
   if (isActive) {
-    fadeInArray({items, duration})
+    fadeInArray({items, duration});
   } else {
-    fadeOutArray({items, duration})
+    fadeOutArray({items, duration});
   }
 };

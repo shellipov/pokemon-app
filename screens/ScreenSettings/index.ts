@@ -1,1 +1,1 @@
-export * from './ScreenSettings.component'
+export * from './ScreenSettings.component';

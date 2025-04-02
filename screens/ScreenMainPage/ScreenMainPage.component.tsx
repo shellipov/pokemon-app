@@ -1,15 +1,16 @@
-import React, {useEffect, useRef} from "react";
-import {Animated, StyleSheet} from "react-native";
-import {Button, Container, OrangText} from "@/src/StyledComponents";
-import {fadeInFadeOutUtil} from '@/utils/fade'
-import {useIsFocused, useNavigation} from '@react-navigation/native';
-import {SoundController} from "@/utils/sounds";
-import {useRefAnimated} from "@/hooks/useRefAnimated";
+import React, {useEffect} from 'react';
+import {Animated, StyleSheet} from 'react-native';
+import {Button, Container, OrangText} from '@/src/StyledComponents';
+import {fadeInFadeOutUtil} from '@/utils/fade';
+import {useIsFocused} from '@react-navigation/native';
+import {SoundController} from '@/utils/sounds';
+import {useRefAnimated} from '@/hooks/useRefAnimated';
+import {Routes} from '@/src/AppRouter';
+import {useNavigationHook} from '@/hooks/useNavigation';
 
-
-export const ScreenMainPage = (props: unknown) => {
-  const navigation =  useNavigation()
-  const click = SoundController.instance.playClick
+export const ScreenMainPage = () => {
+  const navigation =  useNavigationHook();
+  const click = SoundController.instance.playClick;
   const isFocused = useIsFocused();
 
   const gameButton = useRefAnimated();
@@ -17,8 +18,8 @@ export const ScreenMainPage = (props: unknown) => {
   const favoritesButton = useRefAnimated();
 
   useEffect(() => {
-      const buttons = [gameButton, pokemonListButton, favoritesButton]
-      fadeInFadeOutUtil({items: buttons, isActive: isFocused})
+    const buttons = [gameButton, pokemonListButton, favoritesButton];
+    fadeInFadeOutUtil({items: buttons, isActive: isFocused});
   }, [isFocused]);
 
   return (
@@ -26,12 +27,9 @@ export const ScreenMainPage = (props: unknown) => {
       <Animated.View style={[{ opacity: gameButton }, styles.buttonBlock]}>
         <Button
           onPress={() => {
-              // @ts-ignore
-              navigation.navigate("Game");
-              click()
-
-          }}
-        >
+            navigation.navigate(Routes.Game);
+            click().then();
+          }}>
           <OrangText>{'Game'}</OrangText>
         </Button>
       </Animated.View>
@@ -39,11 +37,9 @@ export const ScreenMainPage = (props: unknown) => {
       <Animated.View style={[{ opacity: pokemonListButton}, styles.buttonBlock]}>
         <Button
           onPress={() => {
-              // @ts-ignore
-              navigation.navigate("PokemonList");
-              click()
-          }}
-        >
+            navigation.navigate(Routes.PokemonList);
+            click().then();
+          }}>
           <OrangText>{'Pokemons'}</OrangText>
         </Button>
       </Animated.View>
@@ -51,12 +47,11 @@ export const ScreenMainPage = (props: unknown) => {
       <Animated.View style={[{ opacity: favoritesButton }, styles.buttonBlock]}>
         <Button
           onPress={() => {
-              // @ts-ignore
-              navigation.navigate("Favorites");
-              click()
+            navigation.navigate(Routes.Favorites);
+            click().then();
           }}>
           <OrangText>
-              {'Favorites'}
+            {'Favorites'}
           </OrangText>
         </Button>
       </Animated.View>
@@ -67,7 +62,7 @@ export const ScreenMainPage = (props: unknown) => {
 
 const styles = StyleSheet.create({
   buttonBlock: {
-    width: "100%",
-    alignItems: "center",
+    width: '100%',
+    alignItems: 'center',
   },
 });

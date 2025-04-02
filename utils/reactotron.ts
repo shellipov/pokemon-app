@@ -7,7 +7,7 @@ import reactotron from 'reactotron-react-native';
 // import ReactotronFlipper from 'reactotron-react-native/dist/flipper';
 // import { name as appName } from '../../app.json';
 
- const reactotronHost = process.env.REACTOTRON_HOST || 'localhost';
+const reactotronHost = process.env.REACTOTRON_HOST || 'localhost';
 
 type Reactotron = typeof reactotron;
 let tron: Reactotron | undefined;
