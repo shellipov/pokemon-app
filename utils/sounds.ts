@@ -34,7 +34,7 @@ export class SoundController {
     await sound.playAsync(); }
 
 
-  public async  playReaction(reaction: ReactionEnum) {
+  public async  playReaction (reaction: ReactionEnum) {
     const path = soundBank[reaction];
 
     if (reaction !== ReactionEnum.stopGame && !!path) {

@@ -52,12 +52,18 @@ export default tseslint.config(
       'indent': ['error', 2, { SwitchCase: 1 }],
       'quotes': ['error', 'single'],
       'semi': ['error', 'always'],
+      'comma-spacing': ['error', { 'before': false, 'after': true }],
+      'space-before-function-paren': ['error', {
+        'anonymous': 'always',
+        'named': 'always',
+        'asyncArrow': 'always'
+      }],
+      'react/jsx-closing-tag-location': ['error', 'line-aligned'],
       'react-native/no-inline-styles': 'warn',
       'react-native/no-color-literals': 'warn',
       'array-bracket-spacing': ['error', 'never'],
       'newline-before-return': 'error',
       '@typescript-eslint/no-require-imports': 'off',
-      'node/global-require': 'error', // Контролирует использование require
       '@typescript-eslint/ban-ts-comment': ['error', {
         'ts-expect-error': 'allow-with-description',
         'ts-ignore': false,

@@ -6,7 +6,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import Api from '../api/api';
 import {FlatListVars} from '@/utils/FlatList.vars';
 
-export default function PokemonList() {
+export default function PokemonList () {
   const [detailedPokemons, setDetailedPokemons] = useState(null);
   const [posts, setPosts] = useState();
   const [pages, setPages] = useState([]);
@@ -15,7 +15,7 @@ export default function PokemonList() {
 
 
   useEffect(() => {
-    async function fetchMyAPI() {
+    async function fetchMyAPI () {
       const data = await Api.newGetPost();
       setPosts(data);
       setPages(Object.keys(data));
@@ -25,7 +25,7 @@ export default function PokemonList() {
 
   useEffect(() => {
     if (posts && pageNumber) {
-      async function fetchMyAPI() {
+      async function fetchMyAPI () {
         const detailedList = await Api.getDetailedList(posts[pageNumber]);
         setDetailedPokemons(detailedList);
       }

@@ -12,7 +12,7 @@ const FavoriteItem = ({ item, deletePokemon, index}) => {
 
   useEffect(() => {
     fadeIn(card, (index * 150));
-  },[]);
+  }, []);
 
   return (
     <Animated.View style={{ opacity: card}} >

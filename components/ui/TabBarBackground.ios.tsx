@@ -3,7 +3,7 @@ import { BlurView } from 'expo-blur';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export default function BlurTabBarBackground() {
+export default function BlurTabBarBackground () {
   return (
     <BlurView
       // System chrome material automatically adapts to the system's theme
@@ -15,8 +15,9 @@ export default function BlurTabBarBackground() {
   );
 }
 
-export function useBottomTabOverflow() {
+export function useBottomTabOverflow () {
   const tabHeight = useBottomTabBarHeight();
   const { bottom } = useSafeAreaInsets();
+  
   return tabHeight - bottom;
 }

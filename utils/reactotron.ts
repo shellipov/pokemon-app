@@ -13,7 +13,7 @@ type Reactotron = typeof reactotron;
 let tron: Reactotron | undefined;
 const errorTypeRegExp = /.*?{(.*?)}/;
 
-export function reactotronInit() {
+export function reactotronInit () {
   const r = reactotron
     .configure({
       name: 'pokemonApp',
@@ -40,7 +40,7 @@ export function reactotronInit() {
   // debugCommandsInit();
 }
 
-export async function reactotronConnect() {
+export async function reactotronConnect () {
   if (tron && !(tron as any).connected) {
     await tron.connect();
     console.log('REACTOTRON Reconnected', tron); // 🐞 ✅
@@ -48,7 +48,7 @@ export async function reactotronConnect() {
 }
 
 // patch the console.log
-function patchConsoleLog() {
+function patchConsoleLog () {
   const nativeConsoleLog = console.log;
 
   console.log = (...args: any[]) => {

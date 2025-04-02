@@ -27,19 +27,19 @@ export  const fadeOut = (element:  Animated.Value, duration = 1500) => {
   }).start();
 };
 
-export  const fadeInArray = ({items , duration = 50}: IFadeInFadeOutProps) => {
+export  const fadeInArray = ({items, duration = 50}: IFadeInFadeOutProps) => {
   items.forEach((item, index) => {
     fadeIn(item, ((index + 1) * duration));
   });
 };
 
-export  const fadeOutArray = ({items , duration = 50}: IFadeInFadeOutProps) => {
+export  const fadeOutArray = ({items, duration = 50}: IFadeInFadeOutProps) => {
   items.forEach((item, index) => {
     fadeOut(item, ((index + 1) * duration));
   });
 };
 
-export  const fadeInFadeOutUtil = ({items , duration, isActive }: IFadeInFadeOutArrayProps) => {
+export  const fadeInFadeOutUtil = ({items, duration, isActive }: IFadeInFadeOutArrayProps) => {
   if (isActive) {
     fadeInArray({items, duration});
   } else {

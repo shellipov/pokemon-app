@@ -7,7 +7,7 @@ interface IStatisticsBlockComponentProps {
     opacity?:  Animated.Value
 }
 
-export function StatisticsBlockComponent({opacity}: IStatisticsBlockComponentProps) {
+export function StatisticsBlockComponent ({opacity}: IStatisticsBlockComponentProps) {
   const [isNeedToUpdate, setIsNeedToUpdate] = useState(false);
   const [statisticsData, setStatisticsData] = useState({
     totalGamesPlayed: null,
@@ -16,7 +16,7 @@ export function StatisticsBlockComponent({opacity}: IStatisticsBlockComponentPro
     maximumPointsPerGame: null,
   });
 
-  function clear() {
+  function clear () {
     Alert.alert('Are you sure you want cleat statistics', 'Maybe not ?', [
       {
         text: 'Yes',

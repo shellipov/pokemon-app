@@ -31,7 +31,7 @@ const Game = () => {
   const animationValue = useRef(new Animated.Value(1)).current;
 
   //styled functions
-  function clickButton(buttonName: string) {
+  function clickButton (buttonName: string) {
     getAnswer(buttonName);
     playClick().then();
     if (buttonName === truePokemon?.name) {
@@ -42,7 +42,7 @@ const Game = () => {
     }
   }
 
-  function buttonStyles(buttonName: string) {
+  function buttonStyles (buttonName: string) {
     const background = userAnswer ? { backgroundColor: buttonName === truePokemon.name ? 'green' : 'red'} : {};
 
     return [
@@ -50,7 +50,7 @@ const Game = () => {
     ];
   }
 
-  function randomPokemon() {
+  function randomPokemon () {
     const letters = Object.keys(posts);
     const oneLetter = letters[Math.floor(Math.random() * letters.length)];
     const pokemonlist = posts[oneLetter];
@@ -58,7 +58,7 @@ const Game = () => {
     return pokemonlist[Math.floor(Math.random() * pokemonlist.length)];
   }
 
-  function createButtons(correctAnswer) {
+  function createButtons (correctAnswer) {
     const buttonArray = [];
     for (let i = 0; i < 4; i++) {
       buttonArray.push({ name: randomPokemon().name, id: i.toString() });
@@ -69,7 +69,7 @@ const Game = () => {
   }
 
   useEffect(() => {
-    async function fetchMyAPI() {
+    async function fetchMyAPI () {
       const data = await Api.newGetPost();
       console.log('>>>> data', data);
       setPosts(data);
@@ -78,7 +78,7 @@ const Game = () => {
   }, []);
 
   useEffect(() => {
-    async function getPokemon() {
+    async function getPokemon () {
       const pokemon = randomPokemon();
       const response = await Api.getDetailedList([pokemon]);
       const detailedPokemon = response?.[0];

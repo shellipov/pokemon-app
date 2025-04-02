@@ -8,12 +8,14 @@ import * as SplashScreen from 'expo-splash-screen/build/index';
 import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {SoundController} from './utils/sounds';
 
-export default function App() {
+export default function App () {
   const colorScheme = useColorScheme();
   const setIOSSettings = SoundController.instance.setIOSSettings;
 
   const [loaded, error] = useFonts({
+    // eslint-disable-next-line no-undef
     Comix: require('./assets/fonts/comixloucyr.ttf'),
+    // eslint-disable-next-line no-undef
     SpaceMono: require('./assets/fonts/SpaceMono-Regular.ttf'),
   });
 

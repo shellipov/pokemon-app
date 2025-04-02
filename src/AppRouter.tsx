@@ -26,7 +26,7 @@ export type RootStackParamList = {
     [Routes.Game]: undefined;
 };
 
-export default function AppRouter() {
+export default function AppRouter () {
   const screenSettings = (title: string) => {
     return {
       title: title,

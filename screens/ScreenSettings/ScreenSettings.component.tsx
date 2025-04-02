@@ -7,7 +7,7 @@ import {ThemeBlockComponent} from '@/screens/ScreenSettings/components/ThemeBloc
 import {useRefAnimated} from '@/hooks/useRefAnimated';
 import {AboutBlockComponent} from '@/screens/ScreenSettings/components/AboutBlock.component';
 
-export function ScreenSettings() {
+export function ScreenSettings () {
   const isFocused = useIsFocused();
   const statisticsBlock = useRefAnimated();
   const themeBlock = useRefAnimated();

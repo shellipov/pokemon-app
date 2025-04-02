@@ -6,7 +6,7 @@ interface IThemeBlockComponentProps {
     opacity?:  Animated.Value
 }
 
-export function ThemeBlockComponent({opacity}:IThemeBlockComponentProps) {
+export function ThemeBlockComponent ({opacity}:IThemeBlockComponentProps) {
   const toggleSwitch = () => {};
 
   return (

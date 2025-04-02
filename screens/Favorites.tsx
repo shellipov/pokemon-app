@@ -17,7 +17,7 @@ const Favorites = () => {
     }
   };
 
-  async function deleteItem(id : string) {
+  async function deleteItem (id : string) {
     try {
       const jsonValue = await AsyncStorage.getItem('favorites');
       if (jsonValue) {
@@ -33,7 +33,7 @@ const Favorites = () => {
   }
 
   useEffect(() => {
-    async function storeData() {
+    async function storeData () {
       try {
         const data = await getFavoritesList();
         setFavoritesList(data);
@@ -44,7 +44,7 @@ const Favorites = () => {
     storeData();
   }, []);
 
-  function deletePokemon(id: string) {
+  function deletePokemon (id: string) {
     Alert.alert('Are you sure you want to delete it ?', 'Maybe not ?', [
       {
         text: 'Yes',

@@ -6,7 +6,7 @@ interface IAboutBlockComponentProps {
     opacity?:  Animated.Value
 }
 
-export function AboutBlockComponent({opacity}:IAboutBlockComponentProps) {
+export function AboutBlockComponent ({opacity}:IAboutBlockComponentProps) {
   return (
     <Animated.View style={{ opacity: opacity }}>
       <GrayBackground style={styles.littlePadding} >
@@ -16,7 +16,7 @@ export function AboutBlockComponent({opacity}:IAboutBlockComponentProps) {
           }}
         >
           <WhiteText style={{fontSize: 8}} >{'the program is based on'}</WhiteText>
-          <StyledImage style={{width: 200,height: 50}} source={require('../../../assets/images/pokeapi.png')} />
+          <StyledImage style={{width: 200, height: 50}} source={require('../../../assets/images/pokeapi.png')} />
         </TouchableOpacity>
         <TouchableOpacity
           style={{marginTop: 20}}

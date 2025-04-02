@@ -7,18 +7,18 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
-import {Button} from "react-native";
-import {SoundController} from "@/utils/sounds";
-import {DebugVars} from "@/src/debug";
-import {reactotronInit} from "@/utils/reactotron";
+import {Button} from 'react-native';
+import {SoundController} from '@/utils/sounds';
+import {DebugVars} from '@/src/debug';
+import {reactotronInit} from '@/utils/reactotron';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
-export default function RootLayout() {
+export default function RootLayout () {
   const colorScheme = useColorScheme();
   const router = useRouter();
-  const setIOSSettings = SoundController.instance.setIOSSettings
+  const setIOSSettings = SoundController.instance.setIOSSettings;
 
   const [loaded, error] = useFonts({
     Comix: require('../assets/fonts/comixloucyr.ttf'),
@@ -29,7 +29,7 @@ export default function RootLayout() {
     if (DebugVars?.enableReactotron) {
       reactotronInit();
     }
-    setIOSSettings().then()
+    setIOSSettings().then();
     if (loaded) {
       SplashScreen.hideAsync();
     }
@@ -47,20 +47,20 @@ export default function RootLayout() {
         <Stack.Screen name="+not-found" />
         <Stack.Screen name="game" options={{ headerShown: false }} />
         <Stack.Screen
-            name="pokemon"
-            options={{
-          title: 'Покемон',
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontFamily: "Comix",
-          },
-              headerRight: () => <Button title="Действие" />,
-              headerLeft: () => <Button title="Назад" onPress={router.back} />,
-        }}
-         />
+          name="pokemon"
+          options={{
+            title: 'Покемон',
+            headerStyle: {
+              backgroundColor: '#f4511e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontFamily: 'Comix',
+            },
+            headerRight: () => <Button title="Действие" />,
+            headerLeft: () => <Button title="Назад" onPress={router.back} />,
+          }}
+        />
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
