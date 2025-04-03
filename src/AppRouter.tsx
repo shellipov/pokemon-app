@@ -7,6 +7,7 @@ import {ScreenPokemonList} from '@/screens/ScreenPokemonList';
 import {NavigationContainer} from '@react-navigation/native';
 import {Tabs} from './Tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {IPokemonItem} from '@/api/api';
 
 export enum Routes {
     MainPage = 'MainPage',
@@ -20,7 +21,7 @@ export enum Routes {
 export type RootStackParamList = {
     [Routes.MainPage]: undefined;
     [Routes.Settings]: undefined;
-    [Routes.Pokemon]: {item: {}};
+    [Routes.Pokemon]: {item: IPokemonItem};
     [Routes.PokemonList]: undefined;
     [Routes.Favorites]: undefined;
     [Routes.Game]: undefined;

@@ -9,8 +9,6 @@ import Api from '@/api/api';
 import {ReactionEnum, SoundController} from '@/utils/sounds';
 import {useNavigationHook} from '@/hooks/useNavigation';
 
-interface IPokemon {     id?: string;     name?: string;     front?: string;     back?: string;     weight?: string;     height?: string;     url?: string; }
-
 export const ScreenGame = () => {
   const navigation = useNavigationHook();
   const [posts, setPosts] = useState<{}>();
