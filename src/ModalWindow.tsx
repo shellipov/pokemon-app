@@ -4,13 +4,16 @@ import {BlackText, CenteredBackView, CloseButton, ModaView, WhiteText,} from '@/
 import {Routes} from '@/src/AppRouter';
 import {useNavigationHook} from '@/hooks/useNavigation';
 
-const ModalWindow = ({
-  modalVisible,
-  setModalVisible,
-  score,
-  counter,
-}) => {
+export interface IModalWindowProps {
+    modalVisible: boolean,
+    setModalVisible: (visible: boolean)=> void,
+    score: number,
+    counter: number
+}
+
+export const ModalWindow = (Props : IModalWindowProps) => {
   const navigation = useNavigationHook();
+  const {modalVisible, setModalVisible, score, counter} = Props;
 
   return (
     <Modal
@@ -35,9 +38,7 @@ const ModalWindow = ({
             onPress={() => {
               setModalVisible(!modalVisible);
               navigation.popToTop();
-              navigation.navigate(Routes.MainPage);
-            }}
-          >
+              navigation.navigate(Routes.MainPage);}}>
             <WhiteText>
               {'Close'}
             </WhiteText>
@@ -47,5 +48,3 @@ const ModalWindow = ({
     </Modal>
   );
 };
-
-export default ModalWindow;

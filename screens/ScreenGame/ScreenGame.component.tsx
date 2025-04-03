@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, SafeAreaView, StyleProp, View, ViewStyle} from 'react-native';
 import {Container, GameBackground, LittleButton, OrangText, StyledImage, WhiteText,} from '@/src/StyledComponents';
-import ModalWindow from '../../src/ModalWindow';
+import {ModalWindow} from '@/src/ModalWindow';
 import {setMaximumPointsPerGame, setStorageStatisticsPlusValue,} from '@/utils/statistics';
 import {fadeIn, fadeOut} from '@/utils/fade';
 import {sizeDownAnimation, sizeUpAnimation} from '@/utils/changeSize';
@@ -147,7 +147,56 @@ export const ScreenGame = () => {
     }, 1500);
   };
 
-  const Buttons = () => {
+
+  const HeaderBlock = () => {
+    return (
+      <Animated.View style={{flex: 1 }}>
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+
+          <LittleButton onPress={navigation.goBack} style={{width: '30%'}}>
+            <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
+              {'back'}
+            </OrangText>
+          </LittleButton>
+
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
+            <OrangText style={{ fontSize: 18 }}>❤️</OrangText>
+            <OrangText>{lives}</OrangText>
+          </View>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <OrangText style={{ fontSize: 10 }}>Score:</OrangText>
+            <OrangText>{score}</OrangText>
+          </View>
+
+        </View>
+
+        <WhiteText style={{marginTop: 30, fontSize: 15}}>
+          {'Do you know who is it?'}
+        </WhiteText>
+      </Animated.View>
+    );
+  };
+
+  const GameBlock = () => {
+    return (
+      <>
+        {/*counterBlock*/}
+        <Animated.View style={{ opacity: counterView, flex: 1 }}>
+          <OrangText style={{fontSize: 30, color: counter < 3 ? 'rgb(209, 25, 25)' : 'orange'}}>
+            {counter}
+          </OrangText>
+        </Animated.View>
+
+        {/*imageBlock*/}
+        <Animated.View style={{opacity: imageView, transform: [{ scale: animationValue }], flex: 2}}>
+          <StyledImage style={{height: 200, width: 200}} source={{ uri: truePokemon?.front }}/>
+        </Animated.View>
+      </>
+    );
+  };
+
+  const ButtonsBlock = () => {
     return (
       <Animated.View
         style={{opacity: buttonsView, flex: 2, width: '100%', paddingBottom: 20}}>
@@ -157,12 +206,7 @@ export const ScreenGame = () => {
 
           return (
             <View key={button.id.toString()} style={blockStyle}>
-              <LittleButton
-                disabled={!!userAnswer}
-                style={buttonStyle}
-                onPress={() => {
-                  clickButton(button.name);
-                }}>
+              <LittleButton disabled={!!userAnswer} style={buttonStyle} onPress={() => {clickButton(button.name);}}>
                 <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
                   {button.name}
                 </OrangText>
@@ -178,66 +222,9 @@ export const ScreenGame = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
       <Container style={{ padding: 20 }}>
         <GameBackground style={{opacity: gameWindow}}>
-          <Animated.View style={{flex: 1 }}>
-
-            {/*headerBlock*/}
-            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-
-              <LittleButton onPress={navigation.goBack} style={{width: '30%'}}>
-                <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
-                  {'back'}
-                </OrangText>
-              </LittleButton>
-
-              <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
-                <OrangText style={{ fontSize: 18 }}>❤️</OrangText>
-                <OrangText>{lives}</OrangText>
-              </View>
-
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <OrangText style={{ fontSize: 10 }}>Score:</OrangText>
-                <OrangText>{score}</OrangText>
-              </View>
-
-            </View>
-
-            {/*questionBlock*/}
-            <WhiteText
-              style={{
-                marginTop: 30,
-                fontSize: 15,
-              }}>
-            Do you know who is it?
-            </WhiteText>
-          </Animated.View>
-
-          {/*counterBlock*/}
-          <Animated.View style={{ opacity: counterView, flex: 1 }}>
-            <OrangText
-              style={{
-                fontSize: 30,
-                color: counter < 3 ? 'rgb(209, 25, 25)' : 'orange',
-              }}>
-              {counter}
-            </OrangText>
-          </Animated.View>
-
-          {/*imageBlock*/}
-          <Animated.View
-            style={{
-              opacity: imageView,
-              transform: [{ scale: animationValue }],
-              flex: 2,
-            }}>
-            <StyledImage
-              style={{
-                height: 200,
-                width: 200,
-              }}
-              source={{ uri: truePokemon?.front }}/>
-          </Animated.View>
-
-          <Buttons />
+          <HeaderBlock />
+          <GameBlock/>
+          <ButtonsBlock />
         </GameBackground>
         <ModalWindow modalVisible={modalVisible} setModalVisible={setModalVisible} score={score} counter={counter}/>
       </Container>
