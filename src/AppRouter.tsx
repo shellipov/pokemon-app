@@ -1,7 +1,7 @@
 import React from 'react';
 import {ScreenSettings} from '@/screens/ScreenSettings';
 import Favorites from '../screens/Favorites';
-import Game from '../screens/Game';
+import Game from '../screens/ScreenGame/Game';
 import Pokemon from '../screens/Pokemon';
 import PokemonList from '../screens/PokemonList';
 import {NavigationContainer} from '@react-navigation/native';
@@ -47,7 +47,7 @@ export default function AppRouter () {
         <Stack.Screen name={Routes.Pokemon} options={screenSettings('Pokemon')} component={Pokemon} />
         <Stack.Screen name={Routes.PokemonList} options={screenSettings('Pokemons')} component={PokemonList} />
         <Stack.Screen name={Routes.Favorites} options={screenSettings('Favorites')} component={Favorites} />
-        <Stack.Screen name={Routes.Game} options={screenSettings('Game')} component={Game} />
+        <Stack.Screen name={Routes.Game} options={{ headerShown: false }} component={Game} />
       </Stack.Navigator>
     </NavigationContainer>
   );

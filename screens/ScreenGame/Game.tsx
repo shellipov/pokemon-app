@@ -1,16 +1,18 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, View} from 'react-native';
+import {Animated, SafeAreaView, View} from 'react-native';
 import {Container, GameBackground, LittleButton, OrangText, StyledImage, WhiteText,} from '@/src/StyledComponents';
-import ModalWindow from '../src/ModalWindow';
+import ModalWindow from '../../src/ModalWindow';
 import {setMaximumPointsPerGame, setStorageStatisticsPlusValue,} from '@/utils/statistics';
 import {fadeIn, fadeOut} from '@/utils/fade';
 import {sizeDownAnimation, sizeUpAnimation} from '@/utils/changeSize';
 import Api from '@/api/api';
-import {ReactionEnum, SoundController } from '@/utils/sounds';
+import {ReactionEnum, SoundController} from '@/utils/sounds';
+import {useNavigationHook} from '@/hooks/useNavigation';
 
 interface IPokemon {     id?: string;     name?: string;     front?: string;     back?: string;     weight?: string;     height?: string;     url?: string; }
 
 const Game = () => {
+  const navigation = useNavigationHook();
   const [posts, setPosts] = useState<{}>();
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(2);
@@ -71,7 +73,6 @@ const Game = () => {
   useEffect(() => {
     async function fetchMyAPI () {
       const data = await Api.newGetPost();
-      console.log('>>>> data', data);
       setPosts(data);
     }
     fetchMyAPI();
@@ -82,7 +83,7 @@ const Game = () => {
       const pokemon = randomPokemon();
       const response = await Api.getDetailedList([pokemon]);
       const detailedPokemon = response?.[0];
-      console.log('>>> true - ', detailedPokemon?.name);
+      console.log('>>> wright Answer - ', detailedPokemon?.name);
       setTruePokemon(detailedPokemon);
       createButtons(detailedPokemon.name);
       fadeIn(gameWindow, 100);
@@ -149,112 +150,107 @@ const Game = () => {
 
   const Buttons = () => {
     return (
-      <>
-        {buttons.map((button) => (
-          <View
-            key={button.id.toString()}
-            style={{
-              height: '25%',
-              width: '100%',
-              paddingHorizontal: 20,
-              flexDirection: 'column-reverse',
-            }}>
-            <LittleButton
-              disabled={!!userAnswer}
-              style={buttonStyles(button.name)}
-              onPress={() => {
-                clickButton(button.name);
-              }}>
-              <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
-                {button.name}
-              </OrangText>
-            </LittleButton>
-          </View>
-        ))}
-      </>
+      <Animated.View
+        style={{opacity: buttonsView, flex: 2, width: '100%', paddingBottom: 20}}>
+        {buttons.map((button) => {
+          const blockStyle = {height: '25%', width: '100%', paddingHorizontal: 20, flexDirection: 'column-reverse'};
+          const buttonStyle = buttonStyles(button.name);
+
+          return (
+            <View key={button.id.toString()} style={blockStyle}>
+              <LittleButton
+                disabled={!!userAnswer}
+                style={buttonStyle}
+                onPress={() => {
+                  clickButton(button.name);
+                }}>
+                <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
+                  {button.name}
+                </OrangText>
+              </LittleButton>
+            </View>
+          );
+        })}
+      </Animated.View>
     );
   };
 
   return (
-    <Container style={{ padding: 20 }}>
-      <ModalWindow
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        score={score}
-        counter={counter}
-      />
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <Container style={{ padding: 20 }}>
+        <GameBackground style={{opacity: gameWindow}}>
+          <Animated.View style={{flex: 1 }}>
 
-      <GameBackground
-        style={{
-          opacity: gameWindow,
-        }}
-      >
-        <Animated.View style={{flex: 1 }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}>
+            {/*headerBlock*/}
             <View
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                justifyContent: 'flex-start',
-              }}
-            >
-              <OrangText style={{ fontSize: 18 }}>❤️</OrangText>
-              <OrangText>{lives}</OrangText>
+                justifyContent: 'space-between'
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                }}>
+                <OrangText style={{ fontSize: 18 }}>❤️</OrangText>
+                <OrangText>{lives}</OrangText>
+              </View>
+
+              <LittleButton onPress={navigation.goBack} style={{width: '30%'}}>
+                <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
+                  {'back'}
+                </OrangText>
+              </LittleButton>
+
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <OrangText style={{ fontSize: 10 }}>Score:</OrangText>
+                <OrangText>{score}</OrangText>
+              </View>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <OrangText style={{ fontSize: 10 }}>Score:</OrangText>
-              <OrangText>{score}</OrangText>
-            </View>
-          </View>
-          <WhiteText
-            style={{
-              marginTop: 30,
-              fontSize: 15,
-            }}>
+
+            {/*questionBlock*/}
+            <WhiteText
+              style={{
+                marginTop: 30,
+                fontSize: 15,
+              }}>
             Do you know who is it?
-          </WhiteText>
-        </Animated.View>
-        <Animated.View style={{ opacity: counterView, flex: 1 }}>
-          <OrangText
+            </WhiteText>
+          </Animated.View>
+
+          {/*counterBlock*/}
+          <Animated.View style={{ opacity: counterView, flex: 1 }}>
+            <OrangText
+              style={{
+                fontSize: 30,
+                color: counter < 3 ? 'rgb(209, 25, 25)' : 'orange',
+              }}>
+              {counter}
+            </OrangText>
+          </Animated.View>
+
+          {/*imageBlock*/}
+          <Animated.View
             style={{
-              fontSize: 30,
-              color: counter < 3 ? 'rgb(209, 25, 25)' : 'orange',
-            }}
-          >
-            {counter}
-          </OrangText>
-        </Animated.View>
-        <Animated.View
-          style={{
-            opacity: imageView,
-            transform: [{ scale: animationValue }],
-            flex: 2,
-          }}>
-          <StyledImage
-            style={{
-              height: 200,
-              width: 200,
-            }}
-            source={{ uri: truePokemon.front }}
-          />
-        </Animated.View>
-        <Animated.View
-          style={{
-            opacity: buttonsView,
-            flex: 2,
-            width: '100%',
-            paddingBottom: 20,
-          }}
-        >
+              opacity: imageView,
+              transform: [{ scale: animationValue }],
+              flex: 2,
+            }}>
+            <StyledImage
+              style={{
+                height: 200,
+                width: 200,
+              }}
+              source={{ uri: truePokemon.front }}/>
+          </Animated.View>
+
           <Buttons />
-        </Animated.View>
-      </GameBackground>
-    </Container>
+        </GameBackground>
+        <ModalWindow modalVisible={modalVisible} setModalVisible={setModalVisible} score={score} counter={counter}/>
+      </Container>
+    </SafeAreaView>
   );
 };
 
