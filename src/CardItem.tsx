@@ -34,3 +34,5 @@ export const CardItem = ({ item } : {item : IPokemonItem}) => {
     </Animated.View>
   );
 };
+
+export default CardItem;
