@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, FlatList, ScrollView, View,} from 'react-native';
-import CardItem from '../src/CardItem';
+import CardItem from '../../src/CardItem';
 import {Container, LittleButton, OrangText} from '@/src/StyledComponents';
 import {LinearGradient} from 'expo-linear-gradient';
-import Api from '../api/api';
+import Api from '../../api/api';
 import {FlatListVars} from '@/utils/FlatList.vars';
 
-export default function PokemonList () {
+export function ScreenPokemonList () {
   const [detailedPokemons, setDetailedPokemons] = useState(null);
   const [posts, setPosts] = useState();
   const [pages, setPages] = useState([]);

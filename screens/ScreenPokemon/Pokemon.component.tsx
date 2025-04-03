@@ -3,7 +3,7 @@ import {Container, GrayBackground, LittleButton, OrangText, StyledImage, WhiteTe
 import {ActivityIndicator, Alert, Animated} from 'react-native';
 import {fadeIn} from '@/utils/fade';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Api from '../api/api';
+import Api from '../../api/api';
 
 export interface IPokemon {
   front_default: string,
@@ -26,7 +26,7 @@ export interface IItem {
   height: string,
 }
 
-const Pokemon = (props: { route: { params: { item: IItem } }}) => {
+export const ScreenPokemon = (props: { route: { params: { item: IItem } }}) => {
   const [pokemon, setPokemon] = useState<{front_default: string, back_default: string} | undefined>(undefined);
   const image1 = useRef(new Animated.Value(0)).current;
   const image2 = useRef(new Animated.Value(0)).current;
@@ -117,5 +117,3 @@ const Pokemon = (props: { route: { params: { item: IItem } }}) => {
     );
   }
 };
-
-export default Pokemon;

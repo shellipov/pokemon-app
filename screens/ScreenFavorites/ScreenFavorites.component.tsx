@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Alert } from 'react-native';
 import { Container, OrangText } from '@/src/StyledComponents';
-import FavoriteItem from '../src/FavoriteItem';
+import FavoriteItem from '../../src/FavoriteItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Favorites = () => {
+export const ScreenFavorites = () => {
   const [favoritesList, setFavoritesList] = useState([]);
 
   const getFavoritesList = async () => {
@@ -81,5 +81,3 @@ const Favorites = () => {
     </Container>
   );
 };
-
-export default Favorites;

@@ -11,7 +11,7 @@ import {useNavigationHook} from '@/hooks/useNavigation';
 
 interface IPokemon {     id?: string;     name?: string;     front?: string;     back?: string;     weight?: string;     height?: string;     url?: string; }
 
-const Game = () => {
+export const ScreenGame = () => {
   const navigation = useNavigationHook();
   const [posts, setPosts] = useState<{}>();
   const [score, setScore] = useState(0);
@@ -182,21 +182,7 @@ const Game = () => {
           <Animated.View style={{flex: 1 }}>
 
             {/*headerBlock*/}
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between'
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  justifyContent: 'flex-start',
-                }}>
-                <OrangText style={{ fontSize: 18 }}>❤️</OrangText>
-                <OrangText>{lives}</OrangText>
-              </View>
+            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 
               <LittleButton onPress={navigation.goBack} style={{width: '30%'}}>
                 <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
@@ -204,10 +190,16 @@ const Game = () => {
                 </OrangText>
               </LittleButton>
 
+              <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
+                <OrangText style={{ fontSize: 18 }}>❤️</OrangText>
+                <OrangText>{lives}</OrangText>
+              </View>
+
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <OrangText style={{ fontSize: 10 }}>Score:</OrangText>
                 <OrangText>{score}</OrangText>
               </View>
+
             </View>
 
             {/*questionBlock*/}
@@ -253,5 +245,3 @@ const Game = () => {
     </SafeAreaView>
   );
 };
-
-export default Game;
