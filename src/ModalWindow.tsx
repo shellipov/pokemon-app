@@ -1,8 +1,8 @@
 import React from 'react';
 import {Alert, Modal} from 'react-native';
 import {BlackText, CenteredBackView, CloseButton, ModaView, WhiteText,} from '@/src/StyledComponents';
-import {Routes} from '@/src/AppRouter';
 import {useNavigationHook} from '@/hooks/useNavigation';
+import {Routes} from '@/src/AppPouter.types';
 
 export interface IModalWindowProps {
     modalVisible: boolean,

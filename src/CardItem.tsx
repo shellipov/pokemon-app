@@ -2,9 +2,9 @@ import React, {useRef} from 'react';
 import {fadeIn} from '@/utils/fade';
 import {BlackText, OrangeCard, StyledImage} from '@/src/StyledComponents';
 import {Animated, TouchableOpacity, View,} from 'react-native';
-import {Routes} from '@/src/AppRouter';
 import {IPokemonItem} from '@/api/api';
 import {useNavigationHook} from '@/hooks/useNavigation';
+import {Routes} from '@/src/AppPouter.types';
 
 export const CardItem = ({ item } : {item : IPokemonItem}) => {
   const card = useRef(new Animated.Value(0)).current;

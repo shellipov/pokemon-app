@@ -5,8 +5,8 @@ import {fadeInFadeOutUtil} from '@/utils/fade';
 import {useIsFocused} from '@react-navigation/native';
 import {SoundController} from '@/utils/sounds';
 import {useRefAnimated} from '@/hooks/useRefAnimated';
-import {Routes} from '@/src/AppRouter';
 import {useNavigationHook} from '@/hooks/useNavigation';
+import {Routes} from '@/src/AppPouter.types';
 
 export const ScreenMainPage = () => {
   const navigation =  useNavigationHook();

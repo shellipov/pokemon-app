@@ -12,7 +12,7 @@ export function Tabs () {
   return (
     <Tab.Navigator>
       <Tab.Screen
-        name="MainPage"
+        name="Home"
         component={ScreenMainPage}
         options={
           { headerShown: false,
