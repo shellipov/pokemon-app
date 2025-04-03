@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, FlatList, ScrollView, View,} from 'react-native';
-import CardItem from '../../src/CardItem';
+import {CardItem} from '@/src/CardItem';
 import {Container, LittleButton, OrangText} from '@/src/StyledComponents';
 import {LinearGradient} from 'expo-linear-gradient';
 import Api from '../../api/api';
@@ -52,7 +52,7 @@ export function ScreenPokemonList () {
           keyExtractor={(post) => post.name}
           {...FlatListVars.performanceOptions}
           renderItem={(item) => (
-            <CardItem item={item}/>
+            <CardItem item={item.item}/>
           )}/>
         <View
           style={{
