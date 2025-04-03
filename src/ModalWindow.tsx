@@ -1,13 +1,8 @@
 import React from 'react';
-import { Modal, Alert } from 'react-native';
-import {
-  BlackText,
-  WhiteText,
-  CenteredBackView,
-  ModaView,
-  CloseButton,
-} from '@/src/StyledComponents';
-import {useNavigation} from '@react-navigation/native';
+import {Alert, Modal} from 'react-native';
+import {BlackText, CenteredBackView, CloseButton, ModaView, WhiteText,} from '@/src/StyledComponents';
+import {Routes} from '@/src/AppRouter';
+import {useNavigationHook} from '@/hooks/useNavigation';
 
 const ModalWindow = ({
   modalVisible,
@@ -15,7 +10,7 @@ const ModalWindow = ({
   score,
   counter,
 }) => {
-  const navigation = useNavigation();
+  const navigation = useNavigationHook();
 
   return (
     <Modal
@@ -40,7 +35,7 @@ const ModalWindow = ({
             onPress={() => {
               setModalVisible(!modalVisible);
               navigation.popToTop();
-              navigation.navigate('ScreenMainPageComponent');
+              navigation.navigate(Routes.MainPage);
             }}
           >
             <WhiteText>

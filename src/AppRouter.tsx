@@ -6,7 +6,7 @@ import Pokemon from '../screens/Pokemon';
 import PokemonList from '../screens/PokemonList';
 import {NavigationContainer} from '@react-navigation/native';
 import {Tabs} from './Tabs';
-import {createStackNavigator} from '@react-navigation/native/src/__stubs__/createStackNavigator';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 export enum Routes {
     MainPage = 'MainPage',
@@ -37,15 +37,15 @@ export default function AppRouter () {
     };
   };
 
-  const Stack = createStackNavigator<RootStackParamList>();
+  const Stack = createNativeStackNavigator<RootStackParamList>();
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name={Routes.MainPage} options={{ headerShown: false }} component={Tabs}  />
+      <Stack.Navigator initialRouteName={Routes.MainPage} >
+        <Stack.Screen name={Routes.MainPage} options={{ headerShown: false }}  component={Tabs} />
         <Stack.Screen name={Routes.Settings} options={{ headerShown: false }} component={ScreenSettings} />
         <Stack.Screen name={Routes.Pokemon} options={screenSettings('Pokemon')} component={Pokemon} />
-        <Stack.Screen name={Routes.PokemonList} options={screenSettings('PokemonList')} component={PokemonList} />
+        <Stack.Screen name={Routes.PokemonList} options={screenSettings('Pokemons')} component={PokemonList} />
         <Stack.Screen name={Routes.Favorites} options={screenSettings('Favorites')} component={Favorites} />
         <Stack.Screen name={Routes.Game} options={screenSettings('Game')} component={Game} />
       </Stack.Navigator>
