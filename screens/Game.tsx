@@ -1,16 +1,16 @@
-import React, {useEffect, useRef, useState} from "react";
-import {Animated, View} from "react-native";
-import {Container, GameBackground, LittleButton, OrangText, StyledImage, WhiteText,} from "@/src/StyledComponents";
-import ModalWindow from "../src/ModalWindow";
-import {setMaximumPointsPerGame, setStorageStatisticsPlusValue,} from "@/utils/statistics";
-import {fadeIn, fadeOut} from "@/utils/fade";
-import {sizeDownAnimation, sizeUpAnimation} from "@/utils/changeSize";
-import Api from "@/api/api";
-import SoundController from "@/utils/sounds.ts";
+import React, {useEffect, useRef, useState} from 'react';
+import {Animated, View} from 'react-native';
+import {Container, GameBackground, LittleButton, OrangText, StyledImage, WhiteText,} from '@/src/StyledComponents';
+import ModalWindow from '../src/ModalWindow';
+import {setMaximumPointsPerGame, setStorageStatisticsPlusValue,} from '@/utils/statistics';
+import {fadeIn, fadeOut} from '@/utils/fade';
+import {sizeDownAnimation, sizeUpAnimation} from '@/utils/changeSize';
+import Api from '@/api/api';
+import {ReactionEnum, SoundController } from '@/utils/sounds';
 
 interface IPokemon {     id?: string;     name?: string;     front?: string;     back?: string;     weight?: string;     height?: string;     url?: string; }
 
-const Game = ({ isBlacktheme, navigation }) => {
+const Game = () => {
   const [posts, setPosts] = useState<{}>();
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(2);
@@ -20,8 +20,8 @@ const Game = ({ isBlacktheme, navigation }) => {
   const [buttons, setButtons] = useState<{id: string, name: string}[]>([]);
   const [userAnswer, setUserAnswer] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const playClick = SoundController.instance.playClick
-  const playReaction = SoundController.instance.playReaction
+  const playClick = SoundController.instance.playClick;
+  const playReaction = SoundController.instance.playReaction;
 
   const gameWindow = useRef(new Animated.Value(0)).current;
   const textView = useRef(new Animated.Value(0)).current;
@@ -31,35 +31,37 @@ const Game = ({ isBlacktheme, navigation }) => {
   const animationValue = useRef(new Animated.Value(1)).current;
 
   //styled functions
-  function clickButton(buttonName: string) {
+  function clickButton (buttonName: string) {
     getAnswer(buttonName);
-    playClick();
+    playClick().then();
     if (buttonName === truePokemon?.name) {
-      playReaction("victory");
+      playReaction(ReactionEnum.victory).then();
     }
     if (buttonName !== truePokemon.name) {
-      playReaction("losing");
+      playReaction(ReactionEnum.losing).then();
     }
   }
 
-  function buttonStyles(buttonName: string) {
-    const background = userAnswer ? { backgroundColor: buttonName === truePokemon.name ? "green" : "red"} : {}
+  function buttonStyles (buttonName: string) {
+    const background = userAnswer ? { backgroundColor: buttonName === truePokemon.name ? 'green' : 'red'} : {};
+
     return [
-      { width: "auto", marginLeft: 0, align: "center", ...background }
+      { width: 'auto', marginLeft: 0, align: 'center', ...background }
     ];
   }
 
-  function randonPokemon() {
+  function randomPokemon () {
     const letters = Object.keys(posts);
     const oneLetter = letters[Math.floor(Math.random() * letters.length)];
     const pokemonlist = posts[oneLetter];
+
     return pokemonlist[Math.floor(Math.random() * pokemonlist.length)];
   }
 
-  function createButtons(correctAnswer) {
+  function createButtons (correctAnswer) {
     const buttonArray = [];
     for (let i = 0; i < 4; i++) {
-      buttonArray.push({ name: randonPokemon().name, id: i.toString() });
+      buttonArray.push({ name: randomPokemon().name, id: i.toString() });
     }
     const indexCorrectAnswer = Math.floor(Math.random() * 4);
     buttonArray[indexCorrectAnswer].name = correctAnswer;
@@ -67,18 +69,20 @@ const Game = ({ isBlacktheme, navigation }) => {
   }
 
   useEffect(() => {
-    async function fetchMyAPI() {
-      let data = await Api.newGetPost();
+    async function fetchMyAPI () {
+      const data = await Api.newGetPost();
+      console.log('>>>> data', data);
       setPosts(data);
     }
     fetchMyAPI();
   }, []);
 
   useEffect(() => {
-    async function getPokemon() {
-      const pokemon = randonPokemon();
+    async function getPokemon () {
+      const pokemon = randomPokemon();
       const response = await Api.getDetailedList([pokemon]);
       const detailedPokemon = response?.[0];
+      console.log('>>> true - ', detailedPokemon?.name);
       setTruePokemon(detailedPokemon);
       createButtons(detailedPokemon.name);
       fadeIn(gameWindow, 100);
@@ -99,6 +103,7 @@ const Game = ({ isBlacktheme, navigation }) => {
       setTimeout(() => {
         fadeOut(gameWindow, 1000);
       }, 200);
+
       return;
     }
     if (counter != 0 && !userAnswer) {
@@ -108,14 +113,16 @@ const Game = ({ isBlacktheme, navigation }) => {
         },
         counter === 6 ? 2000 : 1000
       );
+
       return () => clearInterval(timer);
     }
   }, [counter]);
 
   useEffect(() => {
     (async () => {
-      setStorageStatisticsPlusValue("totalGamesPlayed").then();
+      setStorageStatisticsPlusValue('totalGamesPlayed').then();
     })();
+
     return;
   }, []);
 
@@ -125,11 +132,11 @@ const Game = ({ isBlacktheme, navigation }) => {
     if (answer === truePokemon.name) {
       setLives((prev) => prev + 1);
       setScore((prev) => prev + 1);
-      setStorageStatisticsPlusValue("allCorrectAnswers").then();
+      setStorageStatisticsPlusValue('allCorrectAnswers').then();
       setMaximumPointsPerGame(score + 1).then();
     } else {
       setLives((prev) => prev - 1);
-      setStorageStatisticsPlusValue("totalWrongAnswers").then();
+      setStorageStatisticsPlusValue('totalWrongAnswers').then();
     }
     fadeOut(imageView);
     fadeOut(buttonsView);
@@ -142,32 +149,31 @@ const Game = ({ isBlacktheme, navigation }) => {
 
   const Buttons = () => {
     return (
-        <>
+      <>
         {buttons.map((button) => (
-              <View
-                  key={button.id.toString()}
-                  style={{
-                    height: "25%",
-                    width: "100%",
-                    paddingHorizontal: 20,
-                    flexDirection: "column-reverse",
-                  }}>
-                <LittleButton
-                    isBlacktheme={isBlacktheme}
-                    disabled={!!userAnswer}
-                    style={buttonStyles(button.name)}
-                    onPress={() => {
-                      clickButton(button.name);
-                    }}>
-                  <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
-                    {button.name}
-                  </OrangText>
-                </LittleButton>
-              </View>
-          ))}
-        </>
-    )
-  }
+          <View
+            key={button.id.toString()}
+            style={{
+              height: '25%',
+              width: '100%',
+              paddingHorizontal: 20,
+              flexDirection: 'column-reverse',
+            }}>
+            <LittleButton
+              disabled={!!userAnswer}
+              style={buttonStyles(button.name)}
+              onPress={() => {
+                clickButton(button.name);
+              }}>
+              <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
+                {button.name}
+              </OrangText>
+            </LittleButton>
+          </View>
+        ))}
+      </>
+    );
+  };
 
   return (
     <Container style={{ padding: 20 }}>
@@ -186,27 +192,26 @@ const Game = ({ isBlacktheme, navigation }) => {
         <Animated.View style={{flex: 1 }}>
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between"
-          }}>
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between'
+            }}>
             <View
               style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "flex-start",
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'flex-start',
               }}
             >
               <OrangText style={{ fontSize: 18 }}>❤️</OrangText>
               <OrangText>{lives}</OrangText>
             </View>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <OrangText style={{ fontSize: 10 }}>Score:</OrangText>
               <OrangText>{score}</OrangText>
             </View>
           </View>
           <WhiteText
-            isBlacktheme={isBlacktheme}
             style={{
               marginTop: 30,
               fontSize: 15,
@@ -218,7 +223,7 @@ const Game = ({ isBlacktheme, navigation }) => {
           <OrangText
             style={{
               fontSize: 30,
-              color: counter < 3 ? "rgb(209, 25, 25)" : "orange",
+              color: counter < 3 ? 'rgb(209, 25, 25)' : 'orange',
             }}
           >
             {counter}
@@ -242,7 +247,7 @@ const Game = ({ isBlacktheme, navigation }) => {
           style={{
             opacity: buttonsView,
             flex: 2,
-            width: "100%",
+            width: '100%',
             paddingBottom: 20,
           }}
         >

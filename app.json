@@ -9,7 +9,10 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSMicrophoneUsageDescription": "Для воспроизведения звуков"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -36,6 +39,22 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "4ed26b92-799b-404c-aeed-c4ebf7fc355a"
+      }
+    },
+    "owner": "shellipov",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "assetBundlePatterns": ["**/*.mp3"],
+    "updates": {
+      "url": "https://u.expo.dev/4ed26b92-799b-404c-aeed-c4ebf7fc355a"
     }
   }
 }

@@ -1,13 +1,8 @@
-import React from "react";
-import { Modal, Alert } from "react-native";
-import {
-  BlackText,
-  WhiteText,
-  CenteredBackView,
-  ModaView,
-  CloseButton,
-} from "../src/StyledComponents";
-import {useRouter} from "expo-router";
+import React from 'react';
+import {Alert, Modal} from 'react-native';
+import {BlackText, CenteredBackView, CloseButton, ModaView, WhiteText,} from '@/src/StyledComponents';
+import {Routes} from '@/src/AppRouter';
+import {useNavigationHook} from '@/hooks/useNavigation';
 
 const ModalWindow = ({
   modalVisible,
@@ -15,7 +10,7 @@ const ModalWindow = ({
   score,
   counter,
 }) => {
-  const router = useRouter();
+  const navigation = useNavigationHook();
 
   return (
     <Modal
@@ -23,7 +18,7 @@ const ModalWindow = ({
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {
-        Alert.alert("Modal has been closed.");
+        Alert.alert('Modal has been closed.');
         setModalVisible(!modalVisible);
       }}
     >
@@ -31,7 +26,7 @@ const ModalWindow = ({
         <ModaView>
           <BlackText style={{ fontSize: 25 }}>Game Over</BlackText>
           <BlackText style={{ fontSize: 13, marginTop: 30 }}>
-            {counter === 0 ? "time is up" : "no more lifes"}
+            {counter === 0 ? 'time is up' : 'no more lifes'}
           </BlackText>
           <BlackText style={{ fontSize: 13, marginTop: 9 }}>
             {`You score: ${score}`}
@@ -39,9 +34,8 @@ const ModalWindow = ({
           <CloseButton
             onPress={() => {
               setModalVisible(!modalVisible);
-              router.dismissAll
-              router.navigate("/");
-              // playClick();
+              navigation.popToTop();
+              navigation.navigate(Routes.MainPage);
             }}
           >
             <WhiteText>

@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 
 export default class Api {
 
-  static async getDetailedList(pokeponList) {
+  static async getDetailedList (pokeponList) {
     try {
       const promises = [];
       for (let i = 0; i < pokeponList.length; i++) {
@@ -11,6 +11,7 @@ export default class Api {
           axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
         );
       }
+
       return Promise.all(promises).then((results) => {
         return results.map((el) => ({
           id: el.data.id,
@@ -25,10 +26,10 @@ export default class Api {
     } catch (e) {}
   }
 
-  static async newGetPost() {
+  static async newGetPost () {
     try {
-      const getCount = await axios.get(`https://pokeapi.co/api/v2/pokemon`);
-      const allPokemons = await axios.get(`https://pokeapi.co/api/v2/pokemon`, {
+      const getCount = await axios.get('https://pokeapi.co/api/v2/pokemon');
+      const allPokemons = await axios.get('https://pokeapi.co/api/v2/pokemon', {
         params: {
           limit: getCount.data.count,
           offset: 0,
@@ -45,20 +46,29 @@ export default class Api {
           sortObject[pokemon.name.charAt(0)] = [pokemon];
         }
       });
+
       return sortObject;
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  static async getPokemon(name) {
+  static async getPokemon (name: string) {
     try {
       const resp = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
+
       return resp.data;
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
-  static async getURL(url) {
+  static async getURL (url: string) {
     try {
       const resp = await axios.get(`${url}`);
+
       return resp.data;
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
 }
