@@ -1,8 +1,24 @@
 import axios from 'axios';
 
-export default class Api {
+export interface IPokemonItem {
+  id: string;
+  name: string;
+  front: string;
+  back: string;
+  weight: string;
+  height: string;
+  url: string;
+}
 
-  static async getDetailedList (pokeponList) {
+export interface IPokemonItemShort {
+  name: string;
+  url: string;
+}
+
+export interface IPokemonItemShortObject {[key: string]: IPokemonItemShort[]}
+
+export default class Api {
+  static async getDetailedList (pokeponList: {name: string}[]): Promise<IPokemonItem[] | undefined> {
     try {
       const promises = [];
       for (let i = 0; i < pokeponList.length; i++) {
@@ -13,7 +29,7 @@ export default class Api {
       }
 
       return Promise.all(promises).then((results) => {
-        return results.map((el) => ({
+        return results.map((el): IPokemonItem => ({
           id: el.data.id,
           name: el.data.name,
           front: el.data.sprites.front_default,
@@ -23,23 +39,29 @@ export default class Api {
           url: el.data.forms[0].url
         }));
       });
-    } catch (e) {}
+    } catch (e) {
+      console.log(e);
+    }
   }
 
-  static async newGetPost () {
+  static async newGetPost () : Promise<IPokemonItemShortObject | undefined> {
     try {
       const getCount = await axios.get('https://pokeapi.co/api/v2/pokemon');
-      const allPokemons = await axios.get('https://pokeapi.co/api/v2/pokemon', {
+      const pokemonCount = getCount.data.count;
+      const req = await axios.get('https://pokeapi.co/api/v2/pokemon', {
         params: {
-          limit: getCount.data.count,
+          limit: pokemonCount,
           offset: 0,
         },
       });
-      const sortArray = allPokemons.data.results.sort((a, b) =>
+
+      const allPokemons =req.data.results as IPokemonItemShort[];
+      const sortArray = allPokemons.sort((a, b) =>
         a.name.localeCompare(b.name)
       );
-      const sortObject = {};
-      sortArray.forEach((pokemon) => {
+
+      const sortObject = {} as IPokemonItemShortObject;
+      sortArray.forEach((pokemon: IPokemonItemShort) => {
         if (sortObject[pokemon.name.charAt(0)]) {
           sortObject[pokemon.name.charAt(0)].push(pokemon);
         } else {

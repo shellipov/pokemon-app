@@ -7,6 +7,7 @@ import {reactotronInit} from './utils/reactotron';
 import * as SplashScreen from 'expo-splash-screen/build/index';
 import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
 import {SoundController} from './utils/sounds';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 export default function App () {
   const colorScheme = useColorScheme();
@@ -34,9 +35,12 @@ export default function App () {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AppRouter />
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <AppRouter />
+      </ThemeProvider>
+    </SafeAreaProvider>
+
   );
 
 }

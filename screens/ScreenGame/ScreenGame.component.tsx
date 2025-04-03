@@ -1,22 +1,22 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, View} from 'react-native';
+import {Animated, SafeAreaView, StyleProp, View, ViewStyle} from 'react-native';
 import {Container, GameBackground, LittleButton, OrangText, StyledImage, WhiteText,} from '@/src/StyledComponents';
-import ModalWindow from '../src/ModalWindow';
+import {ModalWindow} from '@/src/ModalWindow';
 import {setMaximumPointsPerGame, setStorageStatisticsPlusValue,} from '@/utils/statistics';
 import {fadeIn, fadeOut} from '@/utils/fade';
 import {sizeDownAnimation, sizeUpAnimation} from '@/utils/changeSize';
-import Api from '@/api/api';
-import {ReactionEnum, SoundController } from '@/utils/sounds';
+import Api, {IPokemonItem, IPokemonItemShort, IPokemonItemShortObject} from '@/api/api';
+import {ReactionEnum, SoundController} from '@/utils/sounds';
+import {useNavigationHook} from '@/hooks/useNavigation';
 
-interface IPokemon {     id?: string;     name?: string;     front?: string;     back?: string;     weight?: string;     height?: string;     url?: string; }
-
-const Game = () => {
-  const [posts, setPosts] = useState<{}>();
+export const ScreenGame = () => {
+  const navigation = useNavigationHook();
+  const [posts, setPosts] = useState<IPokemonItemShortObject>();
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(2);
   const [round, setRound] = useState(1);
   const [counter, setCounter] = useState(6);
-  const [truePokemon, setTruePokemon] = useState<IPokemon> ({});
+  const [truePokemon, setTruePokemon] = useState<IPokemonItem> ();
   const [buttons, setButtons] = useState<{id: string, name: string}[]>([]);
   const [userAnswer, setUserAnswer] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,28 +37,28 @@ const Game = () => {
     if (buttonName === truePokemon?.name) {
       playReaction(ReactionEnum.victory).then();
     }
-    if (buttonName !== truePokemon.name) {
+    if (buttonName !== truePokemon?.name) {
       playReaction(ReactionEnum.losing).then();
     }
   }
 
   function buttonStyles (buttonName: string) {
-    const background = userAnswer ? { backgroundColor: buttonName === truePokemon.name ? 'green' : 'red'} : {};
+    const background = userAnswer ? { backgroundColor: buttonName === truePokemon?.name ? 'green' : 'red'} : {};
 
     return [
       { width: 'auto', marginLeft: 0, align: 'center', ...background }
     ];
   }
 
-  function randomPokemon () {
-    const letters = Object.keys(posts);
+  function randomPokemon (): IPokemonItemShort {
+    const letters = Object.keys(posts || []);
     const oneLetter = letters[Math.floor(Math.random() * letters.length)];
-    const pokemonlist = posts[oneLetter];
+    const pokemonList = posts?.[oneLetter] || [];
 
-    return pokemonlist[Math.floor(Math.random() * pokemonlist.length)];
+    return pokemonList?.[Math.floor(Math.random() * pokemonList?.length)];
   }
 
-  function createButtons (correctAnswer) {
+  function createButtons (correctAnswer: string) {
     const buttonArray = [];
     for (let i = 0; i < 4; i++) {
       buttonArray.push({ name: randomPokemon().name, id: i.toString() });
@@ -71,7 +71,6 @@ const Game = () => {
   useEffect(() => {
     async function fetchMyAPI () {
       const data = await Api.newGetPost();
-      console.log('>>>> data', data);
       setPosts(data);
     }
     fetchMyAPI();
@@ -82,9 +81,10 @@ const Game = () => {
       const pokemon = randomPokemon();
       const response = await Api.getDetailedList([pokemon]);
       const detailedPokemon = response?.[0];
-      console.log('>>> true - ', detailedPokemon?.name);
-      setTruePokemon(detailedPokemon);
-      createButtons(detailedPokemon.name);
+      if(detailedPokemon){
+        setTruePokemon(detailedPokemon);
+        createButtons(detailedPokemon.name);
+      }
       fadeIn(gameWindow, 100);
       fadeIn(textView, 200);
       fadeIn(imageView, 500);
@@ -93,13 +93,13 @@ const Game = () => {
       sizeUpAnimation(animationValue);
       setCounter(6);
     }
-    getPokemon();
+    getPokemon().then();
   }, [round, posts]);
 
   useEffect(() => {
     if ((counter === 0 && !userAnswer) || (lives <= 0 && !userAnswer)) {
       setModalVisible(true);
-      // playReaction("gameOver");
+      playReaction(ReactionEnum.gameOver).then();
       setTimeout(() => {
         fadeOut(gameWindow, 1000);
       }, 200);
@@ -129,7 +129,7 @@ const Game = () => {
   const getAnswer = (answer: string) => {
     fadeOut(counterView, 0);
     setUserAnswer(answer);
-    if (answer === truePokemon.name) {
+    if (answer === truePokemon?.name) {
       setLives((prev) => prev + 1);
       setScore((prev) => prev + 1);
       setStorageStatisticsPlusValue('allCorrectAnswers').then();
@@ -147,115 +147,87 @@ const Game = () => {
     }, 1500);
   };
 
-  const Buttons = () => {
+
+  const HeaderBlock = () => {
+    return (
+      <Animated.View style={{flex: 1 }}>
+        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+
+          <LittleButton onPress={navigation.goBack} style={{width: '30%'}}>
+            <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
+              {'back'}
+            </OrangText>
+          </LittleButton>
+
+          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
+            <OrangText style={{ fontSize: 18 }}>❤️</OrangText>
+            <OrangText>{lives}</OrangText>
+          </View>
+
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <OrangText style={{ fontSize: 10 }}>Score:</OrangText>
+            <OrangText>{score}</OrangText>
+          </View>
+
+        </View>
+
+        <WhiteText style={{marginTop: 30, fontSize: 15}}>
+          {'Do you know who is it?'}
+        </WhiteText>
+      </Animated.View>
+    );
+  };
+
+  const GameBlock = () => {
     return (
       <>
-        {buttons.map((button) => (
-          <View
-            key={button.id.toString()}
-            style={{
-              height: '25%',
-              width: '100%',
-              paddingHorizontal: 20,
-              flexDirection: 'column-reverse',
-            }}>
-            <LittleButton
-              disabled={!!userAnswer}
-              style={buttonStyles(button.name)}
-              onPress={() => {
-                clickButton(button.name);
-              }}>
-              <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
-                {button.name}
-              </OrangText>
-            </LittleButton>
-          </View>
-        ))}
+        {/*counterBlock*/}
+        <Animated.View style={{ opacity: counterView, flex: 1 }}>
+          <OrangText style={{fontSize: 30, color: counter < 3 ? 'rgb(209, 25, 25)' : 'orange'}}>
+            {counter}
+          </OrangText>
+        </Animated.View>
+
+        {/*imageBlock*/}
+        <Animated.View style={{opacity: imageView, transform: [{ scale: animationValue }], flex: 2}}>
+          <StyledImage style={{height: 200, width: 200}} source={{ uri: truePokemon?.front }}/>
+        </Animated.View>
       </>
     );
   };
 
-  return (
-    <Container style={{ padding: 20 }}>
-      <ModalWindow
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        score={score}
-        counter={counter}
-      />
+  const ButtonsBlock = () => {
+    return (
+      <Animated.View
+        style={{opacity: buttonsView, flex: 2, width: '100%', paddingBottom: 20}}>
+        {buttons.map((button) => {
+          const blockStyle = {height: '25%', width: '100%', paddingHorizontal: 20, flexDirection: 'column-reverse'}  as StyleProp<ViewStyle>;
+          const buttonStyle = buttonStyles(button.name) as StyleProp<ViewStyle>;
 
-      <GameBackground
-        style={{
-          opacity: gameWindow,
-        }}
-      >
-        <Animated.View style={{flex: 1 }}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-between'
-            }}>
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-              }}
-            >
-              <OrangText style={{ fontSize: 18 }}>❤️</OrangText>
-              <OrangText>{lives}</OrangText>
+          return (
+            <View key={button.id.toString()} style={blockStyle}>
+              <LittleButton disabled={!!userAnswer} style={buttonStyle} onPress={() => {clickButton(button.name);}}>
+                <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
+                  {button.name}
+                </OrangText>
+              </LittleButton>
             </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <OrangText style={{ fontSize: 10 }}>Score:</OrangText>
-              <OrangText>{score}</OrangText>
-            </View>
-          </View>
-          <WhiteText
-            style={{
-              marginTop: 30,
-              fontSize: 15,
-            }}>
-            Do you know who is it?
-          </WhiteText>
-        </Animated.View>
-        <Animated.View style={{ opacity: counterView, flex: 1 }}>
-          <OrangText
-            style={{
-              fontSize: 30,
-              color: counter < 3 ? 'rgb(209, 25, 25)' : 'orange',
-            }}
-          >
-            {counter}
-          </OrangText>
-        </Animated.View>
-        <Animated.View
-          style={{
-            opacity: imageView,
-            transform: [{ scale: animationValue }],
-            flex: 2,
-          }}>
-          <StyledImage
-            style={{
-              height: 200,
-              width: 200,
-            }}
-            source={{ uri: truePokemon.front }}
-          />
-        </Animated.View>
-        <Animated.View
-          style={{
-            opacity: buttonsView,
-            flex: 2,
-            width: '100%',
-            paddingBottom: 20,
-          }}
-        >
-          <Buttons />
-        </Animated.View>
-      </GameBackground>
-    </Container>
+          );
+        })}
+      </Animated.View>
+    );
+  };
+
+  return (
+    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+      <Container style={{ padding: 20 }}>
+        <GameBackground style={{opacity: gameWindow}}>
+          <HeaderBlock />
+          <GameBlock/>
+          <ButtonsBlock />
+        </GameBackground>
+        <ModalWindow modalVisible={modalVisible} setModalVisible={setModalVisible} score={score} counter={counter}/>
+      </Container>
+    </SafeAreaView>
   );
 };
-
-export default Game;
