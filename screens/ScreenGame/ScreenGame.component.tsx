@@ -1,22 +1,22 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, SafeAreaView, View} from 'react-native';
+import {Animated, SafeAreaView, StyleProp, View, ViewStyle} from 'react-native';
 import {Container, GameBackground, LittleButton, OrangText, StyledImage, WhiteText,} from '@/src/StyledComponents';
 import ModalWindow from '../../src/ModalWindow';
 import {setMaximumPointsPerGame, setStorageStatisticsPlusValue,} from '@/utils/statistics';
 import {fadeIn, fadeOut} from '@/utils/fade';
 import {sizeDownAnimation, sizeUpAnimation} from '@/utils/changeSize';
-import Api from '@/api/api';
+import Api, {IPokemonItem, IPokemonItemShort, IPokemonItemShortObject} from '@/api/api';
 import {ReactionEnum, SoundController} from '@/utils/sounds';
 import {useNavigationHook} from '@/hooks/useNavigation';
 
 export const ScreenGame = () => {
   const navigation = useNavigationHook();
-  const [posts, setPosts] = useState<{}>();
+  const [posts, setPosts] = useState<IPokemonItemShortObject>();
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(2);
   const [round, setRound] = useState(1);
   const [counter, setCounter] = useState(6);
-  const [truePokemon, setTruePokemon] = useState<IPokemon> ({});
+  const [truePokemon, setTruePokemon] = useState<IPokemonItem> ();
   const [buttons, setButtons] = useState<{id: string, name: string}[]>([]);
   const [userAnswer, setUserAnswer] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
@@ -37,28 +37,28 @@ export const ScreenGame = () => {
     if (buttonName === truePokemon?.name) {
       playReaction(ReactionEnum.victory).then();
     }
-    if (buttonName !== truePokemon.name) {
+    if (buttonName !== truePokemon?.name) {
       playReaction(ReactionEnum.losing).then();
     }
   }
 
   function buttonStyles (buttonName: string) {
-    const background = userAnswer ? { backgroundColor: buttonName === truePokemon.name ? 'green' : 'red'} : {};
+    const background = userAnswer ? { backgroundColor: buttonName === truePokemon?.name ? 'green' : 'red'} : {};
 
     return [
       { width: 'auto', marginLeft: 0, align: 'center', ...background }
     ];
   }
 
-  function randomPokemon () {
-    const letters = Object.keys(posts);
+  function randomPokemon (): IPokemonItemShort {
+    const letters = Object.keys(posts || []);
     const oneLetter = letters[Math.floor(Math.random() * letters.length)];
-    const pokemonlist = posts[oneLetter];
+    const pokemonList = posts?.[oneLetter] || [];
 
-    return pokemonlist[Math.floor(Math.random() * pokemonlist.length)];
+    return pokemonList?.[Math.floor(Math.random() * pokemonList?.length)];
   }
 
-  function createButtons (correctAnswer) {
+  function createButtons (correctAnswer: string) {
     const buttonArray = [];
     for (let i = 0; i < 4; i++) {
       buttonArray.push({ name: randomPokemon().name, id: i.toString() });
@@ -81,9 +81,10 @@ export const ScreenGame = () => {
       const pokemon = randomPokemon();
       const response = await Api.getDetailedList([pokemon]);
       const detailedPokemon = response?.[0];
-      console.log('>>> wright Answer - ', detailedPokemon?.name);
-      setTruePokemon(detailedPokemon);
-      createButtons(detailedPokemon.name);
+      if(detailedPokemon){
+        setTruePokemon(detailedPokemon);
+        createButtons(detailedPokemon.name);
+      }
       fadeIn(gameWindow, 100);
       fadeIn(textView, 200);
       fadeIn(imageView, 500);
@@ -92,13 +93,13 @@ export const ScreenGame = () => {
       sizeUpAnimation(animationValue);
       setCounter(6);
     }
-    getPokemon();
+    getPokemon().then();
   }, [round, posts]);
 
   useEffect(() => {
     if ((counter === 0 && !userAnswer) || (lives <= 0 && !userAnswer)) {
       setModalVisible(true);
-      // playReaction("gameOver");
+      playReaction(ReactionEnum.gameOver).then();
       setTimeout(() => {
         fadeOut(gameWindow, 1000);
       }, 200);
@@ -128,7 +129,7 @@ export const ScreenGame = () => {
   const getAnswer = (answer: string) => {
     fadeOut(counterView, 0);
     setUserAnswer(answer);
-    if (answer === truePokemon.name) {
+    if (answer === truePokemon?.name) {
       setLives((prev) => prev + 1);
       setScore((prev) => prev + 1);
       setStorageStatisticsPlusValue('allCorrectAnswers').then();
@@ -151,8 +152,8 @@ export const ScreenGame = () => {
       <Animated.View
         style={{opacity: buttonsView, flex: 2, width: '100%', paddingBottom: 20}}>
         {buttons.map((button) => {
-          const blockStyle = {height: '25%', width: '100%', paddingHorizontal: 20, flexDirection: 'column-reverse'};
-          const buttonStyle = buttonStyles(button.name);
+          const blockStyle = {height: '25%', width: '100%', paddingHorizontal: 20, flexDirection: 'column-reverse'}  as StyleProp<ViewStyle>;
+          const buttonStyle = buttonStyles(button.name) as StyleProp<ViewStyle>;
 
           return (
             <View key={button.id.toString()} style={blockStyle}>
@@ -233,7 +234,7 @@ export const ScreenGame = () => {
                 height: 200,
                 width: 200,
               }}
-              source={{ uri: truePokemon.front }}/>
+              source={{ uri: truePokemon?.front }}/>
           </Animated.View>
 
           <Buttons />

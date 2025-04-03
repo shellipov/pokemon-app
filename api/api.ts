@@ -1,14 +1,21 @@
 import axios from 'axios';
 
 export interface IPokemonItem {
-  id?: string;
-  name?: string;
-  front?: string;
-  back?: string;
-  weight?: string;
-  height?: string;
-  url?: string;
+  id: string;
+  name: string;
+  front: string;
+  back: string;
+  weight: string;
+  height: string;
+  url: string;
 }
+
+export interface IPokemonItemShort {
+  name: string;
+  url: string;
+}
+
+export interface IPokemonItemShortObject {[key: string]: IPokemonItemShort[]}
 
 export default class Api {
   static async getDetailedList (pokeponList: {name: string}[]): Promise<IPokemonItem[] | undefined> {
@@ -37,20 +44,24 @@ export default class Api {
     }
   }
 
-  static async newGetPost () {
+  static async newGetPost () : Promise<IPokemonItemShortObject | undefined> {
     try {
       const getCount = await axios.get('https://pokeapi.co/api/v2/pokemon');
-      const allPokemons = await axios.get('https://pokeapi.co/api/v2/pokemon', {
+      const pokemonCount = getCount.data.count;
+      const req = await axios.get('https://pokeapi.co/api/v2/pokemon', {
         params: {
-          limit: getCount.data.count,
+          limit: pokemonCount,
           offset: 0,
         },
       });
-      const sortArray = allPokemons.data.results.sort((a, b) =>
+
+      const allPokemons =req.data.results as IPokemonItemShort[];
+      const sortArray = allPokemons.sort((a, b) =>
         a.name.localeCompare(b.name)
       );
-      const sortObject = {};
-      sortArray.forEach((pokemon: {name: string}) => {
+
+      const sortObject = {} as IPokemonItemShortObject;
+      sortArray.forEach((pokemon: IPokemonItemShort) => {
         if (sortObject[pokemon.name.charAt(0)]) {
           sortObject[pokemon.name.charAt(0)].push(pokemon);
         } else {
