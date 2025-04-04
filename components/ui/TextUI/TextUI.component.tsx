@@ -12,16 +12,17 @@ export interface ITextProps {
     style?: StyleProp<TextStyle>,
 }
 
-export function Text (props: ITextProps) {
+export function TextUI (props: ITextProps) {
   const colorScheme = useColorScheme();
   const isBlackTheme = colorScheme === 'dark';
-
 
   const style = props.style || {};
   switch (props.type) {
     case 'orange':
       return (
-        <OrangeText style={[style, {textShadowColor: isBlackTheme ? 'white' : 'rgba(0, 0, 0, 0.75)'}]} onPress={props.onPress}>
+        <OrangeText
+          style={[{textShadowColor: isBlackTheme ? 'white' : 'rgba(0, 0, 0, 0.75)'}, style]}
+          onPress={props.onPress}>
           {props.text}
           {props.children}
         </OrangeText>
@@ -29,9 +30,9 @@ export function Text (props: ITextProps) {
 
     case 'white':
       return (
-        <WhiteText onPress={props.onPress} style={[style,
-          {textShadowColor: isBlackTheme ? 'white' : 'rgba(0, 0, 0, 0.75)',
-            color: isBlackTheme ? 'black' : 'white'}]}>
+        <WhiteText
+          style={[{textShadowColor: isBlackTheme ? 'white' : 'rgba(0, 0, 0, 0.75)', color: isBlackTheme ? 'black' : 'white'}, style]}
+          onPress={props.onPress} >
           {props.text}
           {props.children}
         </WhiteText>
@@ -39,14 +40,18 @@ export function Text (props: ITextProps) {
 
     case 'black':
       return (
-        <BlackText onPress={props.onPress} style={props.style}>
+        <BlackText
+          style={style}
+          onPress={props.onPress}>
           {props.text}
           {props.children}
         </BlackText>
       );
     default:
       return (
-        <DefaultText onPress={props.onPress} style={props.style}>
+        <DefaultText
+          style={style}
+          onPress={props.onPress}>
           {props.text}
           {props.children}
         </DefaultText>

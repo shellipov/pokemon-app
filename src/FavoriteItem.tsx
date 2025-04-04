@@ -1,10 +1,18 @@
 import React, {useEffect, useRef} from 'react';
 import {fadeIn} from '@/utils/fade';
 import {Animated, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {GrayBackground, OrangeText, StyledImage,} from '@/src/StyledComponents';
+import {GrayBackground, StyledImage,} from '@/src/StyledComponents';
 import {SoundController} from '@/utils/sounds';
+import {TextUI} from '@/components/ui/TextUI';
+import {IPokemonStorage} from '@/screens/ScreenPokemon';
 
-const FavoriteItem = ({ item, deletePokemon, index}) => {
+export interface IFavoriteItemProps {
+  item: IPokemonStorage,
+  deletePokemon: (id?: string)=> void,
+  index: number
+}
+
+const FavoriteItem = ({ item, deletePokemon, index}: IFavoriteItemProps) => {
   const playClick = SoundController.instance.playClick;
   const card = useRef(new Animated.Value(0)).current;
   const image_1 = useRef(new Animated.Value(0)).current;
@@ -16,13 +24,12 @@ const FavoriteItem = ({ item, deletePokemon, index}) => {
 
   return (
     <Animated.View style={{ opacity: card}} >
-      <GrayBackground
-        style={{marginTop: 20, paddingVertical: 10, position: 'relative'}}>
-        <OrangeText>{item.name}</OrangeText>
+      <GrayBackground style={{marginTop: 20, paddingVertical: 10, position: 'relative'}}>
+        <TextUI type={'orange'} text={item.name}></TextUI>
         <TouchableOpacity
           onPress={() => {deletePokemon(item.id); playClick().then();}}
           style={styles.littleButton}>
-          <OrangeText style={styles.littleButtonText}>del</OrangeText>
+          <TextUI type={'orange'} text={'del'} style={styles.littleButtonText}/>
         </TouchableOpacity>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Animated.View style={{ opacity: image_1, width: '50%', height: 150 }}>

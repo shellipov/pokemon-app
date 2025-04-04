@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, Animated, StyleSheet} from 'react-native';
 import {GrayBackground, LittleButton} from '@/src/StyledComponents';
-import {Text} from '@/components/ui/Text';
+import {TextUI} from '@/components/ui/TextUI';
 import {clearStatistics, getStorageStatistics} from '@/utils/statistics';
 
 interface IStatisticsBlockComponentProps {
@@ -39,21 +39,21 @@ export function StatisticsBlockComponent ({opacity}: IStatisticsBlockComponentPr
   return (
     <Animated.View style={{ opacity: opacity }}>
       <GrayBackground style={styles.littlePadding} >
-        <Text type={'white'} style={{ marginBottom: 20, fontSize: 14 }} text={'Statistics'} />
-        <Text type={'white'} style={{ marginBottom: 10, fontSize: 8 }} text={'total games played:  '}>
-          <Text type={'orange'} style={{ fontSize: 12 }} text={statisticsData.totalGamesPlayed} />
-        </Text>
-        <Text type={'white'} style={{ marginBottom: 10, fontSize: 8 }} text={'all correct answers:  '}>
-          <Text type={'orange'} style={{ fontSize: 12 }} text={statisticsData.allCorrectAnswers} />
-        </Text>
-        <Text type={'white'} style={{ marginBottom: 10, fontSize: 8 }} text={'total wrong answers:  '}>
-          <Text type={'orange'} style={{ fontSize: 12 }} text={statisticsData.totalWrongAnswers} />
-        </Text>
-        <Text type={'white'} style={{ marginBottom: 10, fontSize: 8 }} text={'maximum points per game:  '}>
-          <Text type={'orange'} style={{ fontSize: 12 }} text={statisticsData.maximumPointsPerGame} />
-        </Text>
+        <TextUI type={'white'} style={{ marginBottom: 20, fontSize: 14 }} text={'Statistics'} />
+        <TextUI type={'white'} style={{ marginBottom: 10, fontSize: 8 }} text={'total games played:  '}>
+          <TextUI type={'orange'} style={{ fontSize: 12 }} text={statisticsData.totalGamesPlayed} />
+        </TextUI>
+        <TextUI type={'white'} style={{ marginBottom: 10, fontSize: 8 }} text={'all correct answers:  '}>
+          <TextUI type={'orange'} style={{ fontSize: 12 }} text={statisticsData.allCorrectAnswers} />
+        </TextUI>
+        <TextUI type={'white'} style={{ marginBottom: 10, fontSize: 8 }} text={'total wrong answers:  '}>
+          <TextUI type={'orange'} style={{ fontSize: 12 }} text={statisticsData.totalWrongAnswers} />
+        </TextUI>
+        <TextUI type={'white'} style={{ marginBottom: 10, fontSize: 8 }} text={'maximum points per game:  '}>
+          <TextUI type={'orange'} style={{ fontSize: 12 }} text={statisticsData.maximumPointsPerGame} />
+        </TextUI>
         <LittleButton style={{ width: '100%' }}>
-          <Text type={'orange'} onPress={clear} style={{ fontSize: 10 }} text={'Clear Statistics'} />
+          <TextUI type={'orange'} onPress={clear} style={{ fontSize: 10 }} text={'Clear Statistics'} />
         </LittleButton>
       </GrayBackground>
     </Animated.View>

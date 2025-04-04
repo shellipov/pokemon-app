@@ -1,9 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Container, GrayBackground, LittleButton, OrangeText, StyledImage, WhiteText,} from '@/src/StyledComponents';
+import {GrayBackground, LittleButton, StyledImage,} from '@/src/StyledComponents';
 import {ActivityIndicator, Alert, Animated} from 'react-native';
 import {fadeIn} from '@/utils/fade';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api, {IPokemonItem} from '../../api/api';
+import {ContainerUI} from '@/components/ui/ContainerUI';
+import {TextUI} from '@/components/ui/TextUI';
 
 export interface IPokemon {
   front_default: string,
@@ -11,7 +13,9 @@ export interface IPokemon {
   name: string,
 }
 
+// TODO: перенести в метод
 export interface IPokemonStorage {
+  id?: string,
   name: string,
   img1: string,
   img2: string,
@@ -46,44 +50,35 @@ export const ScreenPokemon = (props: { route: { params: { item: IPokemonItem } }
       const data = await Api.getURL(item.url);
       setPokemon(data.sprites);
     }
-    fetchMyAPI();
+    fetchMyAPI().then();
   }, []);
 
   if (pokemon) {
     return (
-      <Container style={{ padding: 24 }}>
+      <ContainerUI style={{ padding: 24 }}>
         <GrayBackground
           style={{
             width: '100%',
             height: '100%',
             justifyContent: 'space-between',
-          }}
-        >
-          <OrangeText>{item.name}</OrangeText>
-          <Animated.View
-            style={{ width: '100%', height: '30%', opacity: image1 }}
-          >
+          }}>
+          <TextUI type={'orange'} text={item.name}/>
+          <Animated.View style={{ width: '100%', height: '30%', opacity: image1 }}>
             <StyledImage
               style={{ width: '100%', height: '100%' }}
               onLoad={() => fadeIn(image1)}
               source={{
                 uri: item.front,
-              }}
-            />
+              }}/>
           </Animated.View>
           <Animated.View
             style={{ width: '100%', height: '30%', opacity: image2 }}>
             <StyledImage
               style={{ width: '100%', height: '100%' }}
               onLoad={() => fadeIn(image2)}
-              source={{
-                uri: item.back,
-              }}/>
+              source={{uri: item.back}}/>
           </Animated.View>
-          <WhiteText
-          >{`weight: ${item.weight},   height: ${item.height}`}
-          </WhiteText>
-
+          <TextUI type={'white'} text={`weight: ${item.weight},   height: ${item.height}`}/>
           <LittleButton
             style={{ width: '100%' }}
             onPress={() => {
@@ -93,18 +88,16 @@ export const ScreenPokemon = (props: { route: { params: { item: IPokemonItem } }
                 img2: pokemon?.back_default,
               });
             }}>
-            <OrangeText>add to fovarites</OrangeText>
+            <TextUI type={'orange'} text={'add to favorites'}/>
           </LittleButton>
         </GrayBackground>
-      </Container>
+      </ContainerUI>
     );
   } else {
     return (
-      <>
-        <Container style={{ padding: 24 }}>
-          <ActivityIndicator size="small" />
-        </Container>
-      </>
+      <ContainerUI style={{ padding: 24 }}>
+        <ActivityIndicator size="small" />
+      </ContainerUI>
     );
   }
 };

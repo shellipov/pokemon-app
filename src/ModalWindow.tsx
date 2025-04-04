@@ -1,8 +1,9 @@
 import React from 'react';
 import {Alert, Modal} from 'react-native';
-import {BlackText, CenteredBackView, CloseButton, ModaView, WhiteText,} from '@/src/StyledComponents';
+import {BlackText, CenteredBackView, CloseButton, ModaView,} from '@/src/StyledComponents';
 import {useNavigationHook} from '@/hooks/useNavigation';
 import {Routes} from '@/src/AppPouter.types';
+import {TextUI} from '@/components/ui/TextUI';
 
 export interface IModalWindowProps {
     modalVisible: boolean,
@@ -39,9 +40,7 @@ export const ModalWindow = (Props : IModalWindowProps) => {
               setModalVisible(!modalVisible);
               navigation.popToTop();
               navigation.navigate(Routes.MainPage);}}>
-            <WhiteText>
-              {'Close'}
-            </WhiteText>
+            <TextUI type={'white'} text={'Close'} />
           </CloseButton>
         </ModaView>
       </CenteredBackView>

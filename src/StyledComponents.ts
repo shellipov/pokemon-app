@@ -3,8 +3,6 @@ import {Animated} from 'react-native';
 
 
 export const Container = styled.View`
-  background-color: ${(props) =>
-    props.isBlackTheme ? 'rgb(24, 24, 24)' : 'white'};
   flex: 1;
   flex-direction: column;
   align-items: center;

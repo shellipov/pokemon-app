@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { View, FlatList, Alert } from 'react-native';
-import { Container, OrangeText } from '@/src/StyledComponents';
+import React, {useEffect, useState} from 'react';
+import {Alert, FlatList, View} from 'react-native';
 import FavoriteItem from '../../src/FavoriteItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {TextUI} from '@/components/ui/TextUI';
+import {ContainerUI} from '@/components/ui/ContainerUI';
+import {IPokemonStorage} from '@/screens/ScreenPokemon';
 
 export const ScreenFavorites = () => {
   const [favoritesList, setFavoritesList] = useState([]);
@@ -17,10 +19,10 @@ export const ScreenFavorites = () => {
     }
   };
 
-  async function deleteItem (id : string) {
+  async function deleteItem (id?: string) {
     try {
       const jsonValue = await AsyncStorage.getItem('favorites');
-      if (jsonValue) {
+      if (jsonValue && id) {
         const newPokemonLins = JSON.parse(jsonValue).filter(
           (pokemon: {id: string}) => pokemon.id !== id
         );
@@ -44,7 +46,7 @@ export const ScreenFavorites = () => {
     storeData();
   }, []);
 
-  function deletePokemon (id: string) {
+  function deletePokemon (id?: string) {
     Alert.alert('Are you sure you want to delete it ?', 'Maybe not ?', [
       {
         text: 'Yes',
@@ -58,26 +60,24 @@ export const ScreenFavorites = () => {
 
   if (favoritesList && favoritesList?.length === 0) {
     return (
-      <Container style={{ justifyContent: 'center', padding: 25 }}>
-        <OrangeText>there is no one here yet</OrangeText>
-        <OrangeText style={{ fontSize: 10, marginTop: 50 }}>
-          Please add someone from the Pokemon list
-        </OrangeText>
-      </Container>
+      <ContainerUI style={{ justifyContent: 'center', padding: 25 }}>
+        <TextUI type={'orange'} text={'there is no one here yet'} />
+        <TextUI type={'orange'} text={'Please add someone from the Pokemon list'} style={{ fontSize: 10, marginTop: 50 }} />
+      </ContainerUI>
     );
   }
 
   return (
-    <Container>
+    <ContainerUI>
       <FlatList
         style={{ width: '100%', paddingHorizontal: 20 }}
         data={favoritesList}
         keyExtractor={(item: {id: string}) => item.id}
         renderItem={({ item, index }) => (
-          <FavoriteItem item={item} index={index} deletePokemon={deletePokemon} />
+          <FavoriteItem item={item as IPokemonStorage} index={index} deletePokemon={deletePokemon} />
         )}
       />
       <View style={{ height: 20 }}></View>
-    </Container>
+    </ContainerUI>
   );
 };

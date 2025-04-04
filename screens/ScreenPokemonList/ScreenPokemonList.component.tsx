@@ -1,11 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, FlatList, ScrollView, View,} from 'react-native';
 import {CardItem} from '@/src/CardItem';
-import {Container, LittleButton, OrangeText} from '@/src/StyledComponents';
+import {LittleButton} from '@/src/StyledComponents';
 import {LinearGradient} from 'expo-linear-gradient';
 import Api, {IPokemonItemShortObject} from '../../api/api';
 import {FlatListVars} from '@/utils/FlatList.vars';
 import {useTheme} from '@react-navigation/native';
+import {ContainerUI} from '@/components/ui/ContainerUI';
+import {TextUI} from '@/components/ui/TextUI';
 
 export function ScreenPokemonList () {
   const theme = useTheme();
@@ -39,7 +41,7 @@ export function ScreenPokemonList () {
 
   if (detailedPokemons) {
     return (
-      <Container  style={{ position: 'relative' }}>
+      <ContainerUI  style={{ position: 'relative' }}>
         <LinearGradient
           colors={[
             `${isBlackTheme ? 'rgb(24, 24, 24)' : 'white'}`,
@@ -79,21 +81,20 @@ export function ScreenPokemonList () {
                     animated: true,
                     offset: 0,
                   });
-                }}
-              >
-                <OrangeText style={{ fontSize: 13 }}>{item} </OrangeText>
+                }}>
+                <TextUI type={'orange'} text={item} style={{ fontSize: 13 }}/>
               </LittleButton>
             ))}
           </ScrollView>
         </View>
-      </Container>
+      </ContainerUI>
     );
   } else {
     return (
       <>
-        <Container>
+        <ContainerUI>
           <ActivityIndicator size="large" />
-        </Container>
+        </ContainerUI>
       </>
     );
   }
