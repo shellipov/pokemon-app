@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
-import {Animated, StyleSheet} from 'react-native';
-import {Button, Container, OrangText} from '@/src/StyledComponents';
+import {Animated, StyleSheet, useColorScheme} from 'react-native';
+import {Button, Container, OrangeText} from '@/src/StyledComponents';
 import {fadeInFadeOutUtil} from '@/utils/fade';
 import {useIsFocused} from '@react-navigation/native';
 import {SoundController} from '@/utils/sounds';
@@ -12,6 +12,7 @@ export const ScreenMainPage = () => {
   const navigation =  useNavigationHook();
   const click = SoundController.instance.playClick;
   const isFocused = useIsFocused();
+  const colorScheme = useColorScheme();
 
   const gameButton = useRefAnimated();
   const pokemonListButton = useRefAnimated();
@@ -23,40 +24,41 @@ export const ScreenMainPage = () => {
   }, [isFocused]);
 
   return (
-    <Container style={{ paddingVertical: '20%' }}>
-      <Animated.View style={[{ opacity: gameButton }, styles.buttonBlock]}>
-        <Button
-          onPress={() => {
-            navigation.navigate(Routes.Game);
-            click().then();
-          }}>
-          <OrangText>{'Game'}</OrangText>
-        </Button>
-      </Animated.View>
+    <>
+      <Container style={{ paddingVertical: '20%' }}>
+        <Animated.View style={[{ opacity: gameButton }, styles.buttonBlock]}>
+          <Button
+            onPress={() => {
+              navigation.navigate(Routes.Game);
+              click().then();
+            }}>
+            <OrangeText>{'Game'}</OrangeText>
+          </Button>
+        </Animated.View>
 
-      <Animated.View style={[{ opacity: pokemonListButton}, styles.buttonBlock]}>
-        <Button
-          onPress={() => {
-            navigation.navigate(Routes.PokemonList);
-            click().then();
-          }}>
-          <OrangText>{'Pokemons'}</OrangText>
-        </Button>
-      </Animated.View>
+        <Animated.View style={[{ opacity: pokemonListButton}, styles.buttonBlock]}>
+          <Button
+            onPress={() => {
+              navigation.navigate(Routes.PokemonList);
+              click().then();
+            }}>
+            <OrangeText>{'Pokemons'}</OrangeText>
+          </Button>
+        </Animated.View>
 
-      <Animated.View style={[{ opacity: favoritesButton }, styles.buttonBlock]}>
-        <Button
-          onPress={() => {
-            navigation.navigate(Routes.Favorites);
-            click().then();
-          }}>
-          <OrangText>
-            {'Favorites'}
-          </OrangText>
-        </Button>
-      </Animated.View>
-
-    </Container>
+        <Animated.View style={[{ opacity: favoritesButton }, styles.buttonBlock]}>
+          <Button
+            onPress={() => {
+              navigation.navigate(Routes.Favorites);
+              click().then();
+            }}>
+            <OrangeText>
+              {'Favorites'}
+            </OrangeText>
+          </Button>
+        </Animated.View>
+      </Container>
+    </>
   );
 };
 

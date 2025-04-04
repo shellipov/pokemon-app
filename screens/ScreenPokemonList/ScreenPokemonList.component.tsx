@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, FlatList, ScrollView, View,} from 'react-native';
 import {CardItem} from '@/src/CardItem';
-import {Container, LittleButton, OrangText} from '@/src/StyledComponents';
+import {Container, LittleButton, OrangeText} from '@/src/StyledComponents';
 import {LinearGradient} from 'expo-linear-gradient';
 import Api, {IPokemonItemShortObject} from '../../api/api';
 import {FlatListVars} from '@/utils/FlatList.vars';
@@ -81,7 +81,7 @@ export function ScreenPokemonList () {
                   });
                 }}
               >
-                <OrangText style={{ fontSize: 13 }}>{item} </OrangText>
+                <OrangeText style={{ fontSize: 13 }}>{item} </OrangeText>
               </LittleButton>
             ))}
           </ScrollView>

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Animated, SafeAreaView, StyleProp, View, ViewStyle} from 'react-native';
-import {Container, GameBackground, LittleButton, OrangText, StyledImage, WhiteText,} from '@/src/StyledComponents';
+import {GameBackground, LittleButton, StyledImage, WhiteText,} from '@/src/StyledComponents';
 import {ModalWindow} from '@/src/ModalWindow';
 import {setMaximumPointsPerGame, setStorageStatisticsPlusValue,} from '@/utils/statistics';
 import {fadeIn, fadeOut} from '@/utils/fade';
@@ -8,6 +8,8 @@ import {sizeDownAnimation, sizeUpAnimation} from '@/utils/changeSize';
 import Api, {IPokemonItem, IPokemonItemShort, IPokemonItemShortObject} from '@/api/api';
 import {ReactionEnum, SoundController} from '@/utils/sounds';
 import {useNavigationHook} from '@/hooks/useNavigation';
+import {ThemedView} from '@/components/ThemedView';
+import {Text} from '@/components/ui/Text';
 
 export const ScreenGame = () => {
   const navigation = useNavigationHook();
@@ -154,24 +156,22 @@ export const ScreenGame = () => {
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 
           <LittleButton onPress={navigation.goBack} style={{width: '30%'}}>
-            <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
-              {'back'}
-            </OrangText>
+            <Text type={'orange'} text={'back'} style={{ padding: 0, fontSize: 12, lineHeight: 21 }} />
           </LittleButton>
 
           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
-            <OrangText style={{ fontSize: 18 }}>❤️</OrangText>
-            <OrangText>{lives}</OrangText>
+            <Text type={'orange'} text={'❤️'} style={{ fontSize: 18 }} />
+            <Text type={'orange'}>{lives}</Text>
           </View>
 
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <OrangText style={{ fontSize: 10 }}>Score:</OrangText>
-            <OrangText>{score}</OrangText>
+            <Text type={'orange'} style={{ fontSize: 10 }} text={'Score:'} />
+            <Text type={'orange'} text={score} />
           </View>
 
         </View>
 
-        <WhiteText style={{marginTop: 30, fontSize: 15}}>
+        <WhiteText  style={{marginTop: 30, fontSize: 15}}>
           {'Do you know who is it?'}
         </WhiteText>
       </Animated.View>
@@ -183,9 +183,7 @@ export const ScreenGame = () => {
       <>
         {/*counterBlock*/}
         <Animated.View style={{ opacity: counterView, flex: 1 }}>
-          <OrangText style={{fontSize: 30, color: counter < 3 ? 'rgb(209, 25, 25)' : 'orange'}}>
-            {counter}
-          </OrangText>
+          <Text type={'orange'} text={counter} style={{fontSize: 30, color: counter < 3 ? 'rgb(209, 25, 25)' : 'orange'}} />
         </Animated.View>
 
         {/*imageBlock*/}
@@ -207,9 +205,7 @@ export const ScreenGame = () => {
           return (
             <View key={button.id.toString()} style={blockStyle}>
               <LittleButton disabled={!!userAnswer} style={buttonStyle} onPress={() => {clickButton(button.name);}}>
-                <OrangText style={{ padding: 0, fontSize: 12, lineHeight: 21 }}>
-                  {button.name}
-                </OrangText>
+                <Text type={'orange'} text={button.name} style={{ padding: 0, fontSize: 12, lineHeight: 21 }} />
               </LittleButton>
             </View>
           );
@@ -220,14 +216,19 @@ export const ScreenGame = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-      <Container style={{ padding: 20 }}>
+      <ThemedView style={{
+        padding: 20,
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-around'}}>
         <GameBackground style={{opacity: gameWindow}}>
           <HeaderBlock />
           <GameBlock/>
           <ButtonsBlock />
         </GameBackground>
         <ModalWindow modalVisible={modalVisible} setModalVisible={setModalVisible} score={score} counter={counter}/>
-      </Container>
+      </ThemedView>
     </SafeAreaView>
   );
 };

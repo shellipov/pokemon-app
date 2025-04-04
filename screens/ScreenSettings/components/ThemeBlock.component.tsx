@@ -1,5 +1,5 @@
 import React from 'react';
-import {Animated, StyleSheet, Switch} from 'react-native';
+import {Animated, Appearance, StyleSheet, Switch, useColorScheme} from 'react-native';
 import {GrayBackground, WhiteText} from '@/src/StyledComponents';
 
 interface IThemeBlockComponentProps {
@@ -7,7 +7,12 @@ interface IThemeBlockComponentProps {
 }
 
 export function ThemeBlockComponent ({opacity}:IThemeBlockComponentProps) {
-  const toggleSwitch = () => {};
+  const colorScheme = useColorScheme();
+
+  const toggleTheme = () => {
+    const newTheme = colorScheme === 'dark' ? 'light' : 'dark';
+    Appearance.setColorScheme(newTheme); // Принудительно меняет тему
+  };
 
   return (
     <Animated.View style={{ opacity: opacity }}>
@@ -19,8 +24,8 @@ export function ThemeBlockComponent ({opacity}:IThemeBlockComponentProps) {
           trackColor={{ false: 'black', true: 'black' }}
           thumbColor={'orange'}
           ios_backgroundColor="black"
-          onValueChange={toggleSwitch}
-          value={false}
+          onValueChange={toggleTheme}
+          value={colorScheme === 'dark'}
         />
       </GrayBackground>
     </Animated.View>

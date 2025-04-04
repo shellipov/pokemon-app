@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Container, GrayBackground, LittleButton, OrangText, StyledImage, WhiteText,} from '@/src/StyledComponents';
+import {Container, GrayBackground, LittleButton, OrangeText, StyledImage, WhiteText,} from '@/src/StyledComponents';
 import {ActivityIndicator, Alert, Animated} from 'react-native';
 import {fadeIn} from '@/utils/fade';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -59,7 +59,7 @@ export const ScreenPokemon = (props: { route: { params: { item: IPokemonItem } }
             justifyContent: 'space-between',
           }}
         >
-          <OrangText>{item.name}</OrangText>
+          <OrangeText>{item.name}</OrangeText>
           <Animated.View
             style={{ width: '100%', height: '30%', opacity: image1 }}
           >
@@ -93,7 +93,7 @@ export const ScreenPokemon = (props: { route: { params: { item: IPokemonItem } }
                 img2: pokemon?.back_default,
               });
             }}>
-            <OrangText>add to fovarites</OrangText>
+            <OrangeText>add to fovarites</OrangeText>
           </LittleButton>
         </GrayBackground>
       </Container>

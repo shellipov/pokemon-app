@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {fadeIn} from '@/utils/fade';
 import {Animated, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {GrayBackground, OrangText, StyledImage,} from '@/src/StyledComponents';
+import {GrayBackground, OrangeText, StyledImage,} from '@/src/StyledComponents';
 import {SoundController} from '@/utils/sounds';
 
 const FavoriteItem = ({ item, deletePokemon, index}) => {
@@ -18,11 +18,11 @@ const FavoriteItem = ({ item, deletePokemon, index}) => {
     <Animated.View style={{ opacity: card}} >
       <GrayBackground
         style={{marginTop: 20, paddingVertical: 10, position: 'relative'}}>
-        <OrangText>{item.name}</OrangText>
+        <OrangeText>{item.name}</OrangeText>
         <TouchableOpacity
           onPress={() => {deletePokemon(item.id); playClick().then();}}
           style={styles.littleButton}>
-          <OrangText style={styles.littleButtonText}>del</OrangText>
+          <OrangeText style={styles.littleButtonText}>del</OrangeText>
         </TouchableOpacity>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Animated.View style={{ opacity: image_1, width: '50%', height: 150 }}>

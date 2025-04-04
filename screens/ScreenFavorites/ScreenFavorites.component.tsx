@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, Alert } from 'react-native';
-import { Container, OrangText } from '@/src/StyledComponents';
+import { Container, OrangeText } from '@/src/StyledComponents';
 import FavoriteItem from '../../src/FavoriteItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -59,10 +59,10 @@ export const ScreenFavorites = () => {
   if (favoritesList && favoritesList?.length === 0) {
     return (
       <Container style={{ justifyContent: 'center', padding: 25 }}>
-        <OrangText>there is no one here yet</OrangText>
-        <OrangText style={{ fontSize: 10, marginTop: 50 }}>
+        <OrangeText>there is no one here yet</OrangeText>
+        <OrangeText style={{ fontSize: 10, marginTop: 50 }}>
           Please add someone from the Pokemon list
-        </OrangText>
+        </OrangeText>
       </Container>
     );
   }
