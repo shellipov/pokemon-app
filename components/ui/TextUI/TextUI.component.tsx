@@ -1,10 +1,10 @@
 import React from 'react';
-import {BlackText, DefaultText, OrangeText, WhiteText} from '@/src/StyledComponents';
-import {StyleProp, TextStyle, useColorScheme} from 'react-native';
+import {StyleProp, StyleSheet, Text, TextStyle, useColorScheme} from 'react-native';
+import {TextProps} from 'react-native/Libraries/Text/Text';
 
 export type TextType = 'orange' | 'white' | 'black'
 
-export interface ITextProps {
+export interface ITextProps extends TextProps{
     type: TextType,
     text?: string | number | undefined,
     onPress?: () => void,
@@ -20,42 +20,76 @@ export function TextUI (props: ITextProps) {
   switch (props.type) {
     case 'orange':
       return (
-        <OrangeText
-          style={[{textShadowColor: isBlackTheme ? 'white' : 'rgba(0, 0, 0, 0.75)'}, style]}
+        <Text
+          style={[styles.orange, {textShadowColor: isBlackTheme ? 'white' : 'rgba(0, 0, 0, 0.75)'}, style]}
           onPress={props.onPress}>
           {props.text}
           {props.children}
-        </OrangeText>
+        </Text>
       );
 
     case 'white':
       return (
-        <WhiteText
-          style={[{textShadowColor: isBlackTheme ? 'white' : 'rgba(0, 0, 0, 0.75)', color: isBlackTheme ? 'black' : 'white'}, style]}
+        <Text
+          style={[styles.white, {textShadowColor: isBlackTheme ? 'white' : 'rgba(0, 0, 0, 0.75)', color: isBlackTheme ? 'black' : 'white'}, style]}
           onPress={props.onPress} >
           {props.text}
           {props.children}
-        </WhiteText>
+        </Text>
       );
 
     case 'black':
       return (
-        <BlackText
-          style={style}
+        <Text
+          style={[styles.black, style]}
           onPress={props.onPress}>
           {props.text}
           {props.children}
-        </BlackText>
+        </Text>
       );
     default:
       return (
-        <DefaultText
-          style={style}
+        <Text
+          style={[styles.default, style]}
           onPress={props.onPress}>
           {props.text}
           {props.children}
-        </DefaultText>
+        </Text>
       );
   }
 }
+
+const styles = StyleSheet.create({
+  orange: {
+    fontFamily: 'Comix',
+    fontSize: 15,
+    color: 'orange',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1,
+    padding: 5,
+    textAlign: 'center',
+  },
+  white: {
+    fontFamily: 'Comix',
+    fontSize: 10,
+    color: 'white',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: { width: -1, height: 1 },
+    textShadowRadius: 1,
+    textAlign: 'center',
+  },
+  black: {
+    fontFamily: 'Comix',
+    fontSize: 10,
+    color: 'black',
+    textAlign: 'center',
+  },
+  default: {
+    fontFamily: 'Comix',
+    fontSize: 6,
+    color: 'black',
+    textAlign: 'center',
+  }
+});
 

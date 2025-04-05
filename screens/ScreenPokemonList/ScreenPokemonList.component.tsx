@@ -1,17 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, FlatList, ScrollView, View,} from 'react-native';
+import {ActivityIndicator, FlatList, ScrollView, useColorScheme, View,} from 'react-native';
 import {CardItem} from '@/src/CardItem';
 import {LittleButton} from '@/src/StyledComponents';
 import {LinearGradient} from 'expo-linear-gradient';
 import Api, {IPokemonItemShortObject} from '../../api/api';
 import {FlatListVars} from '@/utils/FlatList.vars';
-import {useTheme} from '@react-navigation/native';
 import {ContainerUI} from '@/components/ui/ContainerUI';
 import {TextUI} from '@/components/ui/TextUI';
 
 export function ScreenPokemonList () {
-  const theme = useTheme();
-  const isBlackTheme = theme.dark;
+  const colorScheme = useColorScheme();
+  const isBlackTheme = colorScheme === 'dark';
   const [detailedPokemons, setDetailedPokemons] = useState();
   const [posts, setPosts] = useState<IPokemonItemShortObject>();
   const [pages, setPages] = useState([]);

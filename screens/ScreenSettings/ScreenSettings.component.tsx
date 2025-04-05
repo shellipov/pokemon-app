@@ -22,7 +22,7 @@ export function ScreenSettings () {
 
   return (
     <>
-      <SafeAreaView style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'black' : 'white'}} >
+      <SafeAreaView style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'rgb(24, 24, 24)' : 'white'}} >
         <ContainerUI style={{ justifyContent: 'center' }}>
           <StatisticsBlockComponent opacity={statisticsBlock} />
           <ThemeBlockComponent opacity={statisticsBlock} />

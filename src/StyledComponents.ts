@@ -1,14 +1,6 @@
 import styled from 'styled-components/native';
 import {Animated} from 'react-native';
 
-
-export const Container = styled.View`
-  flex: 1;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-`;
-
 export const Button = styled.TouchableOpacity`
   background-color: gray;
   width: 50%;
@@ -146,41 +138,4 @@ export const CloseButton = styled.Pressable`
   border-color: black;
   border-width: 1px;
   shadow-offset: 2px 2px;
-`;
-
-//Fonts
-
-export const OrangeText = styled.Text`
-  font-family: "Comix";
-  font-size: 15px;
-  color: orange;
-  text-shadow-color: rgba(0, 0, 0, 0.75);
-  text-shadow-offset: -1px 1px;
-  text-shadow-radius: 1px;
-  padding: 5px;
-  text-align: center;
-`;
-
-export const WhiteText = styled.Text`
-  font-family: "Comix";
-  font-size: 10px;
-  color: 'white';
-  text-shadow-color: rgba(0, 0, 0, 0.75);
-  text-shadow-offset: -1px 1px;
-  text-shadow-radius: 1px;
-  text-align: center;
-`;
-
-export const BlackText = styled.Text`
-  font-family: "Comix";
-  font-size: 10px;
-  color: black;
-  text-align: center;
-`;
-
-export const DefaultText = styled.Text`
-  font-family: "Comix";
-  font-size: 6px;
-  color: black;
-  text-align: center;
 `;
