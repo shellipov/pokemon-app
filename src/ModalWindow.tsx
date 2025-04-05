@@ -4,6 +4,7 @@ import {CenteredBackView, CloseButton, ModaView,} from '@/src/StyledComponents';
 import {useNavigationHook} from '@/hooks/useNavigation';
 import {Routes} from '@/src/AppPouter.types';
 import {TextUI} from '@/components/ui/TextUI';
+import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
 
 export interface IModalWindowProps {
     modalVisible: boolean,
@@ -30,13 +31,13 @@ export const ModalWindow = (Props : IModalWindowProps) => {
           <TextUI type={'black'} text={'Game Over'} style={{ fontSize: 25 }}/>
           <TextUI type={'black'} text={counter === 0 ? 'time is up' : 'no more lives'} style={{ fontSize: 13, marginTop: 30 }}/>
           <TextUI type={'black'} text={`You score: ${score}`} style={{ fontSize: 13, marginTop: 9 }} />
-          <CloseButton
+          <ButtonUI type={'close'}
             onPress={() => {
               setModalVisible(!modalVisible);
               navigation.popToTop();
               navigation.navigate(Routes.MainPage);}}>
             <TextUI type={'white'} text={'Close'} />
-          </CloseButton>
+          </ButtonUI>
         </ModaView>
       </CenteredBackView>
     </Modal>

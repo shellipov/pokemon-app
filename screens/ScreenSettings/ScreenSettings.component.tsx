@@ -6,7 +6,7 @@ import {ThemeBlockComponent} from '@/screens/ScreenSettings/components/ThemeBloc
 import {useRefAnimated} from '@/hooks/useRefAnimated';
 import {AboutBlockComponent} from '@/screens/ScreenSettings/components/AboutBlock.component';
 import {SafeAreaView, useColorScheme} from 'react-native';
-import {ContainerUI} from "@/components/ui/ContainerUI";
+import {ContainerUI} from '@/components/ui/ContainerUI';
 
 export function ScreenSettings () {
   const isFocused = useIsFocused();
@@ -21,14 +21,12 @@ export function ScreenSettings () {
   }, [isFocused]);
 
   return (
-    <>
-      <SafeAreaView style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'rgb(24, 24, 24)' : 'white'}} >
-        <ContainerUI style={{ justifyContent: 'center' }}>
-          <StatisticsBlockComponent opacity={statisticsBlock} />
-          <ThemeBlockComponent opacity={statisticsBlock} />
-          <AboutBlockComponent opacity={aboutBlock} />
-        </ContainerUI>
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={{ flex: 1, backgroundColor: colorScheme === 'dark' ? 'rgb(24, 24, 24)' : 'white'}} >
+      <ContainerUI style={{ justifyContent: 'center' }}>
+        <StatisticsBlockComponent opacity={statisticsBlock} />
+        <ThemeBlockComponent opacity={statisticsBlock} />
+        <AboutBlockComponent opacity={aboutBlock} />
+      </ContainerUI>
+    </SafeAreaView>
   );
 }

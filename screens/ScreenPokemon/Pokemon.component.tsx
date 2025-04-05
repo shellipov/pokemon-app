@@ -1,11 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {GrayBackground, LittleButton, StyledImage,} from '@/src/StyledComponents';
+import {GrayBackground, StyledImage,} from '@/src/StyledComponents';
 import {ActivityIndicator, Alert, Animated} from 'react-native';
 import {fadeIn} from '@/utils/fade';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Api, {IPokemonItem} from '../../api/api';
 import {ContainerUI} from '@/components/ui/ContainerUI';
 import {TextUI} from '@/components/ui/TextUI';
+import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
 
 export interface IPokemon {
   front_default: string,
@@ -79,7 +80,7 @@ export const ScreenPokemon = (props: { route: { params: { item: IPokemonItem } }
               source={{uri: item.back}}/>
           </Animated.View>
           <TextUI type={'white'} text={`weight: ${item.weight},   height: ${item.height}`}/>
-          <LittleButton
+          <ButtonUI type={'small'}
             style={{ width: '100%' }}
             onPress={() => {
               setPokemonToStorage({
@@ -89,7 +90,7 @@ export const ScreenPokemon = (props: { route: { params: { item: IPokemonItem } }
               });
             }}>
             <TextUI type={'orange'} text={'add to favorites'}/>
-          </LittleButton>
+          </ButtonUI>
         </GrayBackground>
       </ContainerUI>
     );

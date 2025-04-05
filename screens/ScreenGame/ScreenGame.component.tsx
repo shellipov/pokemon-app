@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Animated, SafeAreaView, StyleProp, View, ViewStyle} from 'react-native';
-import {GameBackground, LittleButton, StyledImage} from '@/src/StyledComponents';
+import {Animated, SafeAreaView, StyleProp, useColorScheme, View, ViewStyle} from 'react-native';
+import {GameBackground, StyledImage} from '@/src/StyledComponents';
 import {ModalWindow} from '@/src/ModalWindow';
 import {setMaximumPointsPerGame, setStorageStatisticsPlusValue,} from '@/utils/statistics';
 import {fadeIn, fadeOut} from '@/utils/fade';
@@ -10,9 +10,13 @@ import {ReactionEnum, SoundController} from '@/utils/sounds';
 import {useNavigationHook} from '@/hooks/useNavigation';
 import {ThemedView} from '@/components/ThemedView';
 import {TextUI} from '@/components/ui/TextUI';
+import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
 
 export const ScreenGame = () => {
   const navigation = useNavigationHook();
+  const colorScheme = useColorScheme();
+  const isBlackTheme = colorScheme === 'dark';
+
   const [posts, setPosts] = useState<IPokemonItemShortObject>();
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(2);
@@ -155,9 +159,9 @@ export const ScreenGame = () => {
       <Animated.View style={{flex: 1 }}>
         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
 
-          <LittleButton onPress={navigation.goBack} style={{width: '30%'}}>
+          <ButtonUI type={'small'} onPress={navigation.goBack} style={{width: '30%'}}>
             <TextUI type={'orange'} text={'back'} style={{ padding: 0, fontSize: 12, lineHeight: 21 }} />
-          </LittleButton>
+          </ButtonUI>
 
           <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
             <TextUI type={'orange'} text={'❤️'} style={{ fontSize: 18 }} />
@@ -202,9 +206,9 @@ export const ScreenGame = () => {
 
           return (
             <View key={button.id.toString()} style={blockStyle}>
-              <LittleButton disabled={!!userAnswer} style={buttonStyle} onPress={() => {clickButton(button.name);}}>
+              <ButtonUI type={'small'} disabled={!!userAnswer} style={buttonStyle} onPress={() => {clickButton(button.name);}}>
                 <TextUI type={'orange'} text={button.name} style={{ padding: 0, fontSize: 12, lineHeight: 21 }} />
-              </LittleButton>
+              </ButtonUI>
             </View>
           );
         })}
@@ -213,7 +217,7 @@ export const ScreenGame = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: isBlackTheme ? 'rgb(24, 24, 24)' : 'white'}}>
       <ThemedView style={{
         padding: 20,
         flex: 1,

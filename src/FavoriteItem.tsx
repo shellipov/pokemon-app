@@ -1,10 +1,11 @@
 import React, {useEffect, useRef} from 'react';
 import {fadeIn} from '@/utils/fade';
-import {Animated, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {Animated, StyleSheet, View} from 'react-native';
 import {GrayBackground, StyledImage,} from '@/src/StyledComponents';
 import {SoundController} from '@/utils/sounds';
 import {TextUI} from '@/components/ui/TextUI';
 import {IPokemonStorage} from '@/screens/ScreenPokemon';
+import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
 
 export interface IFavoriteItemProps {
   item: IPokemonStorage,
@@ -26,11 +27,11 @@ const FavoriteItem = ({ item, deletePokemon, index}: IFavoriteItemProps) => {
     <Animated.View style={{ opacity: card}} >
       <GrayBackground style={{marginTop: 20, paddingVertical: 10, position: 'relative'}}>
         <TextUI type={'orange'} text={item.name}></TextUI>
-        <TouchableOpacity
+        <ButtonUI type={'small'}
           onPress={() => {deletePokemon(item.id); playClick().then();}}
           style={styles.littleButton}>
           <TextUI type={'orange'} text={'del'} style={styles.littleButtonText}/>
-        </TouchableOpacity>
+        </ButtonUI>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <Animated.View style={{ opacity: image_1, width: '50%', height: 150 }}>
             <StyledImage onLoad={() => fadeIn(image_1)} source={{uri: item.img1}} />
@@ -51,18 +52,13 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
-    borderWidth: 1,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    height: 30,
   },
   littleButtonText: {
-    paddingBottom: 10,
     fontSize: 12,
     padding: 0,
     paddingLeft: 4,
     paddingRight: 3,
     textShadowOffset: { width: -1, height: 1 },
-    top: -4,
+    top: -2,
   },
 });

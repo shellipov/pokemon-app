@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Alert, Animated, StyleSheet} from 'react-native';
-import {GrayBackground, LittleButton} from '@/src/StyledComponents';
+import {GrayBackground} from '@/src/StyledComponents';
 import {TextUI} from '@/components/ui/TextUI';
 import {clearStatistics, getStorageStatistics} from '@/utils/statistics';
+import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
 
 interface IStatisticsBlockComponentProps {
     opacity?:  Animated.Value
@@ -52,9 +53,9 @@ export function StatisticsBlockComponent ({opacity}: IStatisticsBlockComponentPr
         <TextUI type={'white'} style={{ marginBottom: 10, fontSize: 8 }} text={'maximum points per game:  '}>
           <TextUI type={'orange'} style={{ fontSize: 12 }} text={statisticsData.maximumPointsPerGame} />
         </TextUI>
-        <LittleButton style={{ width: '100%' }}>
+        <ButtonUI type={'small'} style={{ width: '100%' }}>
           <TextUI type={'orange'} onPress={clear} style={{ fontSize: 10 }} text={'Clear Statistics'} />
-        </LittleButton>
+        </ButtonUI>
       </GrayBackground>
     </Animated.View>
   );

@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import {Animated} from 'react-native';
 
-export const Button = styled.TouchableOpacity`
+export const DefaultButton = styled.TouchableOpacity`
   background-color: gray;
   width: 50%;
   padding-vertical: 30px;
@@ -15,10 +15,8 @@ export const Button = styled.TouchableOpacity`
   shadow-offset: 2px 2px;
 `;
 
-export const LittleButton = styled.TouchableOpacity`
-  background-color: ${(props) =>
-    props.isBlacktheme ? 'rgb(24, 24, 24)' : 'white'};
-  ${(props) => props.active && 'background-color: gray'};
+export const SmallButton = styled.TouchableOpacity`
+  background-color: rgb(24, 24, 24);
   justify-content: center;
   align-items: center;
   margin-top: 10px;

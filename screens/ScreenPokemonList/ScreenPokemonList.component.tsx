@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, FlatList, ScrollView, useColorScheme, View,} from 'react-native';
 import {CardItem} from '@/src/CardItem';
-import {LittleButton} from '@/src/StyledComponents';
 import {LinearGradient} from 'expo-linear-gradient';
 import Api, {IPokemonItemShortObject} from '../../api/api';
 import {FlatListVars} from '@/utils/FlatList.vars';
 import {ContainerUI} from '@/components/ui/ContainerUI';
 import {TextUI} from '@/components/ui/TextUI';
+import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
 
 export function ScreenPokemonList () {
   const colorScheme = useColorScheme();
@@ -70,8 +70,8 @@ export function ScreenPokemonList () {
         >
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {pages.map((item: string) => (
-              <LittleButton
-                key={item}
+              <ButtonUI
+                type={'small'} key={item}
                 active={pageNumber === item}
                 onPress={() => {
                   setPageNumber(item);
@@ -82,7 +82,7 @@ export function ScreenPokemonList () {
                   });
                 }}>
                 <TextUI type={'orange'} text={item} style={{ fontSize: 13 }}/>
-              </LittleButton>
+              </ButtonUI>
             ))}
           </ScrollView>
         </View>
