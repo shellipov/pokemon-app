@@ -1,12 +1,15 @@
 import React, {useEffect} from 'react';
 import {Animated, StyleSheet} from 'react-native';
-import {Button, Container, OrangText} from '@/src/StyledComponents';
+import {DefaultButton} from '@/src/StyledComponents';
 import {fadeInFadeOutUtil} from '@/utils/fade';
 import {useIsFocused} from '@react-navigation/native';
 import {SoundController} from '@/utils/sounds';
 import {useRefAnimated} from '@/hooks/useRefAnimated';
-import {Routes} from '@/src/AppRouter';
 import {useNavigationHook} from '@/hooks/useNavigation';
+import {Routes} from '@/src/AppPouter.types';
+import {ContainerUI} from '@/components/ui/ContainerUI';
+import {TextUI} from '@/components/ui/TextUI';
+import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
 
 export const ScreenMainPage = () => {
   const navigation =  useNavigationHook();
@@ -23,40 +26,33 @@ export const ScreenMainPage = () => {
   }, [isFocused]);
 
   return (
-    <Container style={{ paddingVertical: '20%' }}>
+    <ContainerUI style={{ paddingVertical: '20%' }}>
       <Animated.View style={[{ opacity: gameButton }, styles.buttonBlock]}>
-        <Button
-          onPress={() => {
-            navigation.navigate(Routes.Game);
-            click().then();
-          }}>
-          <OrangText>{'Game'}</OrangText>
-        </Button>
+        <ButtonUI type={'default'} onPress={() => {
+          navigation.navigate(Routes.Game);
+          click().then();
+        }}>
+          <TextUI type={'orange'} text={'Game'} />
+        </ButtonUI>
       </Animated.View>
 
       <Animated.View style={[{ opacity: pokemonListButton}, styles.buttonBlock]}>
-        <Button
-          onPress={() => {
-            navigation.navigate(Routes.PokemonList);
-            click().then();
-          }}>
-          <OrangText>{'Pokemons'}</OrangText>
-        </Button>
+        <ButtonUI type={'default'} onPress={() => {
+          navigation.navigate(Routes.PokemonList);
+          click().then();
+        }}>
+          <TextUI type={'orange'} text={'Pokemons'} />
+        </ButtonUI>
       </Animated.View>
 
       <Animated.View style={[{ opacity: favoritesButton }, styles.buttonBlock]}>
-        <Button
-          onPress={() => {
-            navigation.navigate(Routes.Favorites);
-            click().then();
-          }}>
-          <OrangText>
-            {'Favorites'}
-          </OrangText>
-        </Button>
+        <ButtonUI type={'default'} onPress={() => {
+          navigation.navigate(Routes.Favorites);
+          click().then();}}>
+          <TextUI type={'orange'} text={'Favorites'}/>
+        </ButtonUI>
       </Animated.View>
-
-    </Container>
+    </ContainerUI>
   );
 };
 

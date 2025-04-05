@@ -14,9 +14,7 @@ export default function App () {
   const setIOSSettings = SoundController.instance.setIOSSettings;
 
   const [loaded, error] = useFonts({
-    // eslint-disable-next-line no-undef
     Comix: require('./assets/fonts/comixloucyr.ttf'),
-    // eslint-disable-next-line no-undef
     SpaceMono: require('./assets/fonts/SpaceMono-Regular.ttf'),
   });
 
@@ -35,11 +33,12 @@ export default function App () {
   }
 
   return (
-    <SafeAreaProvider>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <SafeAreaProvider style={{backgroundColor: colorScheme === 'dark' ? 'black' : 'white'}}>
         <AppRouter />
-      </ThemeProvider>
-    </SafeAreaProvider>
+      </SafeAreaProvider>
+    </ThemeProvider>
+
 
   );
 

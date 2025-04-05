@@ -1,10 +1,11 @@
 import React, {useRef} from 'react';
 import {fadeIn} from '@/utils/fade';
-import {BlackText, OrangeCard, StyledImage} from '@/src/StyledComponents';
+import {OrangeCard, StyledImage} from '@/src/StyledComponents';
 import {Animated, TouchableOpacity, View,} from 'react-native';
-import {Routes} from '@/src/AppRouter';
 import {IPokemonItem} from '@/api/api';
 import {useNavigationHook} from '@/hooks/useNavigation';
+import {Routes} from '@/src/AppPouter.types';
+import {TextUI} from '@/components/ui/TextUI';
 
 export const CardItem = ({ item } : {item : IPokemonItem}) => {
   const card = useRef(new Animated.Value(0)).current;
@@ -18,9 +19,8 @@ export const CardItem = ({ item } : {item : IPokemonItem}) => {
       >
         <OrangeCard>
           <View >
-            <BlackText numberOfLines={1} style={{overflow: 'hidden'}}>
-              {item.name}
-            </BlackText>
+            {/*TODO: разобраться с пропсами*/}
+            <TextUI type={'black'} text={item.name} numberOfLines={1} style={{overflow: 'hidden'}} />
           </View>
           <View>
             <StyledImage

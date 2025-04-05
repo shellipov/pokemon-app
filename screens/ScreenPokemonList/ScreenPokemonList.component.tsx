@@ -1,15 +1,16 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, FlatList, ScrollView, View,} from 'react-native';
+import {ActivityIndicator, FlatList, ScrollView, useColorScheme, View,} from 'react-native';
 import {CardItem} from '@/src/CardItem';
-import {Container, LittleButton, OrangText} from '@/src/StyledComponents';
 import {LinearGradient} from 'expo-linear-gradient';
 import Api, {IPokemonItemShortObject} from '../../api/api';
 import {FlatListVars} from '@/utils/FlatList.vars';
-import {useTheme} from '@react-navigation/native';
+import {ContainerUI} from '@/components/ui/ContainerUI';
+import {TextUI} from '@/components/ui/TextUI';
+import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
 
 export function ScreenPokemonList () {
-  const theme = useTheme();
-  const isBlackTheme = theme.dark;
+  const colorScheme = useColorScheme();
+  const isBlackTheme = colorScheme === 'dark';
   const [detailedPokemons, setDetailedPokemons] = useState();
   const [posts, setPosts] = useState<IPokemonItemShortObject>();
   const [pages, setPages] = useState([]);
@@ -39,7 +40,7 @@ export function ScreenPokemonList () {
 
   if (detailedPokemons) {
     return (
-      <Container  style={{ position: 'relative' }}>
+      <ContainerUI  style={{ position: 'relative' }}>
         <LinearGradient
           colors={[
             `${isBlackTheme ? 'rgb(24, 24, 24)' : 'white'}`,
@@ -69,8 +70,8 @@ export function ScreenPokemonList () {
         >
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {pages.map((item: string) => (
-              <LittleButton
-                key={item}
+              <ButtonUI
+                type={'small'} key={item}
                 active={pageNumber === item}
                 onPress={() => {
                   setPageNumber(item);
@@ -79,21 +80,20 @@ export function ScreenPokemonList () {
                     animated: true,
                     offset: 0,
                   });
-                }}
-              >
-                <OrangText style={{ fontSize: 13 }}>{item} </OrangText>
-              </LittleButton>
+                }}>
+                <TextUI type={'orange'} text={item} style={{ fontSize: 13 }}/>
+              </ButtonUI>
             ))}
           </ScrollView>
         </View>
-      </Container>
+      </ContainerUI>
     );
   } else {
     return (
       <>
-        <Container>
+        <ContainerUI>
           <ActivityIndicator size="large" />
-        </Container>
+        </ContainerUI>
       </>
     );
   }

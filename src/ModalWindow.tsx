@@ -1,8 +1,10 @@
 import React from 'react';
 import {Alert, Modal} from 'react-native';
-import {BlackText, CenteredBackView, CloseButton, ModaView, WhiteText,} from '@/src/StyledComponents';
-import {Routes} from '@/src/AppRouter';
+import {CenteredBackView, CloseButton, ModaView,} from '@/src/StyledComponents';
 import {useNavigationHook} from '@/hooks/useNavigation';
+import {Routes} from '@/src/AppPouter.types';
+import {TextUI} from '@/components/ui/TextUI';
+import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
 
 export interface IModalWindowProps {
     modalVisible: boolean,
@@ -23,26 +25,19 @@ export const ModalWindow = (Props : IModalWindowProps) => {
       onRequestClose={() => {
         Alert.alert('Modal has been closed.');
         setModalVisible(!modalVisible);
-      }}
-    >
+      }}>
       <CenteredBackView>
         <ModaView>
-          <BlackText style={{ fontSize: 25 }}>Game Over</BlackText>
-          <BlackText style={{ fontSize: 13, marginTop: 30 }}>
-            {counter === 0 ? 'time is up' : 'no more lifes'}
-          </BlackText>
-          <BlackText style={{ fontSize: 13, marginTop: 9 }}>
-            {`You score: ${score}`}
-          </BlackText>
-          <CloseButton
+          <TextUI type={'black'} text={'Game Over'} style={{ fontSize: 25 }}/>
+          <TextUI type={'black'} text={counter === 0 ? 'time is up' : 'no more lives'} style={{ fontSize: 13, marginTop: 30 }}/>
+          <TextUI type={'black'} text={`You score: ${score}`} style={{ fontSize: 13, marginTop: 9 }} />
+          <ButtonUI type={'close'}
             onPress={() => {
               setModalVisible(!modalVisible);
               navigation.popToTop();
               navigation.navigate(Routes.MainPage);}}>
-            <WhiteText>
-              {'Close'}
-            </WhiteText>
-          </CloseButton>
+            <TextUI type={'white'} text={'Close'} />
+          </ButtonUI>
         </ModaView>
       </CenteredBackView>
     </Modal>

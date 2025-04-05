@@ -1,26 +1,30 @@
 import React from 'react';
-import {Animated, StyleSheet, Switch} from 'react-native';
-import {GrayBackground, WhiteText} from '@/src/StyledComponents';
+import {Animated, Appearance, StyleSheet, Switch, useColorScheme} from 'react-native';
+import {GrayBackground} from '@/src/StyledComponents';
+import {TextUI} from '@/components/ui/TextUI';
 
 interface IThemeBlockComponentProps {
     opacity?:  Animated.Value
 }
 
 export function ThemeBlockComponent ({opacity}:IThemeBlockComponentProps) {
-  const toggleSwitch = () => {};
+  const colorScheme = useColorScheme();
+
+  const toggleTheme = () => {
+    const newTheme = colorScheme === 'dark' ? 'light' : 'dark';
+    Appearance.setColorScheme(newTheme); // Принудительно меняет тему
+  };
 
   return (
     <Animated.View style={{ opacity: opacity }}>
       <GrayBackground style={styles.littlePadding} >
-        <WhiteText style={{ marginBottom: 20, fontSize: 14 }}>
-          {'Take a dark theme'}
-        </WhiteText>
+        <TextUI type={'white'} text={'Take a dark theme'} style={{ marginBottom: 20, fontSize: 14 }}/>
         <Switch
           trackColor={{ false: 'black', true: 'black' }}
           thumbColor={'orange'}
           ios_backgroundColor="black"
-          onValueChange={toggleSwitch}
-          value={false}
+          onValueChange={toggleTheme}
+          value={colorScheme === 'dark'}
         />
       </GrayBackground>
     </Animated.View>

@@ -1,16 +1,7 @@
 import styled from 'styled-components/native';
-import { Animated } from 'react-native';
+import {Animated} from 'react-native';
 
-export const Container = styled.View`
-  flex: 1;
-  background-color: ${(props) =>
-    props.isBlacktheme ? 'rgb(24, 24, 24)' : 'white'};
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-`;
-
-export const Button = styled.TouchableOpacity`
+export const DefaultButton = styled.TouchableOpacity`
   background-color: gray;
   width: 50%;
   padding-vertical: 30px;
@@ -24,10 +15,8 @@ export const Button = styled.TouchableOpacity`
   shadow-offset: 2px 2px;
 `;
 
-export const LittleButton = styled.TouchableOpacity`
-  background-color: ${(props) =>
-    props.isBlacktheme ? 'rgb(24, 24, 24)' : 'white'};
-  ${(props) => props.active && 'background-color: gray'};
+export const SmallButton = styled.TouchableOpacity`
+  background-color: rgb(24, 24, 24);
   justify-content: center;
   align-items: center;
   margin-top: 10px;
@@ -147,36 +136,4 @@ export const CloseButton = styled.Pressable`
   border-color: black;
   border-width: 1px;
   shadow-offset: 2px 2px;
-`;
-
-//Fonts
-
-export const OrangText = styled.Text`
-  font-family: "Comix";
-  font-size: 15px;
-  color: orange;
-  text-shadow-color: ${(props) =>
-    props.isBlacktheme ? 'white' : 'rgba(0, 0, 0, 0.75)'};
-  text-shadow-offset: -1px 1px;
-  text-shadow-radius: 1px;
-  padding: 5px;
-  text-align: center;
-`;
-
-export const WhiteText = styled.Text`
-  font-family: "Comix";
-  font-size: 10px;
-  color: ${(props) => (props.isBlacktheme ? 'black' : 'white')};
-  text-shadow-color: ${(props) =>
-    props.isBlacktheme ? 'white' : 'rgba(0, 0, 0, 0.75)'};
-  text-shadow-offset: -1px 1px;
-  text-shadow-radius: 1px;
-  text-align: center;
-`;
-
-export const BlackText = styled.Text`
-  font-family: "Comix";
-  font-size: 10px;
-  color: black;
-  text-align: center;
 `;

@@ -6,36 +6,19 @@ import {ScreenPokemon} from '@/screens/ScreenPokemon';
 import {ScreenPokemonList} from '@/screens/ScreenPokemonList';
 import {NavigationContainer} from '@react-navigation/native';
 import {Tabs} from './Tabs';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {IPokemonItem} from '@/api/api';
-
-export enum Routes {
-    MainPage = 'MainPage',
-    Settings = 'Settings',
-    Pokemon = 'Pokemon',
-    PokemonList = 'PokemonList',
-    Favorites = 'Favorites',
-    Game = 'Game',
-}
-
-export type RootStackParamList = {
-    [Routes.MainPage]: undefined;
-    [Routes.Settings]: undefined;
-    [Routes.Pokemon]: {item: IPokemonItem};
-    [Routes.PokemonList]: undefined;
-    [Routes.Favorites]: undefined;
-    [Routes.Game]: undefined;
-};
+import {createNativeStackNavigator, NativeStackNavigationOptions} from '@react-navigation/native-stack';
+import {RootStackParamList, Routes} from '@/src/AppPouter.types';
 
 export default function AppRouter () {
-  const screenSettings = (title: string) => {
+  const screenSettings  = (title: string) => {
     return {
       title: title,
       headerTintColor: 'white',
       headerStyle: {
         backgroundColor: 'orange',
       },
-    };
+      headerBackTitle: 'Back'
+    } as NativeStackNavigationOptions;
   };
 
   const Stack = createNativeStackNavigator<RootStackParamList>();

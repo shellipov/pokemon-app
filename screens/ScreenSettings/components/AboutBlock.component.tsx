@@ -1,6 +1,7 @@
 import React from 'react';
 import {Animated, Linking, StyleSheet, TouchableOpacity} from 'react-native';
-import {GrayBackground, StyledImage, WhiteText} from '@/src/StyledComponents';
+import {GrayBackground, StyledImage} from '@/src/StyledComponents';
+import {TextUI} from '@/components/ui/TextUI';
 
 interface IAboutBlockComponentProps {
     opacity?:  Animated.Value
@@ -15,13 +16,13 @@ export function AboutBlockComponent ({opacity}:IAboutBlockComponentProps) {
             Linking.openURL('https://pokeapi.co');
           }}
         >
-          <WhiteText style={{fontSize: 8}} >{'the program is based on'}</WhiteText>
+          <TextUI type={'white'} text={'the program is based on'} style={{fontSize: 8}} />
           <StyledImage style={{width: 200, height: 50}} source={require('../../../assets/images/pokeapi.png')} />
         </TouchableOpacity>
         <TouchableOpacity
           style={{marginTop: 20}}
           onPress={() => {Linking.openURL('https://github.com/shellipov');}}>
-          <WhiteText >{'Created by shell'}</WhiteText>
+          <TextUI type={'white'} text={'Created by shell'} />
         </TouchableOpacity>
       </GrayBackground>
     </Animated.View>
