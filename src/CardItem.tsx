@@ -4,7 +4,6 @@ import {OrangeCard, StyledImage} from '@/src/StyledComponents';
 import {Animated, TouchableOpacity, View,} from 'react-native';
 import {IPokemonItem} from '@/api/api';
 import {useNavigationHook} from '@/hooks/useNavigation';
-import {Routes} from '@/src/AppPouter.types';
 import {TextUI} from '@/components/ui/TextUI';
 
 export const CardItem = ({ item } : {item : IPokemonItem}) => {
@@ -15,7 +14,7 @@ export const CardItem = ({ item } : {item : IPokemonItem}) => {
     <Animated.View style={{ opacity: card, flex: 1, alignItems: 'center' }}>
       <TouchableOpacity
         style={{ width: '100%' }}
-        onPress={() => {navigation.navigate(Routes.Pokemon, {item: item});}}
+        onPress={() => {navigation.navigate('Pokemon', {item: item});}}
       >
         <OrangeCard>
           <View >

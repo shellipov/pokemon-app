@@ -1,8 +1,7 @@
 import React from 'react';
 import {Alert, Modal} from 'react-native';
-import {CenteredBackView, CloseButton, ModaView,} from '@/src/StyledComponents';
+import {CenteredBackView, ModaView,} from '@/src/StyledComponents';
 import {useNavigationHook} from '@/hooks/useNavigation';
-import {Routes} from '@/src/AppPouter.types';
 import {TextUI} from '@/components/ui/TextUI';
 import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
 
@@ -35,7 +34,7 @@ export const ModalWindow = (Props : IModalWindowProps) => {
             onPress={() => {
               setModalVisible(!modalVisible);
               navigation.popToTop();
-              navigation.navigate(Routes.MainPage);}}>
+              navigation.navigate('MainPage');}}>
             <TextUI type={'white'} text={'Close'} />
           </ButtonUI>
         </ModaView>

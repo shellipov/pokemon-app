@@ -10,10 +10,14 @@ export enum Routes {
 }
 
 export type RootStackParamList = {
-    [Routes.MainPage]: undefined;
-    [Routes.Settings]: undefined;
-    [Routes.Pokemon]: {item: IPokemonItem};
-    [Routes.PokemonList]: undefined;
-    [Routes.Favorites]: undefined;
-    [Routes.Game]: undefined;
+    MainPage: undefined;
+    Settings: undefined;
+    Pokemon: {item: IPokemonItem};
+    PokemonList: undefined;
+    Favorites: undefined;
+    Game: undefined;
 };
+
+
+export type ScreenName =
+    keyof typeof Routes

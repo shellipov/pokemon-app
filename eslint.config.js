@@ -64,6 +64,7 @@ export default tseslint.config(
       'array-bracket-spacing': ['error', 'never'],
       'newline-before-return': 'error',
       '@typescript-eslint/no-require-imports': 'off',
+      '@typescript-eslint/ no-explicit-any': 'on',
       '@typescript-eslint/ban-ts-comment': ['error', {
         'ts-expect-error': 'allow-with-description',
         'ts-ignore': false,

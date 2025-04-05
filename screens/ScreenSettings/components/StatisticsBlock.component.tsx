@@ -53,8 +53,8 @@ export function StatisticsBlockComponent ({opacity}: IStatisticsBlockComponentPr
         <TextUI type={'white'} style={{ marginBottom: 10, fontSize: 8 }} text={'maximum points per game:  '}>
           <TextUI type={'orange'} style={{ fontSize: 12 }} text={statisticsData.maximumPointsPerGame} />
         </TextUI>
-        <ButtonUI type={'small'} style={{ width: '100%' }}>
-          <TextUI type={'orange'} onPress={clear} style={{ fontSize: 10 }} text={'Clear Statistics'} />
+        <ButtonUI type={'small'} style={{ width: '100%' }} onPress={clear}>
+          <TextUI type={'orange'} style={{ fontSize: 10 }} text={'Clear Statistics'} />
         </ButtonUI>
       </GrayBackground>
     </Animated.View>
