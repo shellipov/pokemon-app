@@ -1,0 +1,17 @@
+export const DesignVars = {
+  blockCornerRadius2: 2,
+  blockCornerRadius4: 4,
+  blockCornerRadius6: 6,
+  blockCornerRadius8: 8,
+  blockCornerRadius12: 12,
+  blockCornerRadius16: 16,
+  blockCornerRadius18: 18,
+  blockCornerRadius19: 19,
+  blockCornerRadius20: 20,
+  blockCornerRadius24: 24,
+  blockCornerRadius25: 25,
+  blockCornerRadius26: 26,
+  blockCornerRadius35: 35,
+  blockCornerRadius45: 45,
+  blockCornerRadius100: 100,
+};

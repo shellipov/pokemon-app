@@ -94,9 +94,9 @@ export const ScreenGame = () => {
       fadeIn(gameWindow, 100);
       fadeIn(textView, 200);
       fadeIn(imageView, 500);
+      sizeUpAnimation(animationValue);
       fadeIn(buttonsView, 1000);
       fadeIn(counterView, 1200);
-      sizeUpAnimation(animationValue);
       setCounter(6);
     }
     getPokemon().then();
