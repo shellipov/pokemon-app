@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {Alert, FlatList, View} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, FlatList, View } from 'react-native';
 import FavoriteItem from '../../src/FavoriteItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {TextUI} from '@/components/ui/TextUI';
-import {ContainerUI} from '@/components/ui/ContainerUI';
-import {IPokemonStorage} from '@/screens/ScreenPokemon';
+import { TextUI } from '@/components/ui/TextUI';
+import { ContainerUI } from '@/components/ui/ContainerUI';
+import { IPokemonStorage } from '@/screens/ScreenPokemon';
 
 export const ScreenFavorites = () => {
   const [favoritesList, setFavoritesList] = useState([]);
@@ -24,7 +24,7 @@ export const ScreenFavorites = () => {
       const jsonValue = await AsyncStorage.getItem('favorites');
       if (jsonValue && id) {
         const newPokemonLins = JSON.parse(jsonValue).filter(
-          (pokemon: {id: string}) => pokemon.id !== id
+          (pokemon: {id: string}) => pokemon.id !== id,
         );
         await AsyncStorage.setItem('favorites', JSON.stringify(newPokemonLins));
         setFavoritesList(newPokemonLins);
@@ -75,9 +75,8 @@ export const ScreenFavorites = () => {
         keyExtractor={(item: {id: string}) => item.id}
         renderItem={({ item, index }) => (
           <FavoriteItem item={item as IPokemonStorage} index={index} deletePokemon={deletePokemon} />
-        )}
-      />
-      <View style={{ height: 20 }}></View>
+        )} />
+      <View style={{ height: 20 }} />
     </ContainerUI>
   );
 };

@@ -1,12 +1,12 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {GrayBackground, StyledImage,} from '@/src/StyledComponents';
-import {ActivityIndicator, Alert, Animated} from 'react-native';
-import {fadeIn} from '@/utils/fade';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { GrayBackground, StyledImage } from '@/src/StyledComponents';
+import { ActivityIndicator, Alert, Animated } from 'react-native';
+import { fadeIn } from '@/utils/fade';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Api, {IPokemonItem} from '../../api/api';
-import {ContainerUI} from '@/components/ui/ContainerUI';
-import {TextUI} from '@/components/ui/TextUI';
-import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
+import Api, { IPokemonItem } from '../../api/api';
+import { ContainerUI } from '@/components/ui/ContainerUI';
+import { TextUI } from '@/components/ui/TextUI';
+import { ButtonUI } from '@/components/ui/ButtonUI/ButtonUI.component';
 
 export interface IPokemon {
   front_default: string,
@@ -26,14 +26,14 @@ export const ScreenPokemon = (props: { route: { params: { item: IPokemonItem } }
   const [pokemon, setPokemon] = useState<{front_default: string, back_default: string} | undefined>(undefined);
   const image1 = useRef(new Animated.Value(0)).current;
   const image2 = useRef(new Animated.Value(0)).current;
-  const item  = props.route.params.item;
+  const item = props.route.params.item;
 
   const setPokemonToStorage = async (value: IPokemonStorage) => {
     try {
       const id = new Date().toString();
       const jsonData = await AsyncStorage.getItem('favorites');
       const list = jsonData ? JSON.parse(jsonData) : [];
-      const soughtPokemon = list.find((pokemon: IPokemon) => pokemon.name === value.name);
+      const soughtPokemon = list.find((i: IPokemon) => i.name === value.name);
       if (!soughtPokemon) {
         list.push({ ...value, id });
         const jsonValue = JSON.stringify(list);
@@ -54,6 +54,22 @@ export const ScreenPokemon = (props: { route: { params: { item: IPokemonItem } }
     fetchMyAPI().then();
   }, []);
 
+  const onLoadFrontImg = useCallback(() => {
+    fadeIn(image1);
+  }, []);
+
+  const onLoadBackImg = useCallback(() => {
+    fadeIn(image2);
+  }, []);
+
+  const onAddToFavorites = useCallback(() => {
+    setPokemonToStorage({
+      name: item.name,
+      img1: pokemon?.front_default || '',
+      img2: pokemon?.back_default || '',
+    }).then();
+  }, []);
+
   if (pokemon) {
     return (
       <ContainerUI style={{ padding: 24 }}>
@@ -63,33 +79,28 @@ export const ScreenPokemon = (props: { route: { params: { item: IPokemonItem } }
             height: '100%',
             justifyContent: 'space-between',
           }}>
-          <TextUI type={'orange'} text={item.name}/>
+          <TextUI type={'orange'} text={item.name} />
           <Animated.View style={{ width: '100%', height: '30%', opacity: image1 }}>
             <StyledImage
               style={{ width: '100%', height: '100%' }}
-              onLoad={() => fadeIn(image1)}
+              onLoad={onLoadFrontImg}
               source={{
                 uri: item.front,
-              }}/>
+              }} />
           </Animated.View>
           <Animated.View
             style={{ width: '100%', height: '30%', opacity: image2 }}>
             <StyledImage
               style={{ width: '100%', height: '100%' }}
-              onLoad={() => fadeIn(image2)}
-              source={{uri: item.back}}/>
+              onLoad={onLoadBackImg}
+              source={{ uri: item.back }} />
           </Animated.View>
-          <TextUI type={'white'} text={`weight: ${item.weight},   height: ${item.height}`}/>
-          <ButtonUI type={'small'}
+          <TextUI type={'white'} text={`weight: ${item.weight},   height: ${item.height}`} />
+          <ButtonUI
+            type={'small'}
             style={{ width: '100%' }}
-            onPress={() => {
-              setPokemonToStorage({
-                name: item.name,
-                img1: pokemon?.front_default,
-                img2: pokemon?.back_default,
-              });
-            }}>
-            <TextUI type={'orange'} text={'add to favorites'}/>
+            onPress={onAddToFavorites}>
+            <TextUI type={'orange'} text={'add to favorites'} />
           </ButtonUI>
         </GrayBackground>
       </ContainerUI>

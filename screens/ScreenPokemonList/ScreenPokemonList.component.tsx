@@ -1,53 +1,55 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, FlatList, ScrollView, useColorScheme, View,} from 'react-native';
-import {CardItem} from '@/src/CardItem';
-import {LinearGradient} from 'expo-linear-gradient';
-import Api, {IPokemonItemShortObject} from '../../api/api';
-import {FlatListVars} from '@/utils/FlatList.vars';
-import {ContainerUI} from '@/components/ui/ContainerUI';
-import {TextUI} from '@/components/ui/TextUI';
-import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
+import React, { useEffect, useRef, useState } from 'react';
+import { ActivityIndicator, FlatList, ScrollView, useColorScheme, View } from 'react-native';
+import { CardItem } from '@/src/CardItem';
+import { LinearGradient } from 'expo-linear-gradient';
+import Api, { IPokemonItem, IPokemonItemShortObject } from '../../api/api';
+import { FlatListVars } from '@/utils/FlatList.vars';
+import { ContainerUI } from '@/components/ui/ContainerUI';
+import { TextUI } from '@/components/ui/TextUI';
+import { ButtonUI } from '@/components/ui/ButtonUI/ButtonUI.component';
 
 export function ScreenPokemonList () {
   const colorScheme = useColorScheme();
   const isBlackTheme = colorScheme === 'dark';
-  const [detailedPokemons, setDetailedPokemons] = useState();
+  const [detailedPokemons, setDetailedPokemons] = useState<IPokemonItem[]>();
   const [posts, setPosts] = useState<IPokemonItemShortObject>();
-  const [pages, setPages] = useState([]);
+  const [pages, setPages] = useState<string[]>([]);
   const [pageNumber, setPageNumber] = useState('a');
-  const scrollRef = useRef();
+  const scrollRef = useRef<any>();
 
 
   useEffect(() => {
     async function fetchMyAPI () {
       const data = await Api.newGetPost();
-      setPosts(data);
-      setPages(Object.keys(data));
-
+      if (data) {
+        setPosts(data);
+        setPages(Object.keys(data));
+      }
     }
-    fetchMyAPI();
+    fetchMyAPI().then();
   }, []);
 
   useEffect(() => {
     if (!!posts && pageNumber) {
       async function fetchMyAPI () {
-        const detailedList = await Api.getDetailedList(posts?.[pageNumber]);
-        setDetailedPokemons(detailedList);
+        if (posts?.[pageNumber]) {
+          const detailedList = await Api.getDetailedList(posts?.[pageNumber]);
+          setDetailedPokemons(detailedList);
+        }
       }
-      fetchMyAPI();
+      fetchMyAPI().then();
     }
   }, [posts, pageNumber]);
 
   if (detailedPokemons) {
     return (
-      <ContainerUI  style={{ position: 'relative' }}>
+      <ContainerUI style={{ position: 'relative' }}>
         <LinearGradient
           colors={[
             `${isBlackTheme ? 'rgb(24, 24, 24)' : 'white'}`,
             `${isBlackTheme ? 'rgba(0, 0, 0, 0)' : 'rgba(255, 255, 255, 0)'}`,
           ]}
-          style={{ height: 20, width: '100%', position: 'absolute', zIndex: 2 }}
-        />
+          style={{ height: 20, width: '100%', position: 'absolute', zIndex: 2 }} />
         <FlatList
           style={{ width: '100%', margin: 0, padding: 0 }}
           ref={scrollRef}
@@ -57,8 +59,8 @@ export function ScreenPokemonList () {
           keyExtractor={(post) => post.name}
           {...FlatListVars.performanceOptions}
           renderItem={(item) => (
-            <CardItem item={item.item}/>
-          )}/>
+            <CardItem item={item.item} />
+          )} />
         <View
           style={{
             backgroundColor: isBlackTheme ? 'rgb(24, 24, 24)' : 'white',
@@ -66,8 +68,7 @@ export function ScreenPokemonList () {
             alignItems: 'center',
             justifyContent: 'space-around',
             paddingBottom: 20,
-          }}
-        >
+          }}>
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {pages.map((item: string) => (
               <ButtonUI
@@ -76,12 +77,14 @@ export function ScreenPokemonList () {
                 onPress={() => {
                   setPageNumber(item);
                   setDetailedPokemons([]);
-                  scrollRef?.current?.scrollToOffset({
-                    animated: true,
-                    offset: 0,
-                  });
+                  if (scrollRef?.current) {
+                    scrollRef?.current?.scrollToOffset({
+                      animated: true,
+                      offset: 0,
+                    });
+                  }
                 }}>
-                <TextUI type={'orange'} text={item} style={{ fontSize: 13 }}/>
+                <TextUI type={'orange'} text={item} style={{ fontSize: 13 }} />
               </ButtonUI>
             ))}
           </ScrollView>

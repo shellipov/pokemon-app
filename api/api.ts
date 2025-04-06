@@ -24,7 +24,7 @@ export default class Api {
       for (let i = 0; i < pokeponList.length; i++) {
         const pokemonName = pokeponList[i].name;
         promises.push(
-          axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+          axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`),
         );
       }
 
@@ -36,7 +36,7 @@ export default class Api {
           back: el.data.sprites.back_default,
           weight: el.data.weight,
           height: el.data.height,
-          url: el.data.forms[0].url
+          url: el.data.forms[0].url,
         }));
       });
     } catch (e) {
@@ -55,9 +55,9 @@ export default class Api {
         },
       });
 
-      const allPokemons =req.data.results as IPokemonItemShort[];
+      const allPokemons = req.data.results as IPokemonItemShort[];
       const sortArray = allPokemons.sort((a, b) =>
-        a.name.localeCompare(b.name)
+        a.name.localeCompare(b.name),
       );
 
       const sortObject = {} as IPokemonItemShortObject;

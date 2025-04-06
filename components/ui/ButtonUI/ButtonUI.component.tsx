@@ -1,7 +1,7 @@
 import React from 'react';
-import {StyleProp, useColorScheme, ViewStyle} from 'react-native';
-import {ButtonProps} from 'react-native/Libraries/Components/Button';
-import {CloseButton, DefaultButton, SmallButton} from '@/src/StyledComponents';
+import { StyleProp, useColorScheme, ViewStyle } from 'react-native';
+import { ButtonProps } from 'react-native/Libraries/Components/Button';
+import { CloseButton, DefaultButton, SmallButton } from '@/src/StyledComponents';
 
 type ButtonType = 'default' | 'small' | 'close'
 // @ts-ignore
@@ -11,42 +11,33 @@ export interface IButtonUIProps extends ButtonProps{
   title?: string,
   active?: boolean
   style?: StyleProp<ViewStyle>
-  disabled?: boolean
 }
 
-export function ButtonUI (props: IButtonUIProps) {
+export function ButtonUI ({ type, style, active, children, ...rest }: IButtonUIProps) {
   const colorScheme = useColorScheme();
   const isBlackTheme = colorScheme === 'dark';
-  const activeStyle = props.active ? { backgroundColor: 'gray'} : {};
-  const style = props.style || {};
+  const activeStyle = active ? { backgroundColor: 'gray' } : {};
 
-  switch (props.type) {
+  switch (type) {
     case 'close':
       return (
-        <CloseButton
-          style={[{backgroundColor: isBlackTheme ? 'white' : 'rgba(0, 0, 0, 0.75)'}, style]}
-          disabled={props.disabled}
-          onPress={props.onPress}>
-          {props.children}
+        <CloseButton style={[{ backgroundColor: isBlackTheme ? 'white' : 'rgba(0, 0, 0, 0.75)' }, style]} {...rest}>
+          {children}
         </CloseButton>
       );
 
     case 'small':
       return (
         <SmallButton
-          style={[{backgroundColor: isBlackTheme ? 'rgba(0, 0, 0, 0.75)' : 'white'}, activeStyle, style]}
-          disabled={props.disabled}
-          onPress={props.onPress} >
-          {props.children}
+          style={[{ backgroundColor: isBlackTheme ? 'rgba(0, 0, 0, 0.75)' : 'white' }, activeStyle, style]} {...rest}>
+          {children}
         </SmallButton>
       );
     default:
       return (
         <DefaultButton
-          style={style}
-          disabled={props.disabled}
-          onPress={props.onPress}>
-          {props.children}
+          style={style} {...rest}>
+          {children}
         </DefaultButton>
       );
   }

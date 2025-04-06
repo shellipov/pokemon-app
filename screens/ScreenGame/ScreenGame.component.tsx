@@ -1,16 +1,16 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Animated, SafeAreaView, StyleProp, useColorScheme, View, ViewStyle} from 'react-native';
-import {GameBackground, StyledImage} from '@/src/StyledComponents';
-import {ModalWindow} from '@/src/ModalWindow';
-import {setMaximumPointsPerGame, setStorageStatisticsPlusValue,} from '@/utils/statistics';
-import {fadeIn, fadeOut} from '@/utils/fade';
-import {sizeDownAnimation, sizeUpAnimation} from '@/utils/changeSize';
-import Api, {IPokemonItem, IPokemonItemShort, IPokemonItemShortObject} from '@/api/api';
-import {ReactionEnum, SoundController} from '@/utils/sounds';
-import {useNavigationHook} from '@/hooks/useNavigation';
-import {ThemedView} from '@/components/ThemedView';
-import {TextUI} from '@/components/ui/TextUI';
-import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
+import React, { useEffect, useRef, useState } from 'react';
+import { Animated, SafeAreaView, StyleProp, useColorScheme, View, ViewStyle } from 'react-native';
+import { GameBackground, StyledImage } from '@/src/StyledComponents';
+import { ModalWindow } from '@/src/ModalWindow';
+import { setMaximumPointsPerGame, setStorageStatisticsPlusValue } from '@/utils/statistics';
+import { fadeIn, fadeOut } from '@/utils/fade';
+import { sizeDownAnimation, sizeUpAnimation } from '@/utils/changeSize';
+import Api, { IPokemonItem, IPokemonItemShort, IPokemonItemShortObject } from '@/api/api';
+import { ReactionEnum, SoundController } from '@/utils/sounds';
+import { useNavigationHook } from '@/hooks/useNavigation';
+import { ThemedView } from '@/components/ThemedView';
+import { TextUI } from '@/components/ui/TextUI';
+import { ButtonUI } from '@/components/ui/ButtonUI/ButtonUI.component';
 
 export const ScreenGame = () => {
   const navigation = useNavigationHook();
@@ -36,7 +36,7 @@ export const ScreenGame = () => {
   const buttonsView = useRef(new Animated.Value(0)).current;
   const animationValue = useRef(new Animated.Value(1)).current;
 
-  //styled functions
+  // styled functions
   function clickButton (buttonName: string) {
     getAnswer(buttonName);
     playClick().then();
@@ -49,10 +49,10 @@ export const ScreenGame = () => {
   }
 
   function buttonStyles (buttonName: string) {
-    const background = userAnswer ? { backgroundColor: buttonName === truePokemon?.name ? 'green' : 'red'} : {};
+    const background = userAnswer ? { backgroundColor: buttonName === truePokemon?.name ? 'green' : 'red' } : {};
 
     return [
-      { width: 'auto', marginLeft: 0, align: 'center', ...background }
+      { width: 'auto', marginLeft: 0, align: 'center', ...background },
     ];
   }
 
@@ -87,7 +87,7 @@ export const ScreenGame = () => {
       const pokemon = randomPokemon();
       const response = await Api.getDetailedList([pokemon]);
       const detailedPokemon = response?.[0];
-      if(detailedPokemon){
+      if (detailedPokemon) {
         setTruePokemon(detailedPokemon);
         createButtons(detailedPokemon.name);
       }
@@ -112,12 +112,12 @@ export const ScreenGame = () => {
 
       return;
     }
-    if (counter != 0 && !userAnswer) {
+    if (counter !== 0 && !userAnswer) {
       const timer = setTimeout(
         () => {
           setCounter((prev) => prev - 1);
         },
-        counter === 6 ? 2000 : 1000
+        counter === 6 ? 2000 : 1000,
       );
 
       return () => clearInterval(timer);
@@ -156,14 +156,14 @@ export const ScreenGame = () => {
 
   const HeaderBlock = () => {
     return (
-      <Animated.View style={{flex: 1 }}>
-        <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+      <Animated.View style={{ flex: 1 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
-          <ButtonUI type={'small'} onPress={navigation.goBack} style={{width: '30%'}}>
+          <ButtonUI type={'small'} onPress={navigation.goBack} style={{ width: '30%' }}>
             <TextUI type={'orange'} text={'back'} style={{ padding: 0, fontSize: 12, lineHeight: 21 }} />
           </ButtonUI>
 
-          <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start'}}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
             <TextUI type={'orange'} text={'❤️'} style={{ fontSize: 18 }} />
             <TextUI type={'orange'}>{lives}</TextUI>
           </View>
@@ -175,7 +175,7 @@ export const ScreenGame = () => {
 
         </View>
 
-        <TextUI type={'white'} style={{marginTop: 30, fontSize: 15}} text={'Do you know who is it?'}/>
+        <TextUI type={'white'} style={{ marginTop: 30, fontSize: 15 }} text={'Do you know who is it?'} />
       </Animated.View>
     );
   };
@@ -183,14 +183,14 @@ export const ScreenGame = () => {
   const GameBlock = () => {
     return (
       <>
-        {/*counterBlock*/}
+        {/* counterBlock */}
         <Animated.View style={{ opacity: counterView, flex: 1 }}>
-          <TextUI type={'orange'} text={counter} style={{fontSize: 30, color: counter < 3 ? 'rgb(209, 25, 25)' : 'orange'}} />
+          <TextUI type={'orange'} text={counter} style={{ fontSize: 30, color: counter < 3 ? 'rgb(209, 25, 25)' : 'orange' }} />
         </Animated.View>
 
-        {/*imageBlock*/}
-        <Animated.View style={{opacity: imageView, transform: [{ scale: animationValue }], flex: 2}}>
-          <StyledImage style={{height: 200, width: 200}} source={{ uri: truePokemon?.front }}/>
+        {/* imageBlock */}
+        <Animated.View style={{ opacity: imageView, transform: [{ scale: animationValue }], flex: 2 }}>
+          <StyledImage style={{ height: 200, width: 200 }} source={{ uri: truePokemon?.front }} />
         </Animated.View>
       </>
     );
@@ -199,9 +199,9 @@ export const ScreenGame = () => {
   const ButtonsBlock = () => {
     return (
       <Animated.View
-        style={{opacity: buttonsView, flex: 2, width: '100%', paddingBottom: 20}}>
+        style={{ opacity: buttonsView, flex: 2, width: '100%', paddingBottom: 20 }}>
         {buttons.map((button) => {
-          const blockStyle = {height: '25%', width: '100%', paddingHorizontal: 20, flexDirection: 'column-reverse'}  as StyleProp<ViewStyle>;
+          const blockStyle = { height: '25%', width: '100%', paddingHorizontal: 20, flexDirection: 'column-reverse' } as StyleProp<ViewStyle>;
           const buttonStyle = buttonStyles(button.name) as StyleProp<ViewStyle>;
 
           return (
@@ -217,19 +217,20 @@ export const ScreenGame = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: isBlackTheme ? 'rgb(24, 24, 24)' : 'white'}}>
-      <ThemedView style={{
-        padding: 20,
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'space-around'}}>
-        <GameBackground style={{opacity: gameWindow}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: isBlackTheme ? 'rgb(24, 24, 24)' : 'white' }}>
+      <ThemedView
+        style={{
+          padding: 20,
+          flex: 1,
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-around' }}>
+        <GameBackground style={{ opacity: gameWindow }}>
           <HeaderBlock />
-          <GameBlock/>
+          <GameBlock />
           <ButtonsBlock />
         </GameBackground>
-        <ModalWindow modalVisible={modalVisible} setModalVisible={setModalVisible} score={score} counter={counter}/>
+        <ModalWindow modalVisible={modalVisible} setModalVisible={setModalVisible} score={score} counter={counter} />
       </ThemedView>
     </SafeAreaView>
   );
