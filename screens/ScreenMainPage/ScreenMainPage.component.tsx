@@ -8,6 +8,8 @@ import { useNavigationHook } from '@/hooks/useNavigation';
 import { ContainerUI } from '@/components/ui/ContainerUI';
 import { TextUI } from '@/components/ui/TextUI';
 import { ButtonUI } from '@/components/ui/ButtonUI/ButtonUI.component';
+import { ExampleService } from '@/boot/IoC/example';
+import { InversifyConfig } from '@/boot/IoC/inversify.config';
 
 export const ScreenMainPage = () => {
   const navigation = useNavigationHook();
@@ -17,6 +19,12 @@ export const ScreenMainPage = () => {
   const gameButton = useRefAnimated();
   const pokemonListButton = useRefAnimated();
   const favoritesButton = useRefAnimated();
+
+  const exampleService = InversifyConfig.get<ExampleService>('ExampleService');
+
+  useEffect(() => {
+    exampleService.getData();
+  }, []);
 
   useEffect(() => {
     const buttons = [gameButton, pokemonListButton, favoritesButton];

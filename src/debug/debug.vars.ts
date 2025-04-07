@@ -1,5 +1,5 @@
 // По-умолчанию все флаги заданы текущей работы, в production выключены
-import {ScreenName} from "@/src/AppPouter.types";
+import { ScreenName } from '@/src/AppPouter.types';
 
 export const DebugVars = !__DEV__ ? undefined : {
   isDev: true,

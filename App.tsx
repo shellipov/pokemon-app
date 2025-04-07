@@ -1,13 +1,14 @@
-import React, {useEffect} from 'react';
-import {useColorScheme,} from 'react-native';
+import React, { useEffect } from 'react';
+import { useColorScheme } from 'react-native';
 import AppRouter from './src/AppRouter';
-import {useFonts} from 'expo-font';
-import {DebugVars} from './src/debug';
-import {reactotronInit} from './utils/reactotron';
+import { useFonts } from 'expo-font';
+import { DebugVars } from './src/debug';
+import { reactotronInit } from './utils/reactotron';
 import * as SplashScreen from 'expo-splash-screen/build/index';
-import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
-import {SoundController} from './utils/sounds';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { SoundController } from './utils/sounds';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { InversifyProvider } from '@/boot/IoC/provider';
 
 export default function App () {
   const colorScheme = useColorScheme();
@@ -22,6 +23,9 @@ export default function App () {
     if (DebugVars?.enableReactotron) {
       reactotronInit();
     }
+  }, []);
+
+  useEffect(() => {
     setIOSSettings().then();
     if (loaded) {
       SplashScreen.hideAsync();
@@ -33,14 +37,14 @@ export default function App () {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <SafeAreaProvider style={{backgroundColor: colorScheme === 'dark' ? 'black' : 'white'}}>
-        <AppRouter />
-      </SafeAreaProvider>
-    </ThemeProvider>
+    <InversifyProvider>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <SafeAreaProvider style={{ backgroundColor: colorScheme === 'dark' ? 'black' : 'white' }}>
+          <AppRouter />
+        </SafeAreaProvider>
+      </ThemeProvider>
+    </InversifyProvider>
 
 
   );
-
 }
-

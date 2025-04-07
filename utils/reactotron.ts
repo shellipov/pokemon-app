@@ -1,53 +1,35 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import { IDebugCommand } from '@VTB/service/DebugCommands';
-// import { gDebugCommandsService } from '@VTB/service/DebugCommands/DebugCommandsService.service';
+// @ts-ignore
 import AnsiParser from 'ansi-parser';
-// import { autorun } from 'mobx';
 import reactotron from 'reactotron-react-native';
-// import ReactotronFlipper from 'reactotron-react-native/dist/flipper';
-// import { name as appName } from '../../app.json';
 
 const reactotronHost = process.env.REACTOTRON_HOST || 'localhost';
 
-type Reactotron = typeof reactotron;
-let tron: Reactotron | undefined;
 const errorTypeRegExp = /.*?{(.*?)}/;
 
 export function reactotronInit () {
-  const r = reactotron
+  const configure = reactotron
     .configure({
       name: 'pokemonApp',
       host: reactotronHost,
-      // createSocket: path => new ReactotronFlipper(path),
     });
 
   // @ts-ignore
-  r.useReactNative({
-    asyncStorage: { ignore: [] },
-    networking: {},
-    editor: {},
-    errors: {
-      veto: (stackFrame: any) => false,
-    },
+  configure.useReactNative({
+    storybook: true, // If using Storybook
+    asyncStorage: true, // AsyncStorage logs
+    networking: true, // Network requests
+    editor: false, // Disable editor integration (may conflict with Expo)
+    errors: true, // Error tracking
+    overlay: false, // Disable overlay (better for Expo)
   })
     .setAsyncStorageHandler(AsyncStorage)
     .connect()
     .clear();
 
-  tron = r;
-
-  patchConsoleLog();
-  // debugCommandsInit();
+  // patchConsoleLog();
 }
 
-export async function reactotronConnect () {
-  if (tron && !(tron as any).connected) {
-    await tron.connect();
-    console.log('REACTOTRON Reconnected', tron); // 🐞 ✅
-  }
-}
-
-// patch the console.log
 function patchConsoleLog () {
   const nativeConsoleLog = console.log;
 
@@ -103,7 +85,7 @@ function patchConsoleLog () {
     }
 
     // делаем ограничение на 120 первых символов
-    const preview = isPreview ? args.slice(0, countOfStrungsArgs).join(' ').slice(0, 120) : null;
+    const preview = isPreview ? args.slice(0, countOfStrungsArgs).join(' ').slice(0, 120) : undefined;
 
     reactotron.display({
       name,
@@ -114,58 +96,4 @@ function patchConsoleLog () {
   };
 }
 
-// function debugCommandsInit() {
-//   autorun(() => {
-//     debugCommandsMap(gDebugCommandsService.commands);
-//   });
-// }
 
- type DebugCommandHandler = () => void;
-
- interface IDebugCommand {
-  title: string;
-  handler: DebugCommandHandler;
-}
-
-// interface ICustomCommand {
-//   debugCommand: IDebugCommand;
-//   uid: string;
-//   remover: () => void;
-// }
-
-// let customCommands: ICustomCommand[] = [];
-
-// function debugCommandsMap(debugCommands: IDebugCommand[]) {
-//   const r = tron!;
-//   // remove deleted
-//   const removedCommands = customCommands.filter(cc => debugCommands.indexOf(cc.debugCommand) === -1);
-//   removedCommands.forEach(cc => cc.remover());
-//
-//   // add new
-//   customCommands = customCommands.filter(cc => debugCommands.indexOf(cc.debugCommand) !== -1);
-//   debugCommands.forEach(dc => {
-//     const isExists = customCommands.findIndex(cc => cc.debugCommand === dc) !== -1;
-//     const uid = debugCommandUidAbbrev(dc);
-//     const description = `command (cmd+.): ${uid}`;
-//     if (!isExists) {
-//       const remover = r.onCustomCommand({
-//         command: uid, description, title: dc.title, handler: () => {
-//           console.log(`🐞 [DebugCommand] Execute: ${dc.title}`); // 🐞 ✅
-//           dc.handler();
-//         },
-//       });
-//
-//       customCommands.push({
-//         debugCommand: dc,
-//         uid,
-//         remover,
-//       });
-//     }
-//
-//     console.log(`🐞 [DebugCommand] ${description} → ${dc.title}`); // 🐞 ✅
-//   });
-// }
-
-// function debugCommandUidAbbrev(dc: IDebugCommand): string {
-//   return dc.title.trim().split(' ').map(word => word[0]).join('').toLowerCase();
-// }
