@@ -11,6 +11,7 @@ import { useNavigationHook } from '@/hooks/useNavigation';
 import { ThemedView } from '@/components/ThemedView';
 import { TextUI } from '@/components/ui/TextUI';
 import { ButtonUI } from '@/components/ui/ButtonUI/ButtonUI.component';
+import { useRefAnimated } from '@/hooks/useRefAnimated';
 
 export const ScreenGame = () => {
   const navigation = useNavigationHook();
@@ -29,12 +30,12 @@ export const ScreenGame = () => {
   const playClick = SoundController.instance.playClick;
   const playReaction = SoundController.instance.playReaction;
 
-  const gameWindow = useRef(new Animated.Value(0)).current;
-  const textView = useRef(new Animated.Value(0)).current;
-  const counterView = useRef(new Animated.Value(0)).current;
-  const imageView = useRef(new Animated.Value(0)).current;
-  const buttonsView = useRef(new Animated.Value(0)).current;
-  const animationValue = useRef(new Animated.Value(1)).current;
+  const gameWindow = useRefAnimated();
+  const textView = useRefAnimated();
+  const counterView = useRefAnimated();
+  const imageView = useRefAnimated();
+  const buttonsView = useRefAnimated();
+  const animationValue = useRefAnimated(1);
 
   // styled functions
   function clickButton (buttonName: string) {

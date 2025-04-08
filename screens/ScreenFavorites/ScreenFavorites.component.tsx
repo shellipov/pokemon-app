@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, FlatList, View } from 'react-native';
-import FavoriteItem from '../../src/FavoriteItem';
+import { FavoriteItem } from '@/src/FavoriteItem';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TextUI } from '@/components/ui/TextUI';
 import { ContainerUI } from '@/components/ui/ContainerUI';
-import { IPokemonStorage } from '@/screens/ScreenPokemon';
+import { IPokemonStorage } from '@/src/service/PokemonStorage';
 
 export const ScreenFavorites = () => {
   const [favoritesList, setFavoritesList] = useState([]);

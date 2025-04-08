@@ -17,14 +17,6 @@ export interface IPokemon {
   name: string,
 }
 
-// TODO: перенести в метод
-export interface IPokemonStorage {
-  id?: string,
-  name: string,
-  img1: string,
-  img2: string,
-}
-
 export const ScreenPokemon = (props: { route: { params: { item: IPokemonItem } }}) => {
   const [pokemon, setPokemon] = useState<{front_default: string, back_default: string} | undefined>(undefined);
   const image1 = useRefAnimated();

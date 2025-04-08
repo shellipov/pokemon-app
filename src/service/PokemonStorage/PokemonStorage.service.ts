@@ -1,6 +1,13 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { IPokemon, IPokemonStorage } from '@/screens/ScreenPokemon';
+import { IPokemon } from '@/screens/ScreenPokemon';
 import { Alert } from 'react-native';
+
+export interface IPokemonStorage {
+  id?: string,
+  name: string,
+  img1: string,
+  img2: string,
+}
 
 export async function setPokemonToStorage (value: IPokemonStorage) {
   try {
