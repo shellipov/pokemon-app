@@ -75,15 +75,6 @@ export default class Api {
     }
   }
 
-  static async getPokemon (name: string) {
-    try {
-      const resp = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
-
-      return resp.data;
-    } catch (e) {
-      console.log(e);
-    }
-  }
   static async getURL (url: string) {
     try {
       const resp = await axios.get(`${url}`);
