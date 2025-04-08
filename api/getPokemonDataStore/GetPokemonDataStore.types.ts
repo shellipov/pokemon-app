@@ -1,11 +1,11 @@
-interface IGetPokemonRequest {
+export interface IGetPokemonRequest {
     name: string
 }
 
-interface IGetPokemonDataResponse {
+export interface IGetPokemonDataResponse {
     abilities: any,
     base_experience: number,
-    cries: Object,
+    cries: object,
     forms: any[],
     game_indices: any[],
     height: number,
@@ -18,14 +18,14 @@ interface IGetPokemonDataResponse {
     order: number,
     past_abilities: any[],
     past_types: any[],
-    species: Object,
-    sprites: Object,
-    stats: Object[],
-    types: Object[],
+    species: object,
+    sprites: object,
+    stats: object[],
+    types: object[],
     weight: number,
 }
 
-interface IGetPokemonResponse {
+export interface IGetPokemonResponse {
     data: IGetPokemonDataResponse
     status: number
     statusText: string

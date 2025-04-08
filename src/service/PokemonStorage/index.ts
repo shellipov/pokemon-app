@@ -1,1 +1,1 @@
-export * from './PokemonStorage.service'
+export * from './PokemonStorage.service';

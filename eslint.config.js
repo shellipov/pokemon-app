@@ -9,21 +9,21 @@ export default tseslint.config(
   {
     languageOptions: {
       globals: {
-        ...reactNativeGlobals.environment
+        ...reactNativeGlobals.environment,
       },
       parserOptions: {
         ecmaFeatures: {
-          jsx: true
+          jsx: true,
         },
         ecmaVersion: 'latest',
-        sourceType: 'module'
-      }
+        sourceType: 'module',
+      },
     },
     settings: {
       react: {
-        version: 'detect'
-      }
-    }
+        version: 'detect',
+      },
+    },
   },
 
   // Основные правила
@@ -34,7 +34,7 @@ export default tseslint.config(
   {
     plugins: {
       react: reactPlugin,
-      'react-native': reactNativePlugin
+      'react-native': reactNativePlugin,
     },
     rules: {
       ...reactPlugin.configs.recommended.rules,
@@ -42,8 +42,8 @@ export default tseslint.config(
       'react/jsx-uses-vars': 'error',
       'react/react-in-jsx-scope': 'off', // Не требуется с новым JSX
       'react-native/no-unused-styles': 'error',
-      'react-native/split-platform-components': 'warn'
-    }
+      'react-native/split-platform-components': 'warn',
+    },
   },
 
   // Кастомные правила
@@ -56,7 +56,7 @@ export default tseslint.config(
       'space-before-function-paren': ['error', {
         'anonymous': 'always',
         'named': 'always',
-        'asyncArrow': 'always'
+        'asyncArrow': 'always',
       }],
       'react/jsx-closing-tag-location': ['error', 'line-aligned'],
       'react-native/no-inline-styles': 'warn',
@@ -69,15 +69,10 @@ export default tseslint.config(
         'ts-expect-error': 'allow-with-description',
         'ts-ignore': false,
         'ts-nocheck': false,
-        'ts-check': false
+        'ts-check': false,
       }],
       '@typescript-eslint/naming-convention': 'off',
-      '@typescript-eslint/no-empty-interface': [
-        "error",
-        {
-          "allowInterfaces": ["BaseInterface"]  // Allow specific interface names
-        }
-      ],
+      '@typescript-eslint/no-empty-interface': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-misused-new': 'error',
       '@typescript-eslint/no-namespace': 'error',
@@ -196,7 +191,7 @@ export default tseslint.config(
         'selfClosing': 'after-props',
       }],
       'react/jsx-first-prop-new-line': ['warn', 'multiline'],
-    }
+    },
   },
 
   // Игнорируемые файлы
@@ -206,7 +201,7 @@ export default tseslint.config(
       '**/ios/**',
       '**/node_modules/**',
       '**/dist/**',
-      '**/.expo/**'
-    ]
-  }
+      '**/.expo/**',
+    ],
+  },
 );

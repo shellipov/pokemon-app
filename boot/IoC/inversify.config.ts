@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { Container } from 'inversify';
 import { ExampleService, ExampleServiceImpl } from '@/boot/IoC/example';
-import {GetPokemonDataStore, IGetPokemonDataStore} from "@/api/getPokemonDataStore/GetPokemonDataStore.store";
+import { GetPokemonDataStore, IGetPokemonDataStore } from '@/api/getPokemonDataStore/GetPokemonDataStore.store';
 
 const InversifyConfig = new Container();
 

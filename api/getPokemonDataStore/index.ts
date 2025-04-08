@@ -1,1 +1,1 @@
-export * from './GetPokemonDataStore.store'
+export * from './GetPokemonDataStore.store';

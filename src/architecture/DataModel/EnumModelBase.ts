@@ -1,8 +1,8 @@
 import { computed } from 'mobx';
-import {LambdaValue, Maybe} from "@/helpers/types.helper";
-import {DataModelBase} from "@/src/architecture/DataModel/DataModelBase";
-import {EnumValues} from "@/src/helpers/enumValues";
-import {stringCapitalize} from "@/src/helpers/string.helper";
+import { LambdaValue, Maybe } from '@/helpers/types.helper';
+import { DataModelBase } from '@/src/architecture/DataModel/DataModelBase';
+import { EnumValues } from '@/src/helpers/enumValues';
+import { stringCapitalize } from '@/src/helpers/string.helper';
 
 // Тут создаём интерфейс модели, которая будет иметь проверочный пропс на каждое поле энума
 // https://www.typescriptlang.org/docs/handbook/2/template-literal-types.html
@@ -22,7 +22,7 @@ type TEnumModelBase<TEnum> = ModelClassType<TEnumProps<TEnum> & DataModelBase<Ma
  *
  * @param enm
  */
-export function createEnumModelBase<TEnum>(enm: any) {
+export function createEnumModelBase<TEnum> (enm: any) {
   class EnumModel extends DataModelBase<Maybe<EnumValue<TEnum>>> {
   }
 
@@ -30,7 +30,7 @@ export function createEnumModelBase<TEnum>(enm: any) {
   EnumValues.getNamesAndValues<any>(enm).forEach(item => {
     const key = `is${stringCapitalize(item.name)}`;
     Object.defineProperty(EnumModel.prototype, key, {
-      get() {
+      get () {
         return this.data === item.value;
       },
     });

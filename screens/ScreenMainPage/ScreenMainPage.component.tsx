@@ -1,13 +1,13 @@
-import React, {useCallback, useEffect} from 'react';
-import {Animated, StyleSheet} from 'react-native';
-import {fadeInFadeOutUtil} from '@/utils/fade';
-import {useIsFocused} from '@react-navigation/native';
-import {SoundController} from '@/utils/sounds';
-import {useRefAnimated} from '@/hooks/useRefAnimated';
-import {useNavigationHook} from '@/hooks/useNavigation';
-import {ContainerUI} from '@/components/ui/ContainerUI';
-import {TextUI} from '@/components/ui/TextUI';
-import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
+import React, { useCallback, useEffect } from 'react';
+import { Animated, StyleSheet } from 'react-native';
+import { fadeInFadeOutUtil } from '@/utils/fade';
+import { useIsFocused } from '@react-navigation/native';
+import { SoundController } from '@/utils/sounds';
+import { useRefAnimated } from '@/hooks/useRefAnimated';
+import { useNavigationHook } from '@/hooks/useNavigation';
+import { ContainerUI } from '@/components/ui/ContainerUI';
+import { TextUI } from '@/components/ui/TextUI';
+import { ButtonUI } from '@/components/ui/ButtonUI/ButtonUI.component';
 
 export const ScreenMainPage = () => {
   const navigation = useNavigationHook();

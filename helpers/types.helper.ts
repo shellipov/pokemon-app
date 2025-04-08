@@ -1,5 +1,5 @@
 // @ts-ignore
-import isFunction from "lodash/isFunction";
+import isFunction from 'lodash/isFunction';
 
 // Часто проще использовать чем "| undefined"
 export type Maybe<T> = T | undefined;
@@ -8,7 +8,7 @@ export type Maybe<T> = T | undefined;
 export type LambdaValue<TValue, TArgs = unknown> = TValue | ((args?: TArgs) => TValue);
 
 // Если value функуия, вызвать для получения значения, иначе вернуть value.
-export function resolveLambdaValue<TValue, TArgs = unknown>(value: LambdaValue<TValue>, args?: TArgs): TValue {
-    // @ts-ignore
-    return isFunction(value) ? value(args) : value;
+export function resolveLambdaValue<TValue, TArgs = unknown> (value: LambdaValue<TValue>, args?: TArgs): TValue {
+  // @ts-ignore
+  return isFunction(value) ? value(args) : value;
 }

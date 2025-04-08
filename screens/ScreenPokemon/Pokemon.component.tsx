@@ -1,15 +1,15 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {GrayBackground, StyledImage} from '@/src/StyledComponents';
-import {ActivityIndicator, Animated} from 'react-native';
-import {fadeIn} from '@/utils/fade';
-import {setPokemonToStorage} from '@/src/service/PokemonStorage';
-import Api, {IPokemonItem} from '../../api/api';
-import {ContainerUI} from '@/components/ui/ContainerUI';
-import {TextUI} from '@/components/ui/TextUI';
-import {ButtonUI} from '@/components/ui/ButtonUI/ButtonUI.component';
-import {InversifyConfig} from "@/boot/IoC/inversify.config";
-import {GetPokemonDataStore} from "@/api/getPokemonDataStore";
-import {useRefAnimated} from "@/hooks/useRefAnimated";
+import React, { useCallback, useEffect, useState } from 'react';
+import { GrayBackground, StyledImage } from '@/src/StyledComponents';
+import { ActivityIndicator, Animated } from 'react-native';
+import { fadeIn } from '@/utils/fade';
+import { setPokemonToStorage } from '@/src/service/PokemonStorage';
+import Api, { IPokemonItem } from '../../api/api';
+import { ContainerUI } from '@/components/ui/ContainerUI';
+import { TextUI } from '@/components/ui/TextUI';
+import { ButtonUI } from '@/components/ui/ButtonUI/ButtonUI.component';
+import { InversifyConfig } from '@/boot/IoC/inversify.config';
+import { GetPokemonDataStore } from '@/api/getPokemonDataStore';
+import { useRefAnimated } from '@/hooks/useRefAnimated';
 
 export interface IPokemon {
   front_default: string,
@@ -39,11 +39,11 @@ export const ScreenPokemon = (props: { route: { params: { item: IPokemonItem } }
 
   useEffect(() => {
     fetchMyAPI().then();
-    pokemonDataStore.refresh({name: item.name}).then()
+    pokemonDataStore.refresh({ name: item.name }).then();
   }, []);
 
-  const onLoadFrontImg = useCallback(() => {fadeIn(image1)}, []);
-  const onLoadBackImg = useCallback(() => {fadeIn(image2)}, []);
+  const onLoadFrontImg = useCallback(() => {fadeIn(image1);}, []);
+  const onLoadBackImg = useCallback(() => {fadeIn(image2);}, []);
 
   const onAddToFavorites = useCallback(() => {
     setPokemonToStorage({
@@ -56,10 +56,10 @@ export const ScreenPokemon = (props: { route: { params: { item: IPokemonItem } }
   if (pokemon) {
     return (
       <ContainerUI style={{ padding: 24 }}>
-        <GrayBackground style={{width: '100%', height: '100%', justifyContent: 'space-between'}}>
+        <GrayBackground style={{ width: '100%', height: '100%', justifyContent: 'space-between' }}>
           <TextUI type={'orange'} text={pokemonDataStore.data?.data.name} />
           <Animated.View style={{ width: '100%', height: '30%', opacity: image1 }}>
-            <StyledImage style={{ width: '100%', height: '100%' }} onLoad={onLoadFrontImg} source={{uri: item.front}} />
+            <StyledImage style={{ width: '100%', height: '100%' }} onLoad={onLoadFrontImg} source={{ uri: item.front }} />
           </Animated.View>
           <Animated.View style={{ width: '100%', height: '30%', opacity: image2 }}>
             <StyledImage style={{ width: '100%', height: '100%' }} onLoad={onLoadBackImg} source={{ uri: item.back }} />

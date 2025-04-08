@@ -7,8 +7,6 @@ export interface ExampleService {
 @injectable()
 export class ExampleServiceImpl implements ExampleService {
   getData () {
-    console.log('>>>>> getData');
-
     return 'Hello from Inversify!';
   }
 }

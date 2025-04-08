@@ -1,10 +1,11 @@
-import {injectable} from 'inversify';
-import {AsyncDataHolder, IAsyncDataHolder} from '@/api/holder';
-import {Maybe} from '@/helpers/types.helper';
-import {action, computed, makeObservable} from 'mobx';
-import axios from "axios";
-import {Alert} from "react-native";
-import {PokemonModel} from "@/api/getPokemonDataStore/Pokemon.model";
+import { injectable } from 'inversify';
+import { AsyncDataHolder, IAsyncDataHolder } from '@/api/holder';
+import { Maybe } from '@/helpers/types.helper';
+import { action, computed, makeObservable } from 'mobx';
+import axios from 'axios';
+import { Alert } from 'react-native';
+import { PokemonModel } from '@/api/getPokemonDataStore/Pokemon.model';
+import { IGetPokemonRequest, IGetPokemonResponse } from '@/api/getPokemonDataStore/GetPokemonDataStore.types';
 
 type TData = Maybe<IGetPokemonResponse>;
 
@@ -37,7 +38,7 @@ export class GetPokemonDataStore implements IGetPokemonDataStore {
       this.holder.setData(res);
     } catch (err: any) {
       this.holder.setError(err);
-      Alert.alert('Error', err.message || err.Message || err.apiMessage || 'Ошибка загрузки данных')
+      Alert.alert('Error', err.message || err.Message || err.apiMessage || 'Ошибка загрузки данных');
     }
   }
 }
